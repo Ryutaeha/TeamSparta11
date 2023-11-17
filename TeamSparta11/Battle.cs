@@ -35,10 +35,10 @@
                 switch (userSelect)
                 {
                     case 1:
-                        //공격 함수
+                        BasicAttack();
                         break;
                     case 2:
-                        //스킬 함수
+                        //스킬 목록 보여주고 그 안에서 또 선택 => SkillNum
                         break;
                     case 3:
                         //아이템 사용 함수
@@ -81,40 +81,48 @@
                 }
             }
         }
-        public void SkillAttack(/*Player player, Monster monster*/)
-        {
-            if (/*skill.Mp <= player.Mp*/)
-            {
-                if (/*player.Hp != 0 && monster.Hp != 0*/)
-                {
-                    if (/*공격자가 몬스터이면 */)
-                    {
-                        /*damage == monster.AD - player.def;*/ //데미지는 몬스터 공격력 - 플레이어 방어력
-                                                               //player.Hp -= damage;
-                        if (/*damage >= player.Hp*/)
-                        {
-                            //player.Hp = 0;
-                            //IsDead == true;
-                        }
+        
 
-                    }
-                    else if (/*공격자가 플레이어면*/)
+        public void SkillAttack(/*Player player, Monster monster, Skills skills*/)
+        {
+
+            string skillName = Console.ReadLine();
+            if (skillName == /*스킬배열이름*/[skillName])
+            {
+                if (/*skill.Mp <= player.Mp*/)
+                {
+                    if (/*player.Hp != 0 && monster.Hp != 0*/)
                     {
-                        /*damage == player.AD - monster.def;*/ //데미지는 플레이어 공격력 - 몬스터의 방어력
-                                                               //monster.Hp -= damage;
-                                                               //player.Mp -= skill.mp;                        
-                        if (/*damage >= monster.Hp*/)
+                        if (/*공격자가 몬스터이면 */)
                         {
-                            //monster.Hp = 0;
-                            //IsDead == true;
+                            /*damage == monster.AD - player.def;*/ //데미지는 몬스터 공격력 - 플레이어 방어력
+                                                                   //player.Hp -= damage;
+                            if (/*damage >= player.Hp*/)
+                            {
+                                //player.Hp = 0;
+                                //IsDead == true;
+                            }
+
+                        }
+                        else if (/*공격자가 플레이어면*/)
+                        {
+                            /*damage == player.AD - monster.def;*/ //데미지는 플레이어 공격력 - 몬스터의 방어력
+                                                                   //monster.Hp -= damage;
+                                                                   //player.Mp -= skill.mp;                        
+                            if (/*damage >= monster.Hp*/)
+                            {
+                                //monster.Hp = 0;
+                                //IsDead == true;
+                            }
                         }
                     }
                 }
+                else
+                {
+                    Console.WriteLine("MP가 부족합니다");
+                }
             }
-            else 
-            {
-                Console.WriteLine("MP가 부족합니다");
-            }
+           
            
         }
     }
