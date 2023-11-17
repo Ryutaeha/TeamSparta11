@@ -27,26 +27,27 @@
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력히세요.");
             Console.Write(">>");
-            string? select = Console.ReadLine();
-            if(select == "1")
+            while (true)
             {
-                //공격 함수
-            }
-            else if (select == "2")
-            {
-                //스킬 사용 함수
-            }
-            else if(select == "3")
-            {
-                //아이템 사용 함수
-            }
-            else if(select == "4")
-            {
-                //내 상태 보기 함수
-            }
-            else
-            {
-                
+                int userSelect = Date.userSelect();
+                switch (userSelect)
+                {
+                    case 1:
+                        //공격 함수
+                        break;
+                    case 2:
+                        //스킬 함수
+                        break;
+                    case 3:
+                        //아이템 사용 함수
+                        break;
+                    case 4:
+                        //내 상태보기 함수
+                        return;
+                    default:
+                        Console.WriteLine("번호를 다시 입력해주세요");
+                        break;
+                }
             }
 
         }
