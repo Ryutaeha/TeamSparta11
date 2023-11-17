@@ -10,9 +10,42 @@ namespace TeamSparta11
     {
         internal void Game()
         {
-            Console.WriteLine("스파르타 던전에 오신 여러분을 환영합니다.");
-            Console.WriteLine("원하시는 메뉴를 선택해주세요");
+            Console.WriteLine("This is 스파르타 던전");
+            Console.WriteLine("원하시는 항목을 선택해주세요");
 
+            Console.WriteLine("1. 새게임");
+            Console.WriteLine("2. 이어하기");
+            Console.WriteLine("3. 끝내기");
+            while (true)
+            {
+                int userSelect = Date.userSelect(Console.ReadLine());
+                switch (userSelect)
+                {
+                    case 1:
+                        CreateCharacter();
+                        break;
+                    case 2:
+                        LordCharacter();
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        Console.WriteLine("번호를 다시 입력해주세요");
+                        break;
+                }
+            }
+            
         }
+
+        private void CreateCharacter()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void LordCharacter()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
