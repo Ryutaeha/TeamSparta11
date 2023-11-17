@@ -1,11 +1,11 @@
 ﻿namespace TeamSparta11
 {
-    internal class Program
+    internal partial class Program
     {
         static void Main(string[] args)
         {
-
-            Console.WriteLine("Hello, World!");
+            Battle battle = new Battle();
+            battle.BeginBattleScene();
 
         }
     }
