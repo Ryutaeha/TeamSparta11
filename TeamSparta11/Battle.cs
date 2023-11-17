@@ -115,7 +115,6 @@ namespace TeamSparta11
                 if (damage >= playerStatus.HP)
                 {
                     playerStatus.HP = 0;
-                    playerStatus.IsDead = true;
                 }
 
             }
@@ -126,11 +125,10 @@ namespace TeamSparta11
                 if (damage >= monsterStatus.HP)
                 {
                     monsterStatus.HP = 0;
-                    playerStatus.IsDead = true;
                 }
             }
         }
-        public void SkillAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus, Skills skills)
+        public void SkillAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus/*, Skills skills*/)
         {
             string skillName = Console.ReadLine();
             int damage;
@@ -146,7 +144,6 @@ namespace TeamSparta11
                         if (damage >= playerStatus.HP)
                         {
                             playerStatus.HP = 0;
-                            playerStatus.IsDead = true;
                         }
 
                     }
@@ -154,11 +151,10 @@ namespace TeamSparta11
                     {
                         damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
                         monsterStatus.HP -= damage;
-                        playerStatus.MP -= skills.mp;                        
+                        playerStatus.MP -= skills.MP;                        
                         if (damage >= monsterStatus.HP)
                         {
                             monsterStatus.HP = 0;
-                            monsterStatus.IsDead = true;
                         }
                     }
                 }
