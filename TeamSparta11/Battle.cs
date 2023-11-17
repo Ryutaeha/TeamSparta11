@@ -7,6 +7,8 @@
             Console.WriteLine("Battle!!");
             Console.WriteLine();
 
+
+            //캐릭터나 몬스터 클레스 다 만들면 아래 주석들 주석 풀고 확인해주세요
             //Console.WriteLine($"LV.{monsterStatus.level}\t{monsterStatus.name}\tHP{monsterStatus,hp}");
             Console.WriteLine("LV. 2  미니언  HP 15");
 
@@ -27,26 +29,24 @@
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력히세요.");
             Console.Write(">>");
-            string? select = Console.ReadLine();
-            if(select == "1")
+            int userSelect = Date.userSelect();
+            switch (userSelect)
             {
-                //공격 함수
-            }
-            else if (select == "2")
-            {
-                //스킬 사용 함수
-            }
-            else if(select == "3")
-            {
-                //아이템 사용 함수
-            }
-            else if(select == "4")
-            {
-                //내 상태 보기 함수
-            }
-            else
-            {
-                
+                case 1:
+                    //공격함수
+                    break;
+                case 2:
+                    //스킬사용
+                    break;
+                case 3:
+                    //아이템 사용
+                    break;
+                case 4:
+                    //내 상태보기 함수
+                    break; 
+                default:
+                    Console.WriteLine("번호를 다시 입력해주세요");
+                    break;
             }
 
         }
