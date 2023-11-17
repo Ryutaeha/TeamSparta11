@@ -15,21 +15,28 @@ namespace Teamproject
         public int EXP { get; set; }
         public bool IsDead => HP <= 0;
 
+
+        public int NextEXP = 3;
         public string Job { get; }
         public int MaxMP { get; set; }
         public int MP { get; set; }
 
-        public PlayerStatus(string name, string job, int ad, int df, int exp)
+    
+        
+    
+
+        
+        public PlayerStatus(string name, string job, int level, int maxhp, int hp, int maxmp, int mp,int ad, int df, int speed, int gold, int exp)
         {
             Name = name;
             Job = job;
-            Level = 1;
-            MaxHP = 100;
-            HP = 100;
-            MaxMP = 50;
-            MP = 50;
-            Speed = 1;
-            Gold = 100;
+            Level = level;
+            MaxHP = maxhp;
+            HP = hp;
+            MaxMP = maxmp;
+            MP = mp;
+            Speed = speed;
+            Gold = gold;
             AD = ad;
             DF = df;
             EXP = exp;

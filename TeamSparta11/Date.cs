@@ -64,11 +64,11 @@ internal static class Date
 
     
     //직업별 레벨업당 스탯 정리 
-    public static Dictionary<int, string[]> playerUpStatus = new Dictionary<int, string[]>
+    public static Dictionary<int, int[]> playerUpStatus = new Dictionary<int, int[]>
     {
-        { 0 , new string[] {"", "", "1", "150","150", "50","50", "10", "2", "1", "100","0" } }, //전사 
-        { 1 , new string[] { "", "", "1", "100", "100", "50", "50", "15", "1", "2", "100", "0" } }, //도적
-        { 2 , new string[] { "", "", "1", "100", "100", "100", "100", "5", "1", "1", "100", "0" } } //마법사
+        { 0 , new int[] { } }, //전사 
+        { 1 , new int[] {  } }, //도적
+        { 2 , new int[] {  } } //마법사
 
     };
 
