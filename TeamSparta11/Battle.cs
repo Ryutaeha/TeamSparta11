@@ -1,4 +1,9 @@
-﻿namespace TeamSparta11
+﻿using System.Numerics;
+using System.Threading;
+using Teamproject;
+using static Test;
+
+namespace TeamSparta11
 {
     internal class Battle
     {
@@ -16,29 +21,18 @@
             this.rewards = rewards;
             CharacterDie += EndBattleScene;
         }
-
-        public void BeginBattleScene()
+        public void BeginBattleScene(PlayerStatus playerStatus, MonsterStatus monsterStatus)
         {
             Console.WriteLine("Battle!!");
 
             Console.WriteLine();
             Console.WriteLine("[몬스터 정보]");
-
-            //Console.WriteLine($"LV.{monsterStatus.level}\t{monsterStatus.name}\tHP{monsterStatus,hp}");
-            Console.WriteLine("LV. 2  미니언  HP 15");
-
+            Console.WriteLine($"LV.{monsterStatus.Level}\t{monsterStatus.Name}\tHP{monsterStatus.HP}");
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-
-            //Console.WriteLine($"LV.{playerStatus.level}\t{playerStatus.name}\t{playerStatus.name}");
-            Console.WriteLine("LV.1  Chad  (전사)");
-
-            //Console.WriteLine($"HP {playerStatus.hp}/{playerStatus.maxHp}");
-            Console.WriteLine("HP 100/100");
-
-            //Console.WriteLine($"MP {playerStatus.mp}/{playerStatus.maxMp}");
-            Console.WriteLine("MP 30/30");
-
+            Console.WriteLine($"LV.{playerStatus.Level}\t{playerStatus.Name}");
+            Console.WriteLine($"HP {playerStatus.HP}/{playerStatus.MaxHP}");
+            Console.WriteLine($"MP {playerStatus.MP}/{playerStatus.MaxMP}");
             Console.WriteLine("===============================================================");
 
             // 플레이어나 몬스터가 죽기 전까지 반복
@@ -47,14 +41,14 @@
                 // 플레이어와 몬스터의 스피드에 따라서 선턴 결정
                 if (player.Speed > monster.Speed)
                 {
-                    PlayerAttackScene(); 
-                    MonsterAttackScene(); 
+                    PlayerAttackScene( playerStatus,  monsterStatus); 
+                    MonsterAttackScene(playerStatus, monsterStatus); 
                 }
 
                 else if (monster.Speed > player.Speed)
                 {
-                    MonsterAttackScene();
-                    PlayerAttackScene();
+                    MonsterAttackScene(playerStatus, monsterStatus);
+                    PlayerAttackScene( playerStatus,  monsterStatus);
                 }
                 else
                 {
@@ -76,7 +70,7 @@
         }
 
         // 플레이어 턴일때 실행할 메소드
-        private void PlayerAttackScene()
+        private void PlayerAttackScene(PlayerStatus playerStatus, MonsterStatus monsterStatus)
         {
             Console.WriteLine();
             Console.WriteLine("플레이어의 턴입니다.");
@@ -85,45 +79,106 @@
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력히세요.");
             Console.Write(">>");
-
-            int userSelect = Date.userSelect();
-            switch (userSelect)
+            while (true)
             {
-                case 1:
-                    //공격 함수
-                    break;
-                case 2:
-                    //스킬 함수
-                    break;
-                case 3:
-                    //아이템 사용 함수
-                    break;
-                case 4:
-                    //내 상태보기 함수
-                    return;
-                default:
-                    Console.WriteLine("번호를 다시 입력해주세요");
-                    break;
+                int userSelect = Date.userSelect();
+                switch (userSelect)
+                {
+                    case 1:
+                        
+                        break;
+                    case 2:
+                        //스킬 목록 보여주고 그 안에서 또 선택 => SkillNum
+                        break;
+                    case 3:
+                        //아이템 사용 함수
+                        break;
+                    case 4:
+                        //내 상태보기 함수
+                        return;
+                    default:
+                        Console.WriteLine("번호를 다시 입력해주세요");
+                        break;
+                }
+                Thread.Sleep(1000);
             }
-            Thread.Sleep(1000);
+
         }
 
-        // 몬스터 턴일때 실행할 메소드
-        private void MonsterAttackScene()
+        static void BasicAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus)
+        {
+
+            if (/*공격자가 몬스터이면*/)
+            {
+                int damage = monsterStatus.AD - playerStatus.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
+                playerStatus.HP -= damage;
+                if (damage >= playerStatus.HP)
+                {
+                    playerStatus.HP = 0;
+                    playerStatus.IsDead = true;
+                }
+
+            }
+            else if (/*공격자가 플레이어면*/)
+            {
+                int damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
+                monsterStatus.HP -= damage;
+                if (damage >= monsterStatus.HP)
+                {
+                    monsterStatus.HP = 0;
+                    playerStatus.IsDead = true;
+                }
+            }
+        }
+        public void SkillAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus/*Skills skills*/)
+        {
+            string skillName = Console.ReadLine();
+            if (skillName == /*스킬배열이름*/[skillName])
+            {
+                if (/*skill.Mp <= player.Mp*/)
+                {
+
+                    if (/*공격자가 몬스터이면 */)
+                    {
+                        /*damage == monster.AD - player.def;*/ //데미지는 몬스터 공격력 - 플레이어 방어력
+                                                               //player.Hp -= damage;
+                        if (/*damage >= player.Hp*/)
+                        {
+                            //player.Hp = 0;
+                            //IsDead == true;
+                        }
+
+                    }
+                    else if (/*공격자가 플레이어면*/)
+                    {
+                        /*damage == player.AD - monster.def;*/ //데미지는 플레이어 공격력 - 몬스터의 방어력
+                                                               //monster.Hp -= damage;
+                                                               //player.Mp -= skill.mp;                        
+                        if (/*damage >= monster.Hp*/)
+                        {
+                            //monster.Hp = 0;
+                            //IsDead == true;
+                        }
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("MP가 부족합니다");
+                }
+            }
+        }
+        private void MonsterAttackScene(PlayerStatus playerStatus, MonsterStatus monsterStatus)
         {
             Console.WriteLine();
             Console.WriteLine("몬스터의 턴입니다.");
             Console.WriteLine();
-            // 몬스터의 공격 함수 입력
+            BasicAttack(playerStatus, monsterStatus);
             Thread.Sleep(1000);
         }
-        
-
         // 배틀이 종료된 후에 실행할 메소드
         private void EndBattleScene(ICharacter character) // 플레이어가 승리하면 리워드(보상)을 랜덤으로 주기.
         {
-            
-
             if (character is Player)
             {
                 Console.WriteLine($"{character}이(가) 승리하였습니다!!");
