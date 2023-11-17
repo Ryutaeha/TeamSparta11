@@ -1,28 +1,28 @@
-﻿namespace TeamSparta11
+﻿using System.Numerics;
+using System.Threading;
+using Teamproject;
+
+namespace TeamSparta11
 {
     public class Battle
     {
-        public void BeginBattleScene()
+        public void BeginBattleScene(PlayerStatus playerStatus, MonsterStatus monsterStatus)
         {
             Console.WriteLine("Battle!!");
             Console.WriteLine();
 
 
 
-            //Console.WriteLine($"LV.{monsterStatus.level}\t{monsterStatus.name}\tHP{monsterStatus,hp}");
-            Console.WriteLine("LV. 2  미니언  HP 15");
+            Console.WriteLine($"LV.{monsterStatus.Level}\t{monsterStatus.Name}\tHP{monsterStatus.HP}");
 
             Console.WriteLine();
             Console.WriteLine("[내정보]");
 
-            //Console.WriteLine($"LV.{playerStatus.level}\t{playerStatus.name}\t{playerStatus.name}");
-            Console.WriteLine("LV.1  Chad  (전사)");
+            Console.WriteLine($"LV.{playerStatus.Level}\t{playerStatus.Name}");
 
-            //Console.WriteLine($"HP {playerStatus.hp}/{playerStatus.maxHp}");
-            Console.WriteLine("HP 100/100");
+            Console.WriteLine($"HP {playerStatus.HP}/{playerStatus.MaxHP}");
 
-            //Console.WriteLine($"MP {playerStatus.mp}/{playerStatus.maxMp}");
-            Console.WriteLine("MP 30/30");
+            Console.WriteLine($"MP {playerStatus.MP}/{playerStatus.MaxMP}");
 
             Console.WriteLine();
             Console.WriteLine("1, 공격\t2. 스킬\n3.아이템 사용\t4. 내 상태 보기");
@@ -35,7 +35,7 @@
                 switch (userSelect)
                 {
                     case 1:
-                        BasicAttack();
+                        BasicAttack(playerStatus, monsterStatus);
                         break;
                     case 2:
                         //스킬 목록 보여주고 그 안에서 또 선택 => SkillNum
@@ -54,36 +54,33 @@
 
         }
 
-        public void BasicAttack(/*Player player, Monster monster*/)
+        static void BasicAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus)
         {
-            if (/*player.Hp != 0 && monster.Hp != 0*/)
-            {
-                if (/*공격자가 몬스터이면*/)
-                {
-                    /*damage == monster.AD - player.def;*/ //데미지는 몬스터 공격력 - 플레이어 방어력
-                    //player.Hp -= damage;
-                    if (/*damage >= player.Hp*/)
-                    {
-                        //player.Hp = 0;
-                        //IsDead == true;
-                    }
 
-                }
-                else if (/*공격자가 플레이어면*/)
+            if (/*공격자가 몬스터이면*/)
+            {
+                int damage = monsterStatus.AD - playerStatus.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
+                playerStatus.HP -= damage;
+                if (damage >= playerStatus.HP)
                 {
-                    /*damage == player.AD - monster.def;*/ //데미지는 플레이어 공격력 - 몬스터의 방어력
-                                                           //monster.Hp -= damage;
-                    if (/*damage >= monster.Hp*/)
-                    {
-                        //monster.Hp = 0;
-                        //IsDead == true;
-                    }
+                    playerStatus.HP = 0;
+                    playerStatus.IsDead = true;
+                }
+
+            }
+            else if (/*공격자가 플레이어면*/)
+            {
+                int damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
+                monsterStatus.HP -= damage;
+                if (damage >= monsterStatus.HP)
+                {
+                    monsterStatus.HP = 0;
+                    playerStatus.IsDead = true;
                 }
             }
         }
-        public void SkillAttack(/*Player player, Monster monster, Skills skills*/)
+        public void SkillAttack(PlayerStatus player, MonsterStatus monster/*Skills skills*/)
         {
-
             string skillName = Console.ReadLine();
             if (skillName == /*스킬배열이름*/[skillName])
             {
