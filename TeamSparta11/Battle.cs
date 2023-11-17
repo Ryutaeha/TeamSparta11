@@ -53,5 +53,69 @@
             }
 
         }
+
+        public void BasicAttack(/*Player player, Monster monster*/)
+        {
+            if(/*player.Hp != 0 && monster.Hp != 0*/)
+            {
+                if (/*공격자가 몬스터이면*/)
+                {
+                    /*damage == monster.AD - player.def;*/ //데미지는 몬스터 공격력 - 플레이어 방어력
+                    //player.Hp -= damage;
+                    if (/*damage >= player.Hp*/)
+                    {
+                        //player.Hp = 0;
+                        //IsDead == true;
+                    }
+
+                }
+                else if (/*공격자가 플레이어면*/)
+                {
+                    /*damage == player.AD - monster.def;*/ //데미지는 플레이어 공격력 - 몬스터의 방어력
+                                                           //monster.Hp -= damage;
+                    if(/*damage >= monster.Hp*/)
+                    {
+                        //monster.Hp = 0;
+                        //IsDead == true;
+                    }
+                }
+            }
+        }
+        public void SkillAttack(/*Player player, Monster monster*/)
+        {
+            if (/*skill.Mp <= player.Mp*/)
+            {
+                if (/*player.Hp != 0 && monster.Hp != 0*/)
+                {
+                    if (/*공격자가 몬스터이면 */)
+                    {
+                        /*damage == monster.AD - player.def;*/ //데미지는 몬스터 공격력 - 플레이어 방어력
+                                                               //player.Hp -= damage;
+                        if (/*damage >= player.Hp*/)
+                        {
+                            //player.Hp = 0;
+                            //IsDead == true;
+                        }
+
+                    }
+                    else if (/*공격자가 플레이어면*/)
+                    {
+                        /*damage == player.AD - monster.def;*/ //데미지는 플레이어 공격력 - 몬스터의 방어력
+                                                               //monster.Hp -= damage;
+                                                               //player.Mp -= skill.mp;                        
+                        if (/*damage >= monster.Hp*/)
+                        {
+                            //monster.Hp = 0;
+                            //IsDead == true;
+                        }
+                    }
+                }
+            }
+            else 
+            {
+                Console.WriteLine("MP가 부족합니다");
+            }
+           
+        }
     }
 }
