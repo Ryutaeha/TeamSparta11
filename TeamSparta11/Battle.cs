@@ -130,37 +130,37 @@ namespace TeamSparta11
                 }
             }
         }
-        public void SkillAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus/*Skills skills*/)
+        public void SkillAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus, Skills skills)
         {
             string skillName = Console.ReadLine();
+            int damage;
             if (skillName == /*스킬배열이름*/[skillName])
             {
-                if (/*skill.Mp <= player.Mp*/)
+                if (/*skills.MP <= playerStatus.MP*/)
                 {
 
                     if (/*공격자가 몬스터이면 */)
                     {
-                        /*damage == monster.AD - player.def;*/ //데미지는 몬스터 공격력 - 플레이어 방어력
-                                                               //player.Hp -= damage;
-                        if (/*damage >= player.Hp*/)
+                        damage = monsterStatus.AD - playerStatus.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
+                        playerStatus.HP -= damage;
+                        if (damage >= playerStatus.HP)
                         {
-                            //player.Hp = 0;
-                            //IsDead == true;
+                            playerStatus.HP = 0;
+                            playerStatus.IsDead = true;
                         }
 
                     }
                     else if (/*공격자가 플레이어면*/)
                     {
-                        /*damage == player.AD - monster.def;*/ //데미지는 플레이어 공격력 - 몬스터의 방어력
-                                                               //monster.Hp -= damage;
-                                                               //player.Mp -= skill.mp;                        
-                        if (/*damage >= monster.Hp*/)
+                        damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
+                        monsterStatus.HP -= damage;
+                        playerStatus.MP -= skills.mp;                        
+                        if (damage >= monsterStatus.HP)
                         {
-                            //monster.Hp = 0;
-                            //IsDead == true;
+                            monsterStatus.HP = 0;
+                            monsterStatus.IsDead = true;
                         }
                     }
-
                 }
                 else
                 {
