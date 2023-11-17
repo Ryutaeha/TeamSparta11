@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace TeamSparta11
 {
-    public abstract class Item
+    internal abstract class Item
     {
+        int ItemIndex { get; }
         string Name { get; }
+        string Explain { get; }
         int ItemType { get; }
         int ItemPrice { get; }
 
         public abstract void ItemAdd();
     }
 
-    public class Equipment : Item, IItem
+    internal class Equipment : Item, IItem
     {
         int EquipmentType { get; }
         bool IsEquip { get; set; }
@@ -35,19 +37,23 @@ namespace TeamSparta11
         }
     }
 
-    public class Supplies : Item, IItem
+    internal class Supplies : Item, IItem
     {
         int Amount { get; set; }
         int MaxAmount;
+
+        int EffectStatus;
+        int Modifier;
+        int Value;
+
 
         public override void ItemAdd()
         {
 
         }
-
         public void ItemUse()
         {
-            
+
         }
 
     }
