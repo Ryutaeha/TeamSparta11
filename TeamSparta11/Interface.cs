@@ -16,7 +16,8 @@ using System.Threading.Tasks;
         int AD {  get; }
         int DF {  get; }
         int EXP {  get; }
-    }
+        bool IsDead {  get; }
+}
 
     internal interface ISkill
     {
