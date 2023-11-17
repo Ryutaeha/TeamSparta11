@@ -28,5 +28,20 @@ using System.Threading.Tasks;
     
     internal interface IItem
     {
-        
+        string Name { get; }
+        int ItemType { get; }
+        int ItemPrice { get; }
+
+        public void ItemUse();
+    }
+
+    internal interface IEquipmentItem
+    {
+        int EquipmentType { get; }
+        int MaxHP { get; }
+        int Speed { get; }
+        int AD { get; }
+        int DF { get; }
+
+        public void ItemUse();
     }
