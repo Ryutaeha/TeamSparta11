@@ -64,14 +64,14 @@ namespace TeamSparta11
                     case 0:
                         return;
                     case 1:
-                        if (newGame(Json.JsonLoad(Program.saveSlot), Program.saveSlot)) return;
+                        if (NewGame(Json.JsonLoad(Program.saveSlot), Program.saveSlot)) return;
                         else break;
 
                     case 2:
-                        if (newGame(Json.JsonLoad(Program.saveSlot), Program.saveSlot)) return;
+                        if (NewGame(Json.JsonLoad(Program.saveSlot), Program.saveSlot)) return;
                         else break;
                     case 3:
-                        if (newGame(Json.JsonLoad(Program.saveSlot), Program.saveSlot)) return;
+                        if (NewGame(Json.JsonLoad(Program.saveSlot), Program.saveSlot)) return;
                         else break;
                     default:
                         Console.WriteLine("\n번호를 다시 입력해주세요\n");
@@ -80,7 +80,7 @@ namespace TeamSparta11
             }
         }
 
-        private bool newGame(SaveData saveData, int SaveSlot)
+        private bool NewGame(SaveData saveData, int SaveSlot)
         {
             if(saveData != null)
             {
