@@ -16,7 +16,7 @@ namespace Teamproject
         public bool IsDead => HP <= 0;
 
 
-        public int NextEXP = 3;
+        public int NextEXP = 5;
         public string Job { get; }
         public int MaxMP { get; set; }
         public int MP { get; set; }
@@ -54,12 +54,13 @@ namespace Teamproject
             }
             return up;
         }
+        public void BeDamaged(int damage)
+        {
+            if (IsDead) { Console.WriteLine("사망씬 구현"); }
+            else { Console.WriteLine($"{Name}의 남은 체력 : {HP}"); }
+        }
 
-    
-        
-    
 
-        
         public PlayerStatus(string name, string job, int level, int maxhp, int hp, int maxmp, int mp,int ad, int df, int speed, int gold, int exp)
         {
             Name = name;
