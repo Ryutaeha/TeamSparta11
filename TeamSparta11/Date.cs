@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Teamproject;
 
 // 몬스터 정보나 기타 등등의 일반적인 데이터를 담는 클래스
 internal class Date
@@ -67,10 +68,43 @@ internal class Date
     {
         Console.WriteLine("\n----------------------------------------------------------------\n");
     }
+
+    //플레이어 생성시 해당 스킬중 랜덤 2가지 획득
+    internal static Dictionary<int, string[]> warriorSkill = new Dictionary<int, string[]>
+    {
+        { 0 , new string[] {"전사강타1", "10", "5", "강력한 일격"} },
+        { 1 , new string[] {"전사강타2", "10", "5", "강력한 일격"} },
+        { 2 , new string[] {"전사강타3", "10", "5", "강력한 일격"} },
+        { 3 , new string[] {"전사강타4", "10", "5", "강력한 일격"} }
+    };
+    internal static Dictionary<int, string[]> banditSkill = new Dictionary<int, string[]>
+    {
+        { 0 , new string[] {"도적강타1", "10", "5", "강력한 일격"} },
+        { 1 , new string[] {"도적강타2", "10", "5", "강력한 일격"} },
+        { 2 , new string[] {"도적강타3", "10", "5", "강력한 일격"} },
+        { 3 , new string[] {"도적강타4", "10", "5", "강력한 일격"} }
+    };
+    internal static Dictionary<int, string[]> wizardSkill = new Dictionary<int, string[]>
+    {
+        { 0 , new string[] {"마법사강타1", "10", "5", "강력한 일격"} },
+        { 1 , new string[] {"마법사강타2", "10", "5", "강력한 일격"} },
+        { 2 , new string[] {"마법사강타3", "10", "5", "강력한 일격"} },
+        { 3 , new string[] {"마법사강타4", "10", "5", "강력한 일격"} }
+    };
 }
 
 internal class SaveData
 {
+    public PlayerStatus Player { get; set; }
+    public List<Skill> SkillList { get; set; }
+}
 
-    public Test.Player Player { get; set; }
+internal class PlayerInfo
+{
+    //가지고 있는 스킬 목록
+    public static List<Skill> SkillList = new List<Skill>();
+    //새로 만들거나 로드해올 때 끌어다 쓸 객체
+    public static PlayerStatus player = null;
+    //저장 슬롯
+    public static int saveSlot;
 }
