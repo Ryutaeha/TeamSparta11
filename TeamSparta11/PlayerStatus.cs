@@ -27,7 +27,7 @@ namespace Teamproject
             int up = 0;
             while (EXP >= NextEXP)
             {
-                NextEXP += (++Level + 4);
+                NextEXP += (++Level * 1);
                 MaxHP += Job == "전사" ? 10 : 5;
                 HP += 20;
                 if(HP > MaxHP)
@@ -56,6 +56,7 @@ namespace Teamproject
         }
         public void BeDamaged(int damage)
         {
+            
             if (IsDead) { Console.WriteLine("사망씬 구현"); }
             else { Console.WriteLine($"{Name}의 남은 체력 : {HP}"); }
         }
