@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TeamSparta11;
 
-
-    internal interface ICharacter
+internal interface ICharacter
     {
         string Name { get; }
         int MaxHP {  get; }
@@ -36,6 +36,7 @@ using System.Threading.Tasks;
     
     internal interface IItem
     {
-        
-    }
+        public void ItemUse();
 
+        public Item ItemAdd(int Index);
+    }
