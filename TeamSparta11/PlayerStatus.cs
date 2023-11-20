@@ -9,7 +9,7 @@ namespace Teamproject
         public int HP { get; set; }
         public int Speed { get; set; }
         public int Gold { get; set; }
-        public int Level { get; }
+        public int Level { get; set; }
         public int AD { get; set; }
         public int DF { get; set; }
         public int EXP { get; set; }
@@ -20,6 +20,40 @@ namespace Teamproject
         public string Job { get; }
         public int MaxMP { get; set; }
         public int MP { get; set; }
+
+
+        public int LevelUp() 
+        {
+            int up = 0;
+            while (EXP >= NextEXP)
+            {
+                NextEXP += (++Level + 4);
+                MaxHP += Job == "전사" ? 10 : 5;
+                HP += 20;
+                if(HP > MaxHP)
+                {
+                    HP = MaxHP;
+                }
+
+                MaxMP += Job == "마법사" ? 10 : 5;
+                MP += 10;
+                if(MP > MaxMP)
+                {
+                    MP = MaxMP;
+                }
+
+                AD += Job == "도적" ? 2 : 1;
+                DF += Job == "전사" ? 2 : 1;
+
+                if(Level / 10 == 0)
+                {
+                    ++Speed;
+                }
+
+                ++up;
+            }
+            return up;
+        }
 
     
         
