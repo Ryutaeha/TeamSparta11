@@ -13,7 +13,6 @@ namespace TeamSparta11
         // 첫화면 로딩
         internal void Game()
         {
-
             while (true)
             {
                 Date.Line();
@@ -149,18 +148,24 @@ namespace TeamSparta11
                 jobSkill = Date.wizardSkill;
                 job = "마법사";
             }
-            int skillNumber = 0;
-            for(int i = 0; i < 2; i++)
-            { 
-                int skillNumberCheck = new Random().Next(0,4);
-                
-                if(i == 0)  PlayerInfo.SkillList.Add(new Skill(jobSkill[skillNumberCheck][0], int.Parse(jobSkill[skillNumberCheck][1]), int.Parse(jobSkill[skillNumberCheck][2]), jobSkill[skillNumberCheck][3])) ;
-                if(i == 1) 
+
+            // Random 클래스를 사용하여 무작위로 2개의 인덱스 선택
+            Random random = new Random();
+            List<int> selectedNumbers = new List<int>();
+
+            while (selectedNumbers.Count < 2)
+            {
+                int randomIndex = random.Next(jobSkill.Count);
+                // 이미 선택한 인덱스인지 확인
+                if (!selectedNumbers.Contains(randomIndex))
                 {
-                    if (new Random().Next(0, 5) == skillNumber) continue;
-                    PlayerInfo.SkillList.Add(new Skill(jobSkill[skillNumberCheck][0], int.Parse(jobSkill[skillNumberCheck][1]), int.Parse(jobSkill[skillNumberCheck][2]), jobSkill[skillNumberCheck][3]));
+                    string[] skillString = jobSkill[randomIndex];
+                    Skill skill = new Skill(skillString[0], int.Parse(skillString[1]), int.Parse(skillString[2]), skillString[3]);
+                    PlayerInfo.SkillList.Add(skill);
+
+                    //무한 반복을 막기위한 리스트 추가
+                    selectedNumbers.Add(randomIndex);
                 }
-                skillNumber = skillNumberCheck;
             }
             PlayerInfo.player = new PlayerStatus(name, job, 1, 100, 100, 100, 100, 10, 10, 10, 10, 0);
         }
@@ -289,10 +294,6 @@ namespace TeamSparta11
                 switch (userSelect)
                 {
                     case 1:
-                        Console.WriteLine(
-                            PlayerInfo.SkillList[0].Name+"  "+ PlayerInfo.SkillList[0].Ability + "  " + PlayerInfo.SkillList[0].Cost + "  " + PlayerInfo.SkillList[0].SkillInfo + "\n"
-                            + PlayerInfo.SkillList[1].Name + "  " + PlayerInfo.SkillList[1].Ability + "  " + PlayerInfo.SkillList[1].Cost + "  " + PlayerInfo.SkillList[1].SkillInfo + "\n"
-                            );
                         //상세정보 메서드 인스턴스화해서 호출
                         break;
                     case 2:

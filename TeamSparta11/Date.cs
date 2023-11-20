@@ -82,24 +82,24 @@ internal class Date
     //플레이어 생성시 해당 스킬중 랜덤 2가지 획득
     internal static Dictionary<int, string[]> warriorSkill = new Dictionary<int, string[]>
     {
-        { 0 , new string[] {"전사강타1", "10", "5", "강력한 일격"} },
-        { 1 , new string[] {"전사강타2", "10", "5", "강력한 일격"} },
-        { 2 , new string[] {"전사강타3", "10", "5", "강력한 일격"} },
-        { 3 , new string[] {"전사강타4", "10", "5", "강력한 일격"} }
+        { 0 , new string[] {"강타", "3", "5", "쌔게때리기"} },
+        { 1 , new string[] {"돌진", "6", "8", "전장으로~"} },
+        { 2 , new string[] {"마무리 일격", "10", "13", "아직 한발 남았다"} },
+        { 3 , new string[] {"두개골 부시기", "15", "17", "뚝!빼기"} }
     };
     internal static Dictionary<int, string[]> banditSkill = new Dictionary<int, string[]>
     {
-        { 0 , new string[] {"도적강타1", "10", "5", "강력한 일격"} },
-        { 1 , new string[] {"도적강타2", "10", "5", "강력한 일격"} },
-        { 2 , new string[] {"도적강타3", "10", "5", "강력한 일격"} },
-        { 3 , new string[] {"도적강타4", "10", "5", "강력한 일격"} }
+        { 0 , new string[] {"수리검", "3", "5", "빠른 수리검"} },
+        { 1 , new string[] {"암습", "6", "8", "보이지 않는 검이 가장 무서운 법" } },
+        { 2 , new string[] {"화둔", "10", "13", "아마테라스"} },
+        { 3 , new string[] {"나X환", "15", "17", "졸렬한 풀 냄새가 난다"} }
     };
     internal static Dictionary<int, string[]> wizardSkill = new Dictionary<int, string[]>
     {
-        { 0 , new string[] {"마법사강타1", "10", "5", "강력한 일격"} },
-        { 1 , new string[] {"마법사강타2", "10", "5", "강력한 일격"} },
-        { 2 , new string[] {"마법사강타3", "10", "5", "강력한 일격"} },
-        { 3 , new string[] {"마법사강타4", "10", "5", "강력한 일격"} }
+        { 0 , new string[] {"지팡이 던지기(물리)", "3", "5", "마법사(물리)"} },
+        { 1 , new string[] {"화염구", "6", "8", "단단묵직"} },
+        { 2 , new string[] {"물벼락", "10", "13", "X북이 물대포!"} },
+        { 3 , new string[] { "블랙홀", "15", "17", "히어로스 오브 더 X톰" } }
     };
 }
 
@@ -117,4 +117,5 @@ internal class PlayerInfo
     public static PlayerStatus player = null;
     //저장 슬롯
     public static int saveSlot;
+
 }

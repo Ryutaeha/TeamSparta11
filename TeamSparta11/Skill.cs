@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Teamproject;
+using static System.Net.Mime.MediaTypeNames;
 
 internal class Skill : ISkill
 {
@@ -27,24 +28,21 @@ internal class Skill : ISkill
         Cost = cost;
         SkillInfo = skillInfo;
     }
-    //플레이어에게 사용 힐만 구현
-    public void Use(PlayerStatus player)
-    {
-        player.MP -= Cost;
-        player.HP += AbilityPower;
-        if(player.HP > player.MaxHP) player.HP = player.MaxHP;
-    }
 
     //몬스터 공격
     public void Use(MonsterStatus monster)
     {
         PlayerInfo.player.MP -= Cost;
-        monster.HP -= AbilityPower;
+        int damage = AbilityPower + PlayerInfo.player.AD - monster.DF;
+        monster.HP -= damage;
+        Console.WriteLine($"{monster.Name}에게 {Name}(으)로 {damage}의 피해를 입혔습니다.");
     }
     public void Use(BossMonsterStatus bossMonster)
     {
         PlayerInfo.player.MP -= Cost;
-        bossMonster.HP -= AbilityPower;
+        int damage = AbilityPower + PlayerInfo.player.AD - bossMonster.DF;
+        bossMonster.HP -= damage;
+        Console.WriteLine($"{bossMonster.Name}에게 {Name}(으)로 {damage}의 피해를 입혔습니다.");
     }
 }
 
