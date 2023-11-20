@@ -14,7 +14,8 @@ internal class Json
     {
         SaveData saveData = new SaveData
         {
-            Player = Program.player
+            Player = PlayerInfo.player,
+            SkillList = PlayerInfo.SkillList
         };
         string saveDatas = JsonConvert.SerializeObject(saveData, Formatting.Indented);
         // 키 생성 어따보관하지? DB 연동하기엔 C#은 어캐하는지 몰라유
