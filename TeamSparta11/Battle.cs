@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using System.Threading;
+using System.Xml.Linq;
 using Teamproject;
 
 
@@ -106,8 +107,17 @@ namespace TeamSparta11
         }
         static void BasicAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus)
         {
-
-            if (attacker == "monster")
+            if (attacker == "player")
+            {
+                int damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
+                monsterStatus.HP -= damage;
+                if (damage >= monsterStatus.HP)
+                {
+                    monsterStatus.HP = 0;
+                    Console.WriteLine($"{monsterStatus.Name}이 쓰러졌습니다");
+                }
+            }
+            else
             {
                 int damage = monsterStatus.AD - playerStatus.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
                 playerStatus.HP -= damage;
@@ -119,22 +129,13 @@ namespace TeamSparta11
                 }
 
             }
-            else if (attacker == "player")
-            {
-                int damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
-                monsterStatus.HP -= damage;
-                if (damage >= monsterStatus.HP)
-                {
-                    monsterStatus.HP = 0;
-                    Console.WriteLine($"{monsterStatus.Name}이 쓰러졌습니다");
-                }
-            }
+             
         }
         public void SkillAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus, Skill skill, Date data)
         {
             int skillNum = int.Parse(Console.ReadLine());
             int damage;
-            if (skillNum == Date.SkillList[Name])
+            if (skillNum == PlayerInfo.SkillList[skillNum])
             {
                 if (skill.Cost <= playerStatus.MP)
                 {
