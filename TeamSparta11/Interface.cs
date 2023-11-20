@@ -31,8 +31,6 @@ using System.Threading.Tasks;
         int Cost {  get; }
         //스킬 설명
         string SkillInfo { get; }
-        //아군버프인지 공격스킬인지
-        bool AttackSkill { get; }
         
 }
     

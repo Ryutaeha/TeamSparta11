@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Teamproject;
 
@@ -16,23 +18,33 @@ internal class Skill : ISkill
 
     public string SkillInfo { get; }
 
-    public bool AttackSkill { get; }
 
 
-    public Skill(string name, int ability, int cost, string skillInfo, bool attackSkill)
+    public Skill(string name, int ability, int cost, string skillInfo)
     {
         Name = name;
         Ability = ability;
         Cost = cost;
         SkillInfo = skillInfo;
-        AttackSkill = attackSkill;
+    }
+    //플레이어에게 사용 힐만 구현
+    public void Use(PlayerStatus player)
+    {
+        player.MP -= Cost;
+        player.HP += AbilityPower;
+        if(player.HP > player.MaxHP) player.HP = player.MaxHP;
     }
 
-    public void Use(PlayerStatus player) { }
-    public void Use(MonsterStatus monster) { }
-    public void Use(BossMonsterStatus bossMonster) { }
-    
-
-
+    //몬스터 공격
+    public void Use(MonsterStatus monster)
+    {
+        PlayerInfo.player.MP -= Cost;
+        monster.HP -= AbilityPower;
+    }
+    public void Use(BossMonsterStatus bossMonster)
+    {
+        PlayerInfo.player.MP -= Cost;
+        bossMonster.HP -= AbilityPower;
+    }
 }
 

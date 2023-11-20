@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -84,7 +85,7 @@ namespace TeamSparta11
         }
 
         //새게임 생성
-        private bool NewGame(SaveData saveData, int SaveSlot)
+        private bool NewGame(SaveData saveData, int SaveSlot)                 
         {
             if(saveData != null)
             {
@@ -97,11 +98,7 @@ namespace TeamSparta11
                     switch (userSelect)
                     {
                         case 1:
-                            Console.Write("\n이름을 입력하세요 : ");
-                            string name = Console.ReadLine();
-                            Console.Write("\n직업을 입력하세요 : ");
-                            string Job = Console.ReadLine();
-                            PlayerInfo.player = new PlayerStatus(name, Job, 1, 100, 100, 100, 100, 10, 10, 10, 10, 0);
+                            CreatePlayer();
                             Json.JsonSave(SaveSlot);
                             //게임 메인메뉴 위치
                             GameLord();
@@ -118,16 +115,54 @@ namespace TeamSparta11
             }
             else
             {
-                Console.Write("\n이름을 입력하세요 : ");
-                string name = Console.ReadLine();
-                Console.Write("\n직업을 입력하세요 : ");
-                string Job = Console.ReadLine();
-                PlayerInfo.player = new PlayerStatus(name, Job, 1,100,100,100,100,10,10,10,10,0);
+                CreatePlayer();
                 Json.JsonSave(SaveSlot);
                 //게임 메인메뉴 위치
                 GameLord();
                 return true;
             }
+        }
+        void CreatePlayer()
+        {
+            Console.Write("\n이름을 입력하세요 : ");
+            string name = Console.ReadLine();
+            Console.WriteLine("\n직업을 선택하세요 : ");
+            Console.WriteLine("1. 전사");
+            Console.WriteLine("2. 도적");
+            Console.WriteLine("3. 마법사");
+            int userSelect = Date.userSelect();
+            Dictionary<int, string[]> jobSkill = null;
+            string job = null ;
+            
+            if (userSelect == 1)
+            {
+                jobSkill = Date.warriorSkill;
+                job = "전사";
+            }
+            if (userSelect == 2)
+            {
+                jobSkill = Date.banditSkill;
+                job = "도적";
+            }
+            if (userSelect == 3)
+            {
+                jobSkill = Date.wizardSkill;
+                job = "마법사";
+            }
+            int skillNumber = 0;
+            for(int i = 0; i < 2; i++)
+            { 
+                int skillNumberCheck = new Random().Next(0,4);
+                
+                if(i == 0)  PlayerInfo.SkillList.Add(new Skill(jobSkill[skillNumberCheck][0], int.Parse(jobSkill[skillNumberCheck][1]), int.Parse(jobSkill[skillNumberCheck][2]), jobSkill[skillNumberCheck][3])) ;
+                if(i == 1) 
+                {
+                    if (new Random().Next(0, 5) == skillNumber) continue;
+                    PlayerInfo.SkillList.Add(new Skill(jobSkill[skillNumberCheck][0], int.Parse(jobSkill[skillNumberCheck][1]), int.Parse(jobSkill[skillNumberCheck][2]), jobSkill[skillNumberCheck][3]));
+                }
+                skillNumber = skillNumberCheck;
+            }
+            PlayerInfo.player = new PlayerStatus(name, job, 1, 100, 100, 100, 100, 10, 10, 10, 10, 0);
         }
         // 이미 저장되어있는 슬롯 제어
         void LordCharacter()
@@ -188,6 +223,7 @@ namespace TeamSparta11
                         return false;
                     case 1:
                         PlayerInfo.player = Json.JsonLoad(saveSlot).Player;
+                        PlayerInfo.SkillList = Json.JsonLoad(saveSlot).SkillList;
                         GameLord();
                         return true;
                     case 2:
@@ -253,11 +289,15 @@ namespace TeamSparta11
                 switch (userSelect)
                 {
                     case 1:
+                        Console.WriteLine(
+                            PlayerInfo.SkillList[0].Name+"  "+ PlayerInfo.SkillList[0].Ability + "  " + PlayerInfo.SkillList[0].Cost + "  " + PlayerInfo.SkillList[0].SkillInfo + "\n"
+                            + PlayerInfo.SkillList[1].Name + "  " + PlayerInfo.SkillList[1].Ability + "  " + PlayerInfo.SkillList[1].Cost + "  " + PlayerInfo.SkillList[1].SkillInfo + "\n"
+                            );
                         //상세정보 메서드 인스턴스화해서 호출
                         break;
                     case 2:
                         //인벤토리 메서드 인스턴스화해서 호출
-                        break;
+                        break; 
                     case 3:
                         //상점 메서드 인스턴스화해서 호출
                         break;
@@ -266,6 +306,8 @@ namespace TeamSparta11
                         break;
                     case 0:
                         Json.JsonSave(PlayerInfo.saveSlot);
+                        PlayerInfo.SkillList.Clear();
+                        PlayerInfo.player = null;
                         //저장및 돌아가기 메서드 인스턴스화해서 호출
                         return;
                     default:

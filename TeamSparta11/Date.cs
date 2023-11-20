@@ -80,33 +80,33 @@ internal class Date
     }
 
     //플레이어 생성시 해당 스킬중 랜덤 2가지 획득
-    //마지막 0이면 공격스킬 1이면 비공격스킬 바꿔줘야함
     internal static Dictionary<int, string[]> warriorSkill = new Dictionary<int, string[]>
     {
-        { 0 , new string[] {"강타", "10", "5", "강력한 일격", "0"} },
-        { 1 , new string[] {"강타", "10", "5", "강력한 일격", "0"} },
-        { 2 , new string[] {"강타", "10", "5", "강력한 일격", "0"} },
-        { 3 , new string[] {"강타", "10", "5", "강력한 일격", "0"} }
+        { 0 , new string[] {"전사강타1", "10", "5", "강력한 일격"} },
+        { 1 , new string[] {"전사강타2", "10", "5", "강력한 일격"} },
+        { 2 , new string[] {"전사강타3", "10", "5", "강력한 일격"} },
+        { 3 , new string[] {"전사강타4", "10", "5", "강력한 일격"} }
     };
     internal static Dictionary<int, string[]> banditSkill = new Dictionary<int, string[]>
     {
-        { 0 , new string[] {"강타", "10", "5", "강력한 일격", "0"} },
-        { 1 , new string[] {"강타", "10", "5", "강력한 일격", "0"} },
-        { 2 , new string[] {"강타", "10", "5", "강력한 일격", "0"} },
-        { 3 , new string[] {"강타", "10", "5", "강력한 일격", "0"} }
+        { 0 , new string[] {"도적강타1", "10", "5", "강력한 일격"} },
+        { 1 , new string[] {"도적강타2", "10", "5", "강력한 일격"} },
+        { 2 , new string[] {"도적강타3", "10", "5", "강력한 일격"} },
+        { 3 , new string[] {"도적강타4", "10", "5", "강력한 일격"} }
     };
     internal static Dictionary<int, string[]> wizardSkill = new Dictionary<int, string[]>
     {
-        { 0 , new string[] {"강타", "10", "5", "강력한 일격", "0"} },
-        { 1 , new string[] {"강타", "10", "5", "강력한 일격", "0"} },
-        { 2 , new string[] {"강타", "10", "5", "강력한 일격", "0"} },
-        { 3 , new string[] {"강타", "10", "5", "강력한 일격", "0"} }
+        { 0 , new string[] {"마법사강타1", "10", "5", "강력한 일격"} },
+        { 1 , new string[] {"마법사강타2", "10", "5", "강력한 일격"} },
+        { 2 , new string[] {"마법사강타3", "10", "5", "강력한 일격"} },
+        { 3 , new string[] {"마법사강타4", "10", "5", "강력한 일격"} }
     };
 }
 
 internal class SaveData
 {
     public PlayerStatus Player { get; set; }
+    public List<Skill> SkillList { get; set; }
 }
 
 internal class PlayerInfo
