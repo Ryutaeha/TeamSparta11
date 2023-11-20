@@ -104,78 +104,79 @@ namespace TeamSparta11
             }
 
         }
-        //static void BasicAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus)
-        //{
-
-        //    if (/*공격자가 몬스터이면*/)
-        //    {
-        //        int damage = monsterStatus.AD - playerStatus.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
-        //        playerStatus.HP -= damage;
-        //        if (damage >= playerStatus.HP)
-        //        {
-        //            playerStatus.HP = 0;
-
-        //        }
-
-        //    }
-        //    else if (attacker == "player")
-        //    {
-        //        int damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
-        //        monsterStatus.HP -= damage;
-        //        if (damage >= monsterStatus.HP)
-        //        {
-        //            monsterStatus.HP = 0;
-
-        //        }
-        //    }
-        //}
-        //public void SkillAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus, Skill skill, Date data)
-        //{
-        //    string skillName = Console.ReadLine();
-        //    int damage;
-        //    if (skillName == Date.SkillList[name])
-        //    {
-        //        if (/*skills.MP <= playerStatus.MP*/)
-        //        {
-
-        //            if (/*공격자가 몬스터이면 */)
-        //            {
-        //                damage = monsterStatus.AD - playerStatus.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
-        //                playerStatus.HP -= damage;
-        //                if (damage >= playerStatus.HP)
-        //                {
-        //                    playerStatus.HP = 0;
-
-        //                }
-
-        //            }
-        //            else if (/*공격자가 플레이어면*/)
-        //            {
-        //                damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
-        //                monsterStatus.HP -= damage;
-        //                playerStatus.MP -= skill.Cost;                        
-        //                if (damage >= monsterStatus.HP)
-        //                {
-        //                    monsterStatus.HP = 0;
-        //                    WinScene();
-        //                }
-        //            }
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("MP가 부족합니다");
-        //        }
-        //    }
-        //}
-
-        private void MonsterAttackScene(PlayerStatus playerStatus, MonsterStatus monsterStatus)
+        static void BasicAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus)
         {
-            Console.WriteLine();
-            Console.WriteLine("몬스터의 턴입니다.");
-            Console.WriteLine();
-            BasicAttack(playerStatus, monsterStatus);
-            Thread.Sleep(1000);
+
+            if (attacker == "monster")
+            {
+                int damage = monsterStatus.AD - playerStatus.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
+                playerStatus.HP -= damage;
+                if (damage >= playerStatus.HP)
+                {
+                    playerStatus.HP = 0;
+                    Console.WriteLine($"{playerStatus.Name}이 쓰러졌습니다");
+
+                }
+
+            }
+            else if (attacker == "player")
+            {
+                int damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
+                monsterStatus.HP -= damage;
+                if (damage >= monsterStatus.HP)
+                {
+                    monsterStatus.HP = 0;
+                    Console.WriteLine($"{monsterStatus.Name}이 쓰러졌습니다");
+                }
+            }
         }
+        public void SkillAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus, Skill skill, Date data)
+        {
+            int skillNum = int.Parse(Console.ReadLine());
+            int damage;
+            if (skillNum == Date.SkillList[Name])
+            {
+                if (skill.Cost <= playerStatus.MP)
+                {
+
+                    if (attacker == "monster")
+                    {
+                        damage = monsterStatus.AD - playerStatus.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
+                        playerStatus.HP -= damage;
+                        if (damage >= playerStatus.HP)
+                        {
+                            playerStatus.HP = 0;
+
+                        }
+
+                    }
+                    else if (attacker == "player")
+                    {
+                        damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
+                        monsterStatus.HP -= damage;
+                        playerStatus.MP -= skill.Cost;
+                        if (damage >= monsterStatus.HP)
+                        {
+                            monsterStatus.HP = 0;
+                            //WinScene();
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("MP가 부족합니다");
+                }
+            }
+        }
+
+        //private void MonsterAttackScene(PlayerStatus playerStatus, MonsterStatus monsterStatus)
+        //{
+        //    Console.WriteLine();
+        //    Console.WriteLine("몬스터의 턴입니다.");
+        //    Console.WriteLine();
+        //    BasicAttack(playerStatus, monsterStatus);
+        //    Thread.Sleep(1000);
+        //}
         // 배틀이 종료된 후에 실행할 메소드
        
     }
