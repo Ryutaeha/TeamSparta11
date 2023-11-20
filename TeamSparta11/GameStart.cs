@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Teamproject;
 
 namespace TeamSparta11
 {
     internal class GameStart
     {
+        // 첫화면 로딩
         internal void Game()
         {
 
@@ -41,6 +43,7 @@ namespace TeamSparta11
             }
         }
 
+        // 새게임
         void CreateCharacter()
         {
             while (true)
@@ -53,25 +56,25 @@ namespace TeamSparta11
 
                     string resultString = Json.JsonLoad(i) == null
                     ? "저장된 데이터가 없습니다."
-                    : $"이름: {Json.JsonLoad(i).Player.name} 직업: {Json.JsonLoad(i).Player.jobClass}";
+                    : $"이름: {Json.JsonLoad(i).Player.Name} 직업: {Json.JsonLoad(i).Player.Job}";
                     Console.WriteLine(i+1 + ". " + resultString);
                 }
                 Console.WriteLine("0. 돌아가기\n");
                 int userSelect = Date.userSelect();
-                Program.saveSlot = userSelect-1;
+                PlayerInfo.saveSlot = userSelect-1;
                 switch (userSelect)
                 {
                     case 0:
                         return;
                     case 1:
-                        if (NewGame(Json.JsonLoad(Program.saveSlot), Program.saveSlot)) return;
+                        if (NewGame(Json.JsonLoad(PlayerInfo.saveSlot), PlayerInfo.saveSlot)) return;
                         else break;
 
                     case 2:
-                        if (NewGame(Json.JsonLoad(Program.saveSlot), Program.saveSlot)) return;
+                        if (NewGame(Json.JsonLoad(PlayerInfo.saveSlot), PlayerInfo.saveSlot)) return;
                         else break;
                     case 3:
-                        if (NewGame(Json.JsonLoad(Program.saveSlot), Program.saveSlot)) return;
+                        if (NewGame(Json.JsonLoad(PlayerInfo.saveSlot), PlayerInfo.saveSlot)) return;
                         else break;
                     default:
                         Console.WriteLine("\n번호를 다시 입력해주세요\n");
@@ -80,6 +83,7 @@ namespace TeamSparta11
             }
         }
 
+        //새게임 생성
         private bool NewGame(SaveData saveData, int SaveSlot)
         {
             if(saveData != null)
@@ -96,8 +100,8 @@ namespace TeamSparta11
                             Console.Write("\n이름을 입력하세요 : ");
                             string name = Console.ReadLine();
                             Console.Write("\n직업을 입력하세요 : ");
-                            string Jobclass = Console.ReadLine();
-                            Program.player = new Test.Player(name, Jobclass);
+                            string Job = Console.ReadLine();
+                            PlayerInfo.player = new PlayerStatus(name, Job, 1, 100, 100, 100, 100, 10, 10, 10, 10, 0);
                             Json.JsonSave(SaveSlot);
                             //게임 메인메뉴 위치
                             GameLord();
@@ -117,15 +121,15 @@ namespace TeamSparta11
                 Console.Write("\n이름을 입력하세요 : ");
                 string name = Console.ReadLine();
                 Console.Write("\n직업을 입력하세요 : ");
-                string Jobclass = Console.ReadLine();
-                Program.player = new Test.Player(name, Jobclass);
+                string Job = Console.ReadLine();
+                PlayerInfo.player = new PlayerStatus(name, Job, 1,100,100,100,100,10,10,10,10,0);
                 Json.JsonSave(SaveSlot);
                 //게임 메인메뉴 위치
                 GameLord();
                 return true;
             }
         }
-
+        // 이미 저장되어있는 슬롯 제어
         void LordCharacter()
         {
             while (true)
@@ -137,43 +141,43 @@ namespace TeamSparta11
                 {
                     string resultString = Json.JsonLoad(i) == null
                     ? "저장된 데이터가 없습니다."
-                    : $"이름: {Json.JsonLoad(i).Player.name} 직업: {Json.JsonLoad(i).Player.jobClass}";
+                    : $"이름: {Json.JsonLoad(i).Player.Name} 직업: {Json.JsonLoad(i).Player.Job}";
                     Console.WriteLine(i+1 + ". " + resultString);
                 }
                 Console.WriteLine("0. 돌아가기\n");
                 int userSelect = Date.userSelect();
-                Program.saveSlot = userSelect - 1;
+                PlayerInfo.saveSlot = userSelect - 1;
                 switch (userSelect)
                 {
                     case 0:
                         return;
                     case 1:
-                        if (Json.JsonLoad(Program.saveSlot) == null) Console.WriteLine("\n비어있는 슬롯입니다.\n");
-                        else if (ChoiceLordSlot(Program.saveSlot)) return;
+                        if (Json.JsonLoad(PlayerInfo.saveSlot) == null) Console.WriteLine("\n비어있는 슬롯입니다.\n");
+                        else if (ChoiceLordSlot(PlayerInfo.saveSlot)) return;
                         break;
                     case 2:
-                        if (Json.JsonLoad(Program.saveSlot) == null) Console.WriteLine("\n비어있는 슬롯입니다.\n");
-                        else if (ChoiceLordSlot(Program.saveSlot)) return;
+                        if (Json.JsonLoad(PlayerInfo.saveSlot) == null) Console.WriteLine("\n비어있는 슬롯입니다.\n");
+                        else if (ChoiceLordSlot(PlayerInfo.saveSlot)) return;
                         break;
                     case 3:
-                        if (Json.JsonLoad(Program.saveSlot) == null) Console.WriteLine("\n비어있는 슬롯입니다.\n");
-                        else if (ChoiceLordSlot(Program.saveSlot)) return;
+                        if (Json.JsonLoad(PlayerInfo.saveSlot) == null) Console.WriteLine("\n비어있는 슬롯입니다.\n");
+                        else if (ChoiceLordSlot(PlayerInfo.saveSlot)) return;
                         break;
 
                     default:
                         Console.WriteLine("\n번호를 다시 입력해주세요\n");
                         break;
                 }
-                Json.JsonLoad(Program.saveSlot);
+                Json.JsonLoad(PlayerInfo.saveSlot);
             }
         }
-
+        // 저장슬롯 선택시 
         bool ChoiceLordSlot(int saveSlot)
         {
             while (true)
             {
                 Date.Line();
-                Console.WriteLine($"{saveSlot+1}번 슬롯) 이름: {Json.JsonLoad(saveSlot).Player.name} 직업: {Json.JsonLoad(saveSlot).Player.jobClass}");
+                Console.WriteLine($"{saveSlot+1}번 슬롯) 이름: {Json.JsonLoad(saveSlot).Player.Name} 직업: {Json.JsonLoad(saveSlot).Player.Job}");
                 Console.WriteLine("1. 이어하기");
                 Console.WriteLine("2. 삭제하기");
                 Console.WriteLine("0. 돌아가기");
@@ -183,7 +187,7 @@ namespace TeamSparta11
                     case 0:
                         return false;
                     case 1:
-                        Program.player = Json.JsonLoad(saveSlot).Player;
+                        PlayerInfo.player = Json.JsonLoad(saveSlot).Player;
                         GameLord();
                         return true;
                     case 2:
@@ -197,13 +201,13 @@ namespace TeamSparta11
 
         }
 
-
+        //저장 슬롯 삭제
         void DeleteCheck()
         {
             while(true)
             {
                 Date.Line();
-                Console.WriteLine(Program.saveSlot+1+"번 슬롯을 정말로 삭제하시겠습니까?");
+                Console.WriteLine(PlayerInfo.saveSlot+1+"번 슬롯을 정말로 삭제하시겠습니까?");
                 Console.WriteLine("1. 예");
                 Console.WriteLine("2. 아니요");
                 int userSelect = Date.userSelect();
@@ -221,14 +225,17 @@ namespace TeamSparta11
             }
         }
 
+
+        //삭제시 나오는 메세지
         void Delete()
         {
-            string filePath = "..\\..\\..\\dates\\Save" + Program.saveSlot + ".json";
+            string filePath = "..\\..\\..\\dates\\Save" + PlayerInfo.saveSlot + ".json";
             File.Delete(filePath);
 
             Console.WriteLine("파일이 정삭적으로 삭제되었습니다.");
         }
 
+        //게임 시작시 나오는 화면
         private void GameLord()
         {
             while (true)
@@ -258,7 +265,7 @@ namespace TeamSparta11
                         //모험 메서드 인스턴스화해서 호출
                         break;
                     case 0:
-                        Json.JsonSave(Program.saveSlot);
+                        Json.JsonSave(PlayerInfo.saveSlot);
                         //저장및 돌아가기 메서드 인스턴스화해서 호출
                         return;
                     default:
