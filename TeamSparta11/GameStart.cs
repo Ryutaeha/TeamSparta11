@@ -1,25 +1,28 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Teamproject;
 
 namespace TeamSparta11
 {
     internal class GameStart
     {
+        // 첫화면 로딩
         internal void Game()
         {
-
             while (true)
             {
+                Date.Line();
                 Console.WriteLine("This is 스파르타 던전");
                 Console.WriteLine("원하시는 항목을 선택해주세요\n");
 
 
                 Console.WriteLine("1. 새게임");
-                Console.WriteLine("2. 이어하기");
-                Console.WriteLine("3. 끝내기\n");
+                Console.WriteLine("2. 저장된 게임");
+                Console.WriteLine("0. 끝내기\n");
 
                 
                 int userSelect = Date.userSelect();
@@ -31,46 +34,290 @@ namespace TeamSparta11
                     case 2:
                         LordCharacter();
                         break;
-                    case 3:
+                    case 0:
                         return;
                     default:
-                        Console.WriteLine("번호를 다시 입력해주세요");
+                        Console.WriteLine("\n번호를 다시 입력해주세요\n");
                         break;
                 }
             }
         }
 
-        private void CreateCharacter()
+        // 새게임
+        void CreateCharacter()
         {
-            Console.WriteLine("저장 슬롯을 선택하세요");
-
-            Console.WriteLine("1. ");
-            Console.WriteLine("2. ");
-            Console.WriteLine("3. ");
             while (true)
             {
+                Date.Line();
+                Console.WriteLine("\n새로 저장할 슬롯을 선택하세요\n");
+
+                for(int i = 0; i < 3; i++)
+                {
+
+                    string resultString = Json.JsonLoad(i) == null
+                    ? "저장된 데이터가 없습니다."
+                    : $"이름: {Json.JsonLoad(i).Player.Name} 직업: {Json.JsonLoad(i).Player.Job}";
+                    Console.WriteLine(i+1 + ". " + resultString);
+                }
+                Console.WriteLine("0. 돌아가기\n");
+                int userSelect = Date.userSelect();
+                PlayerInfo.saveSlot = userSelect-1;
+                switch (userSelect)
+                {
+                    case 0:
+                        return;
+                    case 1:
+                        if (NewGame(Json.JsonLoad(PlayerInfo.saveSlot), PlayerInfo.saveSlot)) return;
+                        else break;
+
+                    case 2:
+                        if (NewGame(Json.JsonLoad(PlayerInfo.saveSlot), PlayerInfo.saveSlot)) return;
+                        else break;
+                    case 3:
+                        if (NewGame(Json.JsonLoad(PlayerInfo.saveSlot), PlayerInfo.saveSlot)) return;
+                        else break;
+                    default:
+                        Console.WriteLine("\n번호를 다시 입력해주세요\n");
+                        break;
+                }
+            }
+        }
+
+        //새게임 생성
+        private bool NewGame(SaveData saveData, int SaveSlot)                 
+        {
+            if(saveData != null)
+            {
+                while(true)
+                {
+                    Console.WriteLine("저장 데이터를 덮어 쓰겠습니까?");
+                    Console.WriteLine("1. 예");
+                    Console.WriteLine("2. 아니요");
+                    int userSelect = Date.userSelect();
+                    switch (userSelect)
+                    {
+                        case 1:
+                            CreatePlayer();
+                            Json.JsonSave(SaveSlot);
+                            //게임 메인메뉴 위치
+                            GameLord();
+
+                            return true;
+                        case 2:
+                            return false;
+                        default:
+                            Console.WriteLine("\n번호를 다시 입력해주세요\n");
+                            break;
+                    }
+                }
+
+            }
+            else
+            {
+                CreatePlayer();
+                Json.JsonSave(SaveSlot);
+                //게임 메인메뉴 위치
+                GameLord();
+                return true;
+            }
+        }
+        void CreatePlayer()
+        {
+            Console.Write("\n이름을 입력하세요 : ");
+            string name = Console.ReadLine();
+            Console.WriteLine("\n직업을 선택하세요 : ");
+            Console.WriteLine("1. 전사");
+            Console.WriteLine("2. 도적");
+            Console.WriteLine("3. 마법사");
+            int userSelect = Date.userSelect();
+            Dictionary<int, string[]> jobSkill = null;
+            string job = null ;
+            
+            if (userSelect == 1)
+            {
+                jobSkill = Date.warriorSkill;
+                job = "전사";
+            }
+            if (userSelect == 2)
+            {
+                jobSkill = Date.banditSkill;
+                job = "도적";
+            }
+            if (userSelect == 3)
+            {
+                jobSkill = Date.wizardSkill;
+                job = "마법사";
+            }
+
+            // Random 클래스를 사용하여 무작위로 2개의 인덱스 선택
+            Random random = new Random();
+            List<int> selectedNumbers = new List<int>();
+
+            while (selectedNumbers.Count < 2)
+            {
+                int randomIndex = random.Next(jobSkill.Count);
+                // 이미 선택한 인덱스인지 확인
+                if (!selectedNumbers.Contains(randomIndex))
+                {
+                    string[] skillString = jobSkill[randomIndex];
+                    Skill skill = new Skill(skillString[0], int.Parse(skillString[1]), int.Parse(skillString[2]), skillString[3]);
+                    PlayerInfo.SkillList.Add(skill);
+
+                    //무한 반복을 막기위한 리스트 추가
+                    selectedNumbers.Add(randomIndex);
+                }
+            }
+            PlayerInfo.player = new PlayerStatus(name, job, 1, 100, 100, 100, 100, 10, 10, 10, 10, 0);
+        }
+        // 이미 저장되어있는 슬롯 제어
+        void LordCharacter()
+        {
+            while (true)
+            {
+                Date.Line();
+                Console.WriteLine("\n저장된 슬롯을 선택하세요\n");
+
+                for(int i = 0; i < 3; i++)
+                {
+                    string resultString = Json.JsonLoad(i) == null
+                    ? "저장된 데이터가 없습니다."
+                    : $"이름: {Json.JsonLoad(i).Player.Name} 직업: {Json.JsonLoad(i).Player.Job}";
+                    Console.WriteLine(i+1 + ". " + resultString);
+                }
+                Console.WriteLine("0. 돌아가기\n");
+                int userSelect = Date.userSelect();
+                PlayerInfo.saveSlot = userSelect - 1;
+                switch (userSelect)
+                {
+                    case 0:
+                        return;
+                    case 1:
+                        if (Json.JsonLoad(PlayerInfo.saveSlot) == null) Console.WriteLine("\n비어있는 슬롯입니다.\n");
+                        else if (ChoiceLordSlot(PlayerInfo.saveSlot)) return;
+                        break;
+                    case 2:
+                        if (Json.JsonLoad(PlayerInfo.saveSlot) == null) Console.WriteLine("\n비어있는 슬롯입니다.\n");
+                        else if (ChoiceLordSlot(PlayerInfo.saveSlot)) return;
+                        break;
+                    case 3:
+                        if (Json.JsonLoad(PlayerInfo.saveSlot) == null) Console.WriteLine("\n비어있는 슬롯입니다.\n");
+                        else if (ChoiceLordSlot(PlayerInfo.saveSlot)) return;
+                        break;
+
+                    default:
+                        Console.WriteLine("\n번호를 다시 입력해주세요\n");
+                        break;
+                }
+                Json.JsonLoad(PlayerInfo.saveSlot);
+            }
+        }
+        // 저장슬롯 선택시 
+        bool ChoiceLordSlot(int saveSlot)
+        {
+            while (true)
+            {
+                Date.Line();
+                Console.WriteLine($"{saveSlot+1}번 슬롯) 이름: {Json.JsonLoad(saveSlot).Player.Name} 직업: {Json.JsonLoad(saveSlot).Player.Job}");
+                Console.WriteLine("1. 이어하기");
+                Console.WriteLine("2. 삭제하기");
+                Console.WriteLine("0. 돌아가기");
+                int userSelect = Date.userSelect();
+                switch (userSelect)
+                {
+                    case 0:
+                        return false;
+                    case 1:
+                        PlayerInfo.player = Json.JsonLoad(saveSlot).Player;
+                        PlayerInfo.SkillList = Json.JsonLoad(saveSlot).SkillList;
+                        GameLord();
+                        return true;
+                    case 2:
+                        DeleteCheck();
+                        return false;
+                    default:
+                        Console.WriteLine("\n번호를 다시 입력해주세요\n");
+                        break;
+                }
+            }
+
+        }
+
+        //저장 슬롯 삭제
+        void DeleteCheck()
+        {
+            while(true)
+            {
+                Date.Line();
+                Console.WriteLine(PlayerInfo.saveSlot+1+"번 슬롯을 정말로 삭제하시겠습니까?");
+                Console.WriteLine("1. 예");
+                Console.WriteLine("2. 아니요");
                 int userSelect = Date.userSelect();
                 switch (userSelect)
                 {
                     case 1:
-
-                        break;
+                        Delete();
+                        return;
                     case 2:
-
-                        break;
-                    case 3:
                         return;
                     default:
-                        Console.WriteLine("번호를 다시 입력해주세요");
+                        Console.WriteLine("\n번호를 다시 입력해주세요\n");
                         break;
                 }
             }
         }
 
-        private void LordCharacter()
+
+        //삭제시 나오는 메세지
+        void Delete()
         {
-            throw new NotImplementedException();
+            string filePath = "..\\..\\..\\dates\\Save" + PlayerInfo.saveSlot + ".json";
+            File.Delete(filePath);
+
+            Console.WriteLine("파일이 정삭적으로 삭제되었습니다.");
         }
 
+        //게임 시작시 나오는 화면
+        private void GameLord()
+        {
+            while (true)
+            {
+                Date.Line();
+
+                Console.WriteLine("★마을★\n");
+
+                Console.WriteLine("1. 상세정보");
+                Console.WriteLine("2. 인벤토리");
+                Console.WriteLine("3. 상점");
+                Console.WriteLine("4. 모험");
+                Console.WriteLine("0. 끝내기");
+                int userSelect = Date.userSelect();
+                switch (userSelect)
+                {
+                    case 1:
+                        //상세정보 메서드 인스턴스화해서 호출
+                        break;
+                    case 2:
+                        //인벤토리 메서드 인스턴스화해서 호출
+                        break; 
+                    case 3:
+                        //상점 메서드 인스턴스화해서 호출
+                        break;
+                    case 4:
+                        //모험 메서드 인스턴스화해서 호출
+                        break;
+                    case 0:
+                        Json.JsonSave(PlayerInfo.saveSlot);
+                        PlayerInfo.SkillList.Clear();
+                        PlayerInfo.player = null;
+                        //저장및 돌아가기 메서드 인스턴스화해서 호출
+                        return;
+                    default:
+                        Console.WriteLine("\n번호를 다시 입력해주세요\n");
+                        break;
+                }
+            }
+        }
     }
+
+    
 }

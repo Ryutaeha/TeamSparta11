@@ -16,15 +16,23 @@ internal interface ICharacter
         int AD {  get; }
         int DF {  get; }
         int EXP {  get; }
-    }
+        bool IsDead {  get; }
+}
 
     internal interface ISkill
     {
+        //스킬 이름
         string Name { get; }
+        //툴팁 표기량
         int Ability {  get; }
+        //실제 회복or데미지
+        int AbilityPower { get; }
+        // 마나 소모량
         int Cost {  get; }
-        int SkillID { get; }
-    }
+        //스킬 설명
+        string SkillInfo { get; }
+        
+}
     
     internal interface IItem
     {
