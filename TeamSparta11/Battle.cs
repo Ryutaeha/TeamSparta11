@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using System.Threading;
 using Teamproject;
-using static Test;
+
 
 namespace TeamSparta11
 {
@@ -10,6 +10,7 @@ namespace TeamSparta11
         private ICharacter player;
         private ICharacter monster;
         private List<IItem> rewards;
+        static string attacker;
 
         public delegate void GameEvent(ICharacter character);
         public event GameEvent CharacterDie;
@@ -19,7 +20,6 @@ namespace TeamSparta11
             this.player =  player;
             this.monster = monster;
             this.rewards = rewards;
-            CharacterDie += EndBattleScene;
         }
         public void BeginBattleScene(PlayerStatus playerStatus, MonsterStatus monsterStatus)
         {
@@ -85,7 +85,7 @@ namespace TeamSparta11
                 switch (userSelect)
                 {
                     case 1:
-                        
+                        attacker = "player";
                         break;
                     case 2:
                         //스킬 목록 보여주고 그 안에서 또 선택 => SkillNum
@@ -104,66 +104,70 @@ namespace TeamSparta11
             }
 
         }
+        //static void BasicAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus)
+        //{
 
-        static void BasicAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus)
-        {
+        //    if (/*공격자가 몬스터이면*/)
+        //    {
+        //        int damage = monsterStatus.AD - playerStatus.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
+        //        playerStatus.HP -= damage;
+        //        if (damage >= playerStatus.HP)
+        //        {
+        //            playerStatus.HP = 0;
 
-            if (/*공격자가 몬스터이면*/)
-            {
-                int damage = monsterStatus.AD - playerStatus.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
-                playerStatus.HP -= damage;
-                if (damage >= playerStatus.HP)
-                {
-                    playerStatus.HP = 0;
-                }
+        //        }
 
-            }
-            else if (/*공격자가 플레이어면*/)
-            {
-                int damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
-                monsterStatus.HP -= damage;
-                if (damage >= monsterStatus.HP)
-                {
-                    monsterStatus.HP = 0;
-                }
-            }
-        }
-        public void SkillAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus/*, Skills skills*/)
-        {
-            string skillName = Console.ReadLine();
-            int damage;
-            if (skillName == /*스킬배열이름*/[skillName])
-            {
-                if (/*skills.MP <= playerStatus.MP*/)
-                {
+        //    }
+        //    else if (attacker == "player")
+        //    {
+        //        int damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
+        //        monsterStatus.HP -= damage;
+        //        if (damage >= monsterStatus.HP)
+        //        {
+        //            monsterStatus.HP = 0;
 
-                    if (/*공격자가 몬스터이면 */)
-                    {
-                        damage = monsterStatus.AD - playerStatus.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
-                        playerStatus.HP -= damage;
-                        if (damage >= playerStatus.HP)
-                        {
-                            playerStatus.HP = 0;
-                        }
+        //        }
+        //    }
+        //}
+        //public void SkillAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus, Skill skill, Date data)
+        //{
+        //    string skillName = Console.ReadLine();
+        //    int damage;
+        //    if (skillName == Date.SkillList[name])
+        //    {
+        //        if (/*skills.MP <= playerStatus.MP*/)
+        //        {
 
-                    }
-                    else if (/*공격자가 플레이어면*/)
-                    {
-                        damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
-                        monsterStatus.HP -= damage;
-                        playerStatus.MP -= skills.MP;                        
-                        if (damage >= monsterStatus.HP)
-                        {
-                            monsterStatus.HP = 0;
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("MP가 부족합니다");
-                }
-            }
-        }
+        //            if (/*공격자가 몬스터이면 */)
+        //            {
+        //                damage = monsterStatus.AD - playerStatus.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
+        //                playerStatus.HP -= damage;
+        //                if (damage >= playerStatus.HP)
+        //                {
+        //                    playerStatus.HP = 0;
+
+        //                }
+
+        //            }
+        //            else if (/*공격자가 플레이어면*/)
+        //            {
+        //                damage = playerStatus.AD - monsterStatus.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
+        //                monsterStatus.HP -= damage;
+        //                playerStatus.MP -= skill.Cost;                        
+        //                if (damage >= monsterStatus.HP)
+        //                {
+        //                    monsterStatus.HP = 0;
+        //                    WinScene();
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("MP가 부족합니다");
+        //        }
+        //    }
+        //}
+
         private void MonsterAttackScene(PlayerStatus playerStatus, MonsterStatus monsterStatus)
         {
             Console.WriteLine();
@@ -173,17 +177,6 @@ namespace TeamSparta11
             Thread.Sleep(1000);
         }
         // 배틀이 종료된 후에 실행할 메소드
-        private void EndBattleScene(ICharacter character) // 플레이어가 승리하면 리워드(보상)을 랜덤으로 주기.
-        {
-            if (character is Player)
-            {
-                Console.WriteLine($"{character}이(가) 승리하였습니다!!");
-                // 보상을 주는 내용
-            }
-            else
-            {
-                Console.WriteLine($"{character}이(가) 패배하였습니다..");
-            }
-        }
+       
     }
 }

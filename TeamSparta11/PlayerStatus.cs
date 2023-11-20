@@ -75,8 +75,6 @@ namespace Teamproject
             AD = ad;
             DF = df;
             EXP = exp;
-            
-
         }
     }
 }
