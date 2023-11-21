@@ -258,7 +258,7 @@ namespace TeamSparta11
 
 
         //몬스터 생성과 스폰 메소드
-        public void SpawnMonster(int stage)
+        public List<MonsterStatus> SpawnMonster(int stage)
         {
             List<MonsterStatus> monsters = new List<MonsterStatus>();
             Random random = new Random();
@@ -291,9 +291,30 @@ namespace TeamSparta11
                 }
                 
             }
-            
+
+            return monsters;
         }
 
+        public BossMonsterStatus SpawnBoss(int stage)
+        {
+            BossMonsterStatus boss = null;
+
+            if (stage == 5)
+            {
+                boss = GetGoblinBoss();
+            }
+            else if (stage == 10)
+            {
+                boss = GetGolemBoss();
+            }
+            else if (stage == 15)
+            {
+                boss = GetDragonBoss();
+            }
+
+            return boss;
+
+        }
 
         /// <summary>
         /// 몬스터 랜덤 리턴 메소드
