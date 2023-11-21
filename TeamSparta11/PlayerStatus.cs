@@ -78,6 +78,8 @@ namespace Teamproject
             DF = df;
             EXP = exp;
             Stage = stage;
+
+>>>>>>>>    
         }
     }
 }

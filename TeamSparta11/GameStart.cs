@@ -165,7 +165,9 @@ namespace TeamSparta11
                 }
                 choice = randomIndex;
             }
-            PlayerInfo.Player = new PlayerStatus(name, job[1], int.Parse(job[2]), int.Parse(job[3]), int.Parse(job[4]), int.Parse(job[5]), int.Parse(job[6]), int.Parse(job[7]), int.Parse(job[8]), int.Parse(job[9]), int.Parse(job[10]), int.Parse(job[11]), int.Parse(job[12]));
+
+            PlayerInfo.Player = new PlayerStatus(name, job[1], int.Parse(job[2]), int.Parse(job[3]), int.Parse(job[4]), int.Parse(job[5]), int.Parse(job[6]), int.Parse(job[7]), int.Parse(job[8]), int.Parse(job[9]), int.Parse(job[10]), int.Parse(job[11]),1);
+
         }
         // 이미 저장되어있는 슬롯 제어
         void LordCharacter()
