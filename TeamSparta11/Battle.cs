@@ -35,9 +35,11 @@ namespace TeamSparta11
 
 
 
-        public void BeginBattleScene(MonsterStatus monster)
+        public void BeginBattleScene(MonsterStatus monster, int stage)
         {
             Console.WriteLine("Battle!!");
+            Console.WriteLine();
+            Console.WriteLine($"플레이어 {PlayerInfo.Player.Name}은(는) 스테이지[{stage}]에 도착했습니다!");
             Console.WriteLine();
             Console.WriteLine("[몬스터 정보]");
 
@@ -73,9 +75,11 @@ namespace TeamSparta11
             EndBattleScene(monster);
         }
 
-        public void BeginBattleScene(BossMonsterStatus boss)
+        public void BeginBattleScene(BossMonsterStatus boss, int stage)
         {
             Console.WriteLine("Battle!!");
+            Console.WriteLine();
+            Console.WriteLine($"플레이어 {PlayerInfo.Player.Name}은(는) 스테이지[{stage}]에 도착했습니다!");
             Console.WriteLine();
             Console.WriteLine("[보스몬스터 정보]");
             Console.WriteLine($"LV.{boss.Level}\t{boss.Name}\tHP{boss.HP}");
@@ -111,9 +115,7 @@ namespace TeamSparta11
         // 플레이어 턴일때 실행할 메소드
         private void PlayerAttackScene(MonsterStatus monster)
         {
-
             PlayerTurnText();
-
         }
 
         private void PlayerAttackScene(BossMonsterStatus boss)
@@ -121,6 +123,14 @@ namespace TeamSparta11
             PlayerTurnText();
         }
 
+        private bool IsPlayerTurn(MonsterStatus monster)
+        {
+            return PlayerInfo.Player.Speed >= monster.Speed;
+        }
+        private bool IsPlayerTurn(BossMonsterStatus boss)
+        {
+            return PlayerInfo.Player.Speed >= boss.Speed;
+        }
 
 
 
