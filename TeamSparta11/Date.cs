@@ -53,9 +53,10 @@ internal class Date
         //addColumn(equipmentDataTable, "DF", typeof(int));
     }
 
-    
-    
     // 몬스터 정리
+    /// <summary>
+    /// 키값,{몬스터이름, 레벨, 최대체력 , 현재체력 , 공격력 , 방어력 , 속도 , 경험치 , 골드} 
+    /// </summary>
     public static Dictionary<int, string[]> goblin = new Dictionary<int, string[]>
     {
         { 0 , new string[] { "칼 고블린", "1", "10","10","5", "1" ,"1", "1", "10"} },
@@ -63,7 +64,9 @@ internal class Date
         { 2 , new string[] { "장로 고블린", "5", "50", "50", "5", "3", "1", "3", "20" } }
        
     };
-
+    /// <summary>
+    /// 키값,{몬스터이름, 레벨, 최대체력 , 현재체력 , 공격력 , 방어력 , 속도 , 경험치 , 골드} 
+    /// </summary>
     public static Dictionary<int, string[]> golem = new Dictionary<int, string[]>
     {
         { 0 , new string[] { "점토 골렘", "11", "60","60","10", "3" ,"1", "6", "30"} },
@@ -71,7 +74,9 @@ internal class Date
         { 2 , new string[] { "강철 골렘", "15", "100", "100", "15", "7", "1", "8", "40" } }
        
     };
-
+    /// <summary>
+    /// 키값,{몬스터이름, 레벨, 최대체력 , 현재체력 , 공격력 , 방어력 , 속도 , 경험치 , 골드} 
+    /// </summary>
     public static Dictionary<int, string[]> dragon = new Dictionary<int, string[]>
     {
         { 0 , new string[] { "레드 드래곤", "21", "100","100","15", "5" ,"2", "12", "50"} },
@@ -79,7 +84,9 @@ internal class Date
         { 2 , new string[] { "블루 드래곤", "25", "150", "150", "19", "7", "2", "14", "60" } }
         
     };
-
+    /// <summary>
+    /// 키값,{몬스터이름, 레벨, 최대체력 , 현재체력 ,최대마나 ,현재마나, 공격력 , 방어력 , 속도 , 경험치 , 골드, 드랍아이템} 
+    /// </summary>
     public static Dictionary<int, string[]> boss = new Dictionary<int, string[]>
     {
         { 0 , new string[] { "킹 고블린","10", "100", "100", "50", "50", "25", "10", "2", "10", "100", "?" } }, 
@@ -92,11 +99,14 @@ internal class Date
 
 
     //직업 정리
+    /// <summary>
+    /// 키값,{캐릭터이름, 직업, 레벨, 최대체력 , 현재체력 ,최대마나, 현재마나, 공격력 , 방어력 , 속도 , 경험치 , 골드} 
+    /// </summary>
     public static Dictionary<int, string[]> jobClass = new Dictionary<int, string[]>
     {
-        { 1 , new string[] {"", "전사", "1", "120","120", "50","50", "10", "2", "1", "100","0" } }, //전사 
-        { 2 , new string[] { "", "도적", "1", "100", "100", "50", "50", "12", "1", "1", "100", "0" } }, //도적
-        { 3 , new string[] { "", "마법사", "1", "100", "100", "70", "70", "8", "1", "1", "100", "0" } } //마법사
+        { 0 , new string[] {"", "전사", "1", "120","120", "50","50", "10", "2", "1", "0","100" } }, //전사 
+        { 1 , new string[] { "", "도적", "1", "100", "100", "50", "50", "12", "1", "1", "0", "100" } }, //도적
+        { 2 , new string[] { "", "마법사", "1", "100", "100", "70", "70", "8", "1", "1", "0", "100" } } //마법사
 
     };       
 
