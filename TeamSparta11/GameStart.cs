@@ -314,7 +314,6 @@ namespace TeamSparta11
                         ShopMainDisplay();
                         break;
                     case 4:
-                        //모험 메서드 인스턴스화해서 호출
                         break;
                     case 0:
                         SaveItems();
