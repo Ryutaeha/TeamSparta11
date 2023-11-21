@@ -18,7 +18,7 @@ internal class Json
 
             Player = PlayerInfo.Player,
             SkillList = PlayerInfo.SkillList,
-            //Inventory = PlayerInfo.Inventory
+            itemList = PlayerInfo.ItemList
 
         };
         string saveDates = JsonConvert.SerializeObject(saveDate, Formatting.Indented);
