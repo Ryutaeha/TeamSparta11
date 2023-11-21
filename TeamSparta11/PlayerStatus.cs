@@ -20,6 +20,7 @@ namespace Teamproject
         public string Job { get; }
         public int MaxMP { get; set; }
         public int MP { get; set; }
+        public int Stage { get; set; }
 
 
         public int LevelUp() 
@@ -62,7 +63,7 @@ namespace Teamproject
         }
 
 
-        public PlayerStatus(string name, string job, int level, int maxhp, int hp, int maxmp, int mp,int ad, int df, int speed, int gold, int exp)
+        public PlayerStatus(string name, string job, int level, int maxhp, int hp, int maxmp, int mp,int ad, int df, int speed, int exp, int gold, int stage)
         {
             Name = name;
             Job = job;
@@ -76,6 +77,7 @@ namespace Teamproject
             AD = ad;
             DF = df;
             EXP = exp;
+            Stage = stage;
         }
     }
 }
