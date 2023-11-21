@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Teamproject;
@@ -323,9 +324,9 @@ namespace TeamSparta11
 
         private void InvetoryDisplay()
         {
+            Console.Clear();
             while (true)
             {
-                Console.Clear();
                 Console.WriteLine("인벤토리");
                 Console.WriteLine("보유 중인 아이템을 확인 할 수 있습니다.");
                 Console.WriteLine("");
@@ -338,14 +339,14 @@ namespace TeamSparta11
                 }
 
                 Console.WriteLine("");
-                Console.WriteLine("1. 장착관리");
+                Console.WriteLine("1. 아이템 장착/사용");
                 Console.WriteLine("0. 나가기");
                 int userSelect = Date.UserSelect();
 
                 switch (userSelect)
                 {
                     case 1:
-                        //상세정보 메서드 인스턴스화해서 호출
+                        ItemUseDisplay();
                         break;
                     case 0:
                         GameLord();
@@ -356,6 +357,36 @@ namespace TeamSparta11
                 }
             }
             
+        }
+
+        private void ItemUseDisplay()
+        {
+            Console.Clear();
+            while (true)
+            {
+                Console.WriteLine("장착 / 사용할 아이템의 번호를 입력해주세요.");
+                Console.WriteLine("");
+
+                for (int i = 0; i < PlayerInfo.Inventory.ItemCount; i++)
+                {
+                    Item currentItem = PlayerInfo.Inventory.inventory[i];
+
+                    Console.WriteLine($"- {i + 1}. {currentItem.Name} | {currentItem.Explain}");
+                }
+
+                Console.WriteLine("");
+                Console.WriteLine("0. 나가기");
+                int userSelect = Date.UserSelect();
+                if (userSelect == 0)
+                {
+                    InvetoryDisplay();
+                }
+                else
+                {
+                    PlayerInfo.Inventory.ItemUse(userSelect);
+                }
+            }
+
         }
 
         private void ShopMainDisplay()

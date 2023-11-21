@@ -22,7 +22,7 @@ namespace TeamSparta11
     {
         public int EquipmentIndex { get; private set; }
         public int EquipmentType { get; private set; }
-        public bool IsEquip { get; set; }
+        public bool IsEquip { get; private set; }
         public int MaxHP { get; private set; }
         public int MaxMp { get; private set; }
         public int Speed { get; private set; }
@@ -57,9 +57,33 @@ namespace TeamSparta11
             return null;
         }
 
-        public void ItemUse()
+        public void ItemEvent()
         {
+            IsEquip = !IsEquip;
 
+            if (this is Equipment equipmentItem && equipmentItem.IsEquip)
+            {
+                // 인벤토리에서 동일한 타입에 장착중인 장비 찾기
+                Equipment? findEquipment = PlayerInfo.Inventory.inventory
+                .OfType<Equipment>()
+                .Where(findItem => findItem != this) // 자기 자신 제외
+                .FirstOrDefault(findItem => findItem.EquipmentType == equipmentItem.EquipmentType && findItem.IsEquip);
+
+                if (findEquipment != null)
+                {
+                    findEquipment.IsEquip = false;
+                    Console.WriteLine($"착용 중인 {findEquipment.Name}(이/가) 해제되었습니다.");
+                }
+            }
+
+            if (IsEquip)
+            {
+                Console.WriteLine($"{Name}(이/가) 장착되었습니다.");
+            }
+            else
+            {
+                Console.WriteLine($"{Name}(이/가) 해제되었습니다.");
+            }
         }
     }
     
@@ -95,7 +119,7 @@ namespace TeamSparta11
             Amount += index;
         }
 
-        public void ItemUse()
+        public void ItemEvent()
         {
 
         }
