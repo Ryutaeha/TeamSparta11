@@ -433,17 +433,18 @@ namespace TeamSparta11
                 Console.WriteLine("0. 나가기");
                 int userSelect = Date.UserSelect();
 
-            switch (userSelect)
-            {
-                case 1:
-                    //상세정보 메서드 인스턴스화해서 호출
-                    break;
-                case 0:
-                    GameLord();
-                    break;
+                switch (userSelect)
+                {
+                    case 1:
+                        //상세정보 메서드 인스턴스화해서 호출
+                        break;
+                    case 0:
+                        GameLord();
+                        break;
                     default:
-                    Console.WriteLine("\n번호를 다시 입력해주세요\n");
-                    break;
+                        Console.WriteLine("\n번호를 다시 입력해주세요\n");
+                        break;
+                }
             }
         }
         public void PlayerInfomation()
@@ -461,6 +462,4 @@ namespace TeamSparta11
             }
         }
     }
-    
-    
 }
