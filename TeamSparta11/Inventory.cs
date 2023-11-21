@@ -9,14 +9,14 @@ namespace TeamSparta11
 {
     internal class Inventory
     {
-        public int ItemCount;
-        public int MaxItemCount;
-        Item[] inventory;
+        public int ItemCount { get; private set; }
+        public int MaxItemIndex { get; private set; }
+        public List<Item> inventory { get; private set; }
 
-        public Inventory(int Volume) 
+        public Inventory(int volume) 
         {
-            MaxItemCount = Volume;
-            Item[] inventory = new Item[Volume];
+            MaxItemIndex = volume;
+            inventory = new List<Item>();
         }
 
         public void GetItem(int Index, int piece = 1)
@@ -31,7 +31,7 @@ namespace TeamSparta11
                     Equipment addEquipment = newEquipment.ItemAdd(Index);
                     if (addEquipment != null) 
                     { 
-                        inventory[ItemCount] = addEquipment;
+                        inventory.Add(addEquipment);
                         ItemCount++;
                     }
                     break;
