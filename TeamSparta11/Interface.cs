@@ -37,6 +37,4 @@ internal interface ICharacter
     internal interface IItem
     {
         public void ItemUse();
-
-        public Item ItemAdd(int Index);
     }

@@ -303,6 +303,7 @@ namespace TeamSparta11
                         break; 
                     case 3:
                         //상점 메서드 인스턴스화해서 호출
+                        ShopMainDisplay();
                         break;
                     case 4:
                         //모험 메서드 인스턴스화해서 호출
@@ -322,34 +323,68 @@ namespace TeamSparta11
 
         private void InvetoryDisplay()
         {
-            Console.Clear();
-            Console.WriteLine("인벤토리");
-            Console.WriteLine("보유 중인 아이템을 확인 할 수 있습니다.");
-            Console.WriteLine("");
-
-            for (int i = 0; i < PlayerInfo.Inventory.ItemCount; i++)
+            while (true)
             {
-                Item currentItem = PlayerInfo.Inventory.inventory[i];
+                Console.Clear();
+                Console.WriteLine("인벤토리");
+                Console.WriteLine("보유 중인 아이템을 확인 할 수 있습니다.");
+                Console.WriteLine("");
 
-                Console.WriteLine($"- {currentItem.Name}");
+                for (int i = 0; i < PlayerInfo.Inventory.ItemCount; i++)
+                {
+                    Item currentItem = PlayerInfo.Inventory.inventory[i];
+
+                    Console.WriteLine($"- {currentItem.Name} | {currentItem.Explain}");
+                }
+
+                Console.WriteLine("");
+                Console.WriteLine("1. 장착관리");
+                Console.WriteLine("0. 나가기");
+                int userSelect = Date.UserSelect();
+
+                switch (userSelect)
+                {
+                    case 1:
+                        //상세정보 메서드 인스턴스화해서 호출
+                        break;
+                    case 0:
+                        GameLord();
+                        break;
+                    default:
+                        Console.WriteLine("\n번호를 다시 입력해주세요\n");
+                        break;
+                }
             }
+            
+        }
 
-            Console.WriteLine("");
-            Console.WriteLine("1. 장착관리");
-            Console.WriteLine("0. 나가기");
-            int userSelect = Date.UserSelect();
-
-            switch (userSelect)
+        private void ShopMainDisplay()
+        {
+            while (true)
             {
-                case 1:
-                    //상세정보 메서드 인스턴스화해서 호출
-                    break;
-                case 0:
-                    GameLord();
-                    break;
-                default:
-                    Console.WriteLine("\n번호를 다시 입력해주세요\n");
-                    break;
+                Console.Clear();
+                Console.WriteLine("상점");
+                Console.WriteLine("아이템을 구매 및 판매할 수 있습니다.");
+                Console.WriteLine("구입 가능한 물품은 ???마다 갱신됩니다.");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("1. 구매하기");
+                Console.WriteLine("2. 판매하기");
+                Console.WriteLine("0. 나가기");
+                int userSelect = Date.UserSelect();
+
+                switch (userSelect)
+                {
+                    case 1:
+                        //상세정보 메서드 인스턴스화해서 호출
+                        break;
+                    case 0:
+                        GameLord();
+                        break;
+                    default:
+                        Console.WriteLine("\n번호를 다시 입력해주세요\n");
+                        break;
+                }
             }
         }
     }

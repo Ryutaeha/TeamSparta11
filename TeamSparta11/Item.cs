@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TeamSparta11
 {
-    internal abstract class Item : IItem
+    internal abstract class Item
     {
         public int ItemIndex { get; protected set; }
         public string Name { get; protected set; }
@@ -16,11 +16,9 @@ namespace TeamSparta11
         public int ItemPrice { get; protected set; }
 
         public abstract Item ItemAdd(int index);
-
-        public abstract void ItemUse();
     }
 
-    internal class Equipment : Item
+    internal class Equipment : Item, IItem
     {
         public int EquipmentIndex { get; private set; }
         public int EquipmentType { get; private set; }
@@ -59,13 +57,13 @@ namespace TeamSparta11
             return null;
         }
 
-        public override void ItemUse()
+        public void ItemUse()
         {
 
         }
     }
     
-    internal class Supplies : Item
+    internal class Supplies : Item, IItem
     {
         public int SuppliesType { get; }
         public bool IsEquip { get; set; }
@@ -97,7 +95,7 @@ namespace TeamSparta11
             Amount += index;
         }
 
-        public override void ItemUse()
+        public void ItemUse()
         {
 
         }
