@@ -16,7 +16,9 @@ internal class Date
         Console.Write("입력 > ");
         if (int.TryParse(Console.ReadLine(), out int userInput)) return userInput; 
         else return -1;
-        
+
+
+
     }
 
     public static DataTable ItemDataTable = new DataTable();
@@ -53,6 +55,8 @@ internal class Date
         //addColumn(equipmentDataTable, "DF", typeof(int));
     }
 
+    
+    
     // 몬스터 정리
     public static Dictionary<int, string[]> goblin = new Dictionary<int, string[]>
     {
@@ -126,6 +130,7 @@ internal class Date
         { 2 , new string[] {"물벼락", "10", "13", "X북이 물대포!"} },
         { 3 , new string[] { "블랙홀", "15", "17", "히어로스 오브 더 X톰" } }
     };
+
 
 }
 

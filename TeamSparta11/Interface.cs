@@ -16,8 +16,7 @@ internal interface ICharacter
         int AD {  get; }
         int DF {  get; }
         int EXP {  get; }
-        bool IsDead {  get; }
-}
+    }
 
     internal interface ISkill
     {
@@ -36,7 +35,6 @@ internal interface ICharacter
     
     internal interface IItem
     {
-
         public void ItemUse();
         public Item ItemAdd(int Index);
     }

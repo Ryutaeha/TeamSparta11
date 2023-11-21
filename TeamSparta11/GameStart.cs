@@ -5,18 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 using Teamproject;
 
 namespace TeamSparta11
 {
-    
-    internal partial class GameStart
+    internal class GameStart
     {
 
         // 첫화면 로딩
         internal void Game()
         {
-
             while (true)
             {
                 Date.Line();
