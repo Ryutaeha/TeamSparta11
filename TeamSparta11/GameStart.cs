@@ -317,11 +317,11 @@ namespace TeamSparta11
                         break;
                     case 4:
                         /*
-                        */
                         BattleNew battleNew = new BattleNew();
                         bool isDead = battleNew.Battle();
                         if (isDead) break;
                         else return;
+                        */
                     case 0:
                         SaveItems();
                         Json.JsonSave(PlayerInfo.saveSlot);
