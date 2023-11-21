@@ -16,12 +16,6 @@ namespace Teamproject
         public int EXP { get; set; }
         public bool IsDead => HP <= 0;
 
-        public void BeDamaged(int damage)
-        {
-
-            
-        }
-
 
         public MonsterStatus(string name, int level, int maxhp, int hp, int ad, int df, int speed, int exp, int gold)
         {
@@ -59,14 +53,7 @@ namespace Teamproject
 
         public int MaxMP { get; set; }
         public int MP { get; set; }
-        public string DropItem { get; set; }
-
-        public void BeDamaged(int damage)
-        {
-
-
-        }
-
+        public string DropItem { get; set; }        
 
 
         public BossMonsterStatus(string name, int level, int maxHP, int hp, int maxMP, int mp, int ad, int df, int exp, int gold, string dropitem)
