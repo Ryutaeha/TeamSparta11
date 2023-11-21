@@ -72,6 +72,7 @@ namespace Teamproject
             EXP = exp;
             Stage = stage;
 
+
         }
         public void BeDamaged(int damage)
         {
