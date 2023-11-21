@@ -72,7 +72,7 @@ namespace TeamSparta11
             EndBattleScene(monster);
         }
 
-        public void BeginBattleScene(BossMonsterStatus boss)
+        public void BeginBattleScene(BossMonsterStatus boss, Skill skill)
         {
             Console.WriteLine("Battle!!");
             Console.WriteLine();
@@ -94,12 +94,12 @@ namespace TeamSparta11
 
                 {
                     PlayerAttackScene(boss);
-                    //MonsterAttackScene(monster, skill);
+                    MonsterAttackScene(monster, skill);
                 }
 
                 else if (monster.Speed > PlayerInfo.Player.Speed)
                 {
-                    //MonsterAttackScene(player, boss);
+                    MonsterAttackScene(boss, skill);
                     PlayerAttackScene(boss);
                 }
             }
