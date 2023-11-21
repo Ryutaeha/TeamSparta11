@@ -33,7 +33,7 @@ namespace TeamSparta11
 
         public override Equipment? ItemAdd(int index)
         {
-            DataRow? itemData = Date.ItemDataTable.Rows.Find(index);
+            DataRow? itemData = Date.ItemDateTable.Rows.Find(index);
 
             ItemIndex = Convert.ToInt32(itemData["ItemIndex"]);
             Name = itemData["Name"].ToString();
@@ -41,7 +41,7 @@ namespace TeamSparta11
             ItemType = Convert.ToInt32(itemData["ItemType"]);
             ItemPrice = Convert.ToInt32(itemData["ItemPrice"]);
 
-            DataRow? equipmentData = Date.EquipmentDataTable.Rows.Find(index);
+            DataRow? equipmentData = Date.EquipmentDateTable.Rows.Find(index);
 
             EquipmentIndex = Convert.ToInt32(equipmentData["EquipmentIndex"]);
             EquipmentType = Convert.ToInt32(equipmentData["EquipmentType"]);
@@ -77,7 +77,7 @@ namespace TeamSparta11
 
         public override Supplies? ItemAdd(int index)
         {
-            DataRow? itemData = Date.ItemDataTable.Rows.Find(index);
+            DataRow? itemData = Date.ItemDateTable.Rows.Find(index);
 
             ItemIndex = Convert.ToInt32(itemData["ItemIndex"]);
             Name = itemData["Name"].ToString();
