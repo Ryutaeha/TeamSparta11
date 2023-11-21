@@ -10,14 +10,15 @@ using TeamSparta11;
 
 internal class Json
 {
-    internal static void JsonSave(int userSelect)
+    internal static void JsonSave(int UserSelect)
     {
-        SaveData saveData = new SaveData
+        // 저장할 데이터 목록 적어주시면 됩니다.
+        SaveDate saveDate = new SaveDate
         {
-            Player = PlayerInfo.player,
+            Player = PlayerInfo.Player,
             SkillList = PlayerInfo.SkillList
         };
-        string saveDatas = JsonConvert.SerializeObject(saveData, Formatting.Indented);
+        string saveDates = JsonConvert.SerializeObject(saveDate, Formatting.Indented);
         // 키 생성 어따보관하지? DB 연동하기엔 C#은 어캐하는지 몰라유
         byte[] key = Encoding.UTF8.GetBytes("0123456789ABCDEF");
 
@@ -25,14 +26,14 @@ internal class Json
         byte[] iv = Encoding.UTF8.GetBytes("ABCDEFGHABCDEFGH");
 
         // 문자열을 바이트 배열로 변환
-        byte[] originalBytes = Encoding.UTF8.GetBytes(saveDatas);
+        byte[] originalBytes = Encoding.UTF8.GetBytes(saveDates);
 
         // 암호화
         byte[] encryptedBytes = Encrypt(originalBytes, key, iv);
 
 
         string directoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\dates");
-        string filePath = Path.Combine(directoryPath, "Save"+userSelect+".json");
+        string filePath = Path.Combine(directoryPath, "Save"+UserSelect+".json");
         // 폴더가 없으면 생성
         if (!Directory.Exists(directoryPath))
         {
@@ -67,11 +68,11 @@ internal class Json
         }
     }
 
-    internal static SaveData JsonLoad(int userSelect)
+    internal static SaveDate JsonLoad(int UserSelect)
     {
         string directoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\dates");
-        string filePath = Path.Combine(directoryPath, "Save" + userSelect + ".json");
-        SaveData saveData = null;
+        string filePath = Path.Combine(directoryPath, "Save" + UserSelect + ".json");
+        SaveDate saveDate = null;
         // 파일이 존재하는지 확인
         if (File.Exists(filePath))
         {
@@ -89,11 +90,11 @@ internal class Json
             // 복호화된 데이터를 문자열로 변환
             string decryptedData = Encoding.UTF8.GetString(decryptedBytes);
 
-            saveData = JsonConvert.DeserializeObject<SaveData>(decryptedData);
+            saveDate = JsonConvert.DeserializeObject<SaveDate>(decryptedData);
 
 
         }
-        return saveData;
+        return saveDate;
 
     }
 

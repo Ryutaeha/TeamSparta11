@@ -11,7 +11,7 @@ internal class Date
 {
     internal enum ItemType { equipment, supplies }
 
-    internal static int userSelect()
+    internal static int UserSelect()
     {
         Console.Write("입력 > ");
         if (int.TryParse(Console.ReadLine(), out int userInput)) return userInput; 
@@ -106,6 +106,9 @@ internal class Date
     }
 
     //플레이어 생성시 해당 스킬중 랜덤 2가지 획득
+    /// <summary>
+    /// 키값, {스킬이름, 데미지, 코스트, 설명}
+    /// </summary>
     internal static Dictionary<int, string[]> warriorSkill = new Dictionary<int, string[]>
     {
         { 0 , new string[] {"강타", "3", "5", "쌔게때리기"} },
@@ -128,19 +131,19 @@ internal class Date
         { 3 , new string[] { "블랙홀", "15", "17", "히어로스 오브 더 X톰" } }
     };
 }
-
-internal class SaveData
+//세이브시 저장될 목록
+internal class SaveDate
 {
     public PlayerStatus Player { get; set; }
     public List<Skill> SkillList { get; set; }
 }
-
+//세이브 가져올 객체 모음
 internal class PlayerInfo
 {
     //가지고 있는 스킬 목록
     public static List<Skill> SkillList = new List<Skill>();
     //새로 만들거나 로드해올 때 끌어다 쓸 객체
-    public static PlayerStatus player = null;
+    public static PlayerStatus Player = null;
     //저장 슬롯
     public static int saveSlot;
 

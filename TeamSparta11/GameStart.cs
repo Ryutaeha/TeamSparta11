@@ -25,8 +25,8 @@ namespace TeamSparta11
                 Console.WriteLine("0. 끝내기\n");
 
                 
-                int userSelect = Date.userSelect();
-                switch (userSelect)
+                int UserSelect = Date.UserSelect();
+                switch (UserSelect)
                 {
                     case 1:
                         CreateCharacter();
@@ -60,9 +60,9 @@ namespace TeamSparta11
                     Console.WriteLine(i+1 + ". " + resultString);
                 }
                 Console.WriteLine("0. 돌아가기\n");
-                int userSelect = Date.userSelect();
-                PlayerInfo.saveSlot = userSelect-1;
-                switch (userSelect)
+                int UserSelect = Date.UserSelect();
+                PlayerInfo.saveSlot = UserSelect-1;
+                switch (UserSelect)
                 {
                     case 0:
                         return;
@@ -84,17 +84,17 @@ namespace TeamSparta11
         }
 
         //새게임 생성
-        private bool NewGame(SaveData saveData, int SaveSlot)                 
+        private bool NewGame(SaveDate saveDate, int SaveSlot)                 
         {
-            if(saveData != null)
+            if(saveDate != null)
             {
                 while(true)
                 {
                     Console.WriteLine("저장 데이터를 덮어 쓰겠습니까?");
                     Console.WriteLine("1. 예");
                     Console.WriteLine("2. 아니요");
-                    int userSelect = Date.userSelect();
-                    switch (userSelect)
+                    int UserSelect = Date.UserSelect();
+                    switch (UserSelect)
                     {
                         case 1:
                             CreatePlayer();
@@ -129,45 +129,40 @@ namespace TeamSparta11
             Console.WriteLine("1. 전사");
             Console.WriteLine("2. 도적");
             Console.WriteLine("3. 마법사");
-            int userSelect = Date.userSelect();
+            int UserSelect = Date.UserSelect();
             Dictionary<int, string[]> jobSkill = null;
-            string job = null ;
             
-            if (userSelect == 1)
+            if (UserSelect == 1)
             {
                 jobSkill = Date.warriorSkill;
-                job = "전사";
             }
-            if (userSelect == 2)
+            if (UserSelect == 2)
             {
                 jobSkill = Date.banditSkill;
-                job = "도적";
             }
-            if (userSelect == 3)
+            if (UserSelect == 3)
             {
                 jobSkill = Date.wizardSkill;
-                job = "마법사";
             }
+            string[] job = Date.jobClass[UserSelect];
 
             // Random 클래스를 사용하여 무작위로 2개의 인덱스 선택
             Random random = new Random();
-            List<int> selectedNumbers = new List<int>();
+            int choice = -1;
 
-            while (selectedNumbers.Count < 2)
+            while (PlayerInfo.SkillList.Count < 2)
             {
                 int randomIndex = random.Next(jobSkill.Count);
                 // 이미 선택한 인덱스인지 확인
-                if (!selectedNumbers.Contains(randomIndex))
+                if (!(choice == randomIndex))
                 {
                     string[] skillString = jobSkill[randomIndex];
                     Skill skill = new Skill(skillString[0], int.Parse(skillString[1]), int.Parse(skillString[2]), skillString[3]);
                     PlayerInfo.SkillList.Add(skill);
-
-                    //무한 반복을 막기위한 리스트 추가
-                    selectedNumbers.Add(randomIndex);
                 }
+                choice = randomIndex;
             }
-            PlayerInfo.player = new PlayerStatus(name, job, 1, 100, 100, 100, 100, 10, 10, 10, 10, 0);
+            PlayerInfo.Player = new PlayerStatus(name, job[1], int.Parse(job[2]), int.Parse(job[3]), int.Parse(job[4]), int.Parse(job[5]), int.Parse(job[6]), int.Parse(job[7]), int.Parse(job[8]), int.Parse(job[9]), int.Parse(job[10]), int.Parse(job[11]));
         }
         // 이미 저장되어있는 슬롯 제어
         void LordCharacter()
@@ -185,9 +180,9 @@ namespace TeamSparta11
                     Console.WriteLine(i+1 + ". " + resultString);
                 }
                 Console.WriteLine("0. 돌아가기\n");
-                int userSelect = Date.userSelect();
-                PlayerInfo.saveSlot = userSelect - 1;
-                switch (userSelect)
+                int UserSelect = Date.UserSelect();
+                PlayerInfo.saveSlot = UserSelect - 1;
+                switch (UserSelect)
                 {
                     case 0:
                         return;
@@ -221,13 +216,15 @@ namespace TeamSparta11
                 Console.WriteLine("1. 이어하기");
                 Console.WriteLine("2. 삭제하기");
                 Console.WriteLine("0. 돌아가기");
-                int userSelect = Date.userSelect();
-                switch (userSelect)
+                int UserSelect = Date.UserSelect();
+                switch (UserSelect)
                 {
                     case 0:
                         return false;
                     case 1:
-                        PlayerInfo.player = Json.JsonLoad(saveSlot).Player;
+                        // 세이브 가져오고 싶을 때 여기에 추가하면 됩니다.
+
+                        PlayerInfo.Player = Json.JsonLoad(saveSlot).Player;
                         PlayerInfo.SkillList = Json.JsonLoad(saveSlot).SkillList;
                         GameLord();
                         return true;
@@ -251,8 +248,8 @@ namespace TeamSparta11
                 Console.WriteLine(PlayerInfo.saveSlot+1+"번 슬롯을 정말로 삭제하시겠습니까?");
                 Console.WriteLine("1. 예");
                 Console.WriteLine("2. 아니요");
-                int userSelect = Date.userSelect();
-                switch (userSelect)
+                int UserSelect = Date.UserSelect();
+                switch (UserSelect)
                 {
                     case 1:
                         Delete();
@@ -290,8 +287,8 @@ namespace TeamSparta11
                 Console.WriteLine("3. 상점");
                 Console.WriteLine("4. 모험");
                 Console.WriteLine("0. 끝내기");
-                int userSelect = Date.userSelect();
-                switch (userSelect)
+                int UserSelect = Date.UserSelect();
+                switch (UserSelect)
                 {
                     case 1:
                         //상세정보 메서드 인스턴스화해서 호출
@@ -308,7 +305,7 @@ namespace TeamSparta11
                     case 0:
                         Json.JsonSave(PlayerInfo.saveSlot);
                         PlayerInfo.SkillList.Clear();
-                        PlayerInfo.player = null;
+                        PlayerInfo.Player = null;
                         //저장및 돌아가기 메서드 인스턴스화해서 호출
                         return;
                     default:
