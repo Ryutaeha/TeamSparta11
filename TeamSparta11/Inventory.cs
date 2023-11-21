@@ -19,16 +19,16 @@ namespace TeamSparta11
             inventory = new List<Item>();
         }
 
-        public void GetItem(int Index, int piece = 1)
+        public void GetItem(int index, int piece = 1)
         {
-            DataRow? itemdata = Date.ItemDateTable.Rows.Find(Index);
+            DataRow? itemdata = Date.ItemDateTable.Rows.Find(index);
             int itemType = Convert.ToInt32(itemdata["ItemType"]);
 
             switch (itemType)
             {
                 case (int)Date.ItemType.equipment:
                     Equipment newEquipment = new Equipment();
-                    Equipment addEquipment = newEquipment.ItemAdd(Index);
+                    Equipment addEquipment = newEquipment.ItemAdd(index);
                     if (addEquipment != null) 
                     { 
                         inventory.Add(addEquipment);
@@ -38,7 +38,7 @@ namespace TeamSparta11
                 // 소모품일 경우 최대 갯수에 도달했는지 확인하여 기존 슬롯의 갯수를 늘려준다.
                 case (int)Date.ItemType.supplies:
                     Supplies newSupplies = new Supplies();
-                    Supplies addSupplies = newSupplies.ItemAdd(Index);
+                    Supplies addSupplies = newSupplies.ItemAdd(index);
                     if (addSupplies != null)
                     {
                         if (inventory[ItemCount - 1] != null)
@@ -61,6 +61,14 @@ namespace TeamSparta11
                 default:
                     break;
             }
+        }
+
+        public void ItemUse(int index)
+        {
+            if (index > ItemCount) return;
+            Item item = inventory[index - 1];
+
+            if (item is IItem iItem) iItem.ItemEvent();
         }
     }
 }
