@@ -33,11 +33,13 @@ namespace TeamSparta11
 
 
 
-        public void BeginBattleScene(List<MonsterStatus> monsters)
+        public void BeginBattleScene(List<MonsterStatus> monsters, int stage)
         {
             while (true) 
             {
                 Console.WriteLine("Battle!!");
+                Console.WriteLine();
+                Console.WriteLine($"플레이어 {PlayerInfo.Player.Name}은(는) 스테이지[{stage}]에 도착했습니다!");
                 Console.WriteLine();
                 Console.WriteLine("[내정보]");
                 Console.WriteLine($"LV.{PlayerInfo.Player.Level}\t{PlayerInfo.Player.Name}");
@@ -102,7 +104,7 @@ namespace TeamSparta11
 
 
 
-        public void BeginBattleScene(BossMonsterStatus boss)
+        public void BeginBattleScene(BossMonsterStatus boss, int stage)
         {
             Console.WriteLine("Battle!!");
             Console.WriteLine();
