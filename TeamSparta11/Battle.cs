@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Numerics;
 using System.Threading;
 using System.Xml.Linq;
@@ -135,7 +136,6 @@ namespace TeamSparta11
                 if (damage >= PlayerInfo.Player.HP)
                 {
                     PlayerInfo.Player.HP = 0;
-
                 }
             }
             else if (attacker == "player")
@@ -256,6 +256,130 @@ namespace TeamSparta11
             }
         }
 
+
+        //몬스터 생성과 스폰 메소드
+        public void SpawnMonster(int stage)
+        {
+            List<MonsterStatus> monsters = new List<MonsterStatus>();
+            BossMonsterStatus boss;
+            Random random = new Random();
+            int randomCount = random.Next(1, 3);
+
+            // 스테이지가 1 ~ 5일 동안은 랜덤한 고블린을 1마리에서 3마리까지 랜덤으로 생성.
+            if (stage > 0 && stage <= 5)
+            {
+                for (int i = 0; i < randomCount; i++)
+                {
+                    monsters.Add(GetRandomGoblin());
+                }
+                if (stage == 5)
+                {
+                    boss = GetGoblinBoss();
+                }
+            }
+            // 스테이지가 6 ~ 10일 동안은 랜덤한 골렘을 1마리에서 3마리까지 랜덤으로 생성.
+            else if (stage > 5 && stage <= 10)
+            {
+                for (int i = 0; i < randomCount; i++)
+                {
+                    monsters.Add(GetRandomGolem());
+                }
+                if (stage == 10)
+                {
+                    boss = GetGolemBoss();
+                }
+            }
+            // 스테이지가 10 ~ 15일 동안은 랜덤한 드래곤을 1마리에서 3마리까지 랜덤으로 생성.
+            else if (stage > 10 && stage <= 15)
+            {
+                for (int i = 0; i < randomCount; i++)
+                {
+                    monsters.Add(GetRandomDragon());
+                }
+                if (stage == 15)
+                {
+                    boss = GetDragonBoss();
+                }
+            }
+            
+        }
+
+
+        /// <summary>
+        /// 몬스터 랜덤 리턴 메소드
+        /// </summary>
+        /// <returns></returns>
+        // 고블린 세종류 중 한마리를 랜덤으로 리턴
+        public static MonsterStatus GetRandomGoblin()
+        {
+            Random random = new Random();
+            int randomKey = random.Next(0, Date.goblin.Count);
+            string[] goblin = Date.goblin[randomKey];
+            MonsterStatus monster = new MonsterStatus(goblin[0], int.Parse(goblin[1]), int.Parse(goblin[2]), int.Parse(goblin[3]), int.Parse(goblin[4]),
+                                                      int.Parse(goblin[5]), int.Parse(goblin[6]), int.Parse(goblin[7]), int.Parse(goblin[8]));
+            return monster;
+        }
+
+        // 골렘 세종류 중 한마리를 랜덤으로 리턴
+        public static MonsterStatus GetRandomGolem()
+        {
+            Random random = new Random();
+            int randomKey = random.Next(0, Date.golem.Count);
+            string[] golem = Date.goblin[randomKey];
+            MonsterStatus monster = new MonsterStatus(golem[0], int.Parse(golem[1]), int.Parse(golem[2]), int.Parse(golem[3]), int.Parse(golem[4]),
+                                                      int.Parse(golem[5]), int.Parse(golem[6]), int.Parse(golem[7]), int.Parse(golem[8]));
+            return monster;
+        }
+
+        // 드래곤 세종류 중 한마리를 랜덤으로 리턴
+        public static MonsterStatus GetRandomDragon()
+        {
+            Random random = new Random();
+            int randomKey = random.Next(0, Date.dragon.Count);
+            string[] dragon = Date.dragon[randomKey];
+            MonsterStatus monster = new MonsterStatus(dragon[0], int.Parse(dragon[1]), int.Parse(dragon[2]), int.Parse(dragon[3]), int.Parse(dragon[4]),
+                                                      int.Parse(dragon[5]), int.Parse(dragon[6]), int.Parse(dragon[7]), int.Parse(dragon[8]));
+            return monster;
+        }
+
+
+
+
+        /// <summary>
+        /// 보스 몬스터 리턴 메소드
+        /// </summary>
+        /// <returns></returns>
+
+        // 보스 고블린을 리턴해줌
+        public static BossMonsterStatus GetGoblinBoss()
+        {
+            string[] boss1 = Date.boss[0];
+            BossMonsterStatus boss = new BossMonsterStatus(boss1[0], int.Parse(boss1[1]), int.Parse(boss1[2]), int.Parse(boss1[3]), int.Parse(boss1[4]),
+                                                          int.Parse(boss1[5]), int.Parse(boss1[6]), int.Parse(boss1[7]), int.Parse(boss1[8]), int.Parse(boss1[9]), boss1[10]);
+
+            return boss;
+        }
+
+        // 보스 골렘을 리턴해줌
+        public static BossMonsterStatus GetGolemBoss()
+        {
+            string[] boss2 = Date.boss[1];
+            BossMonsterStatus boss = new BossMonsterStatus(boss2[0], int.Parse(boss2[1]), int.Parse(boss2[2]), int.Parse(boss2[3]), int.Parse(boss2[4]),
+                                                          int.Parse(boss2[5]), int.Parse(boss2[6]), int.Parse(boss2[7]), int.Parse(boss2[8]), int.Parse(boss2[9]), boss2[10]);
+
+            return boss;
+        }
+
+        // 보스 드래곤을 리턴해줌
+        public static BossMonsterStatus GetDragonBoss()
+        {
+            string[] boss3 = Date.boss[2];
+            BossMonsterStatus boss = new BossMonsterStatus(boss3[0], int.Parse(boss3[1]), int.Parse(boss3[2]), int.Parse(boss3[3]), int.Parse(boss3[4]),
+                                                          int.Parse(boss3[5]), int.Parse(boss3[6]), int.Parse(boss3[7]), int.Parse(boss3[8]), int.Parse(boss3[9]), boss3[10]);
+
+            return boss;
+        }
+        
 
     }
 }
