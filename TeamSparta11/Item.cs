@@ -15,30 +15,42 @@ namespace TeamSparta11
         public int ItemType { get; protected set; }
         public int ItemPrice { get; protected set; }
 
-        public abstract Item ItemAdd(int Index);
+        public abstract Item ItemAdd(int index);
 
         public abstract void ItemUse();
     }
 
     internal class Equipment : Item
     {
-        public int EquipmentType { get; }
+        public int EquipmentIndex { get; private set; }
+        public int EquipmentType { get; private set; }
         public bool IsEquip { get; set; }
-        public int MaxHP { get; }
-        public int MaxMp { get; }
-        public int Speed { get; }
-        public int AD { get; }
-        public int DF { get; }
+        public int MaxHP { get; private set; }
+        public int MaxMp { get; private set; }
+        public int Speed { get; private set; }
+        public int AD { get; private set; }
+        public int DF { get; private set; }
 
-        public override Equipment? ItemAdd(int Index)
+        public override Equipment? ItemAdd(int index)
         {
-            DataRow? itemdata = Date.ItemDataTable.Rows.Find(Index);
+            DataRow? itemData = Date.ItemDateTable.Rows.Find(index);
 
-            ItemIndex = Convert.ToInt32(itemdata["ItemIndex"]);
-            Name = itemdata["Name"].ToString();
-            Explain = itemdata["Explain"].ToString();
-            ItemType = Convert.ToInt32(itemdata["ItemType"]);
-            ItemPrice = Convert.ToInt32(itemdata["ItemPrice"]);
+            ItemIndex = Convert.ToInt32(itemData["ItemIndex"]);
+            Name = itemData["Name"].ToString();
+            Explain = itemData["Explain"].ToString();
+            ItemType = Convert.ToInt32(itemData["ItemType"]);
+            ItemPrice = Convert.ToInt32(itemData["ItemPrice"]);
+
+            DataRow? equipmentData = Date.EquipmentDateTable.Rows.Find(index);
+
+            EquipmentIndex = Convert.ToInt32(equipmentData["EquipmentIndex"]);
+            EquipmentType = Convert.ToInt32(equipmentData["EquipmentType"]);
+            MaxHP = Convert.ToInt32(equipmentData["MaxHP"]);
+            MaxMp = Convert.ToInt32(equipmentData["MaxMp"]);
+            Speed = Convert.ToInt32(equipmentData["Speed"]);
+            AD = Convert.ToInt32(equipmentData["AD"]);
+            DF = Convert.ToInt32(equipmentData["DF"]);
+
 
             if (ItemType == (int)Date.ItemType.equipment)
             {
@@ -63,15 +75,15 @@ namespace TeamSparta11
         public int Modifier { get; }
         public int Value { get; }
 
-        public override Supplies? ItemAdd(int Index)
+        public override Supplies? ItemAdd(int index)
         {
-            DataRow? itemdata = Date.ItemDataTable.Rows.Find(Index);
+            DataRow? itemData = Date.ItemDateTable.Rows.Find(index);
 
-            ItemIndex = Convert.ToInt32(itemdata["ItemIndex"]);
-            Name = itemdata["Name"].ToString();
-            Explain = itemdata["Explain"].ToString();
-            ItemType = Convert.ToInt32(itemdata["ItemType"]);
-            ItemPrice = Convert.ToInt32(itemdata["ItemPrice"]);
+            ItemIndex = Convert.ToInt32(itemData["ItemIndex"]);
+            Name = itemData["Name"].ToString();
+            Explain = itemData["Explain"].ToString();
+            ItemType = Convert.ToInt32(itemData["ItemType"]);
+            ItemPrice = Convert.ToInt32(itemData["ItemPrice"]);
 
             if (ItemType == (int)Date.ItemType.supplies)
             {
@@ -80,9 +92,9 @@ namespace TeamSparta11
             return null;
         }
 
-        public void ItemAmountModify(int Index)
+        public void ItemAmountModify(int index)
         {
-            Amount += Index;
+            Amount += index;
         }
 
         public override void ItemUse()
