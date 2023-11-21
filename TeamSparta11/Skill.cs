@@ -29,20 +29,5 @@ internal class Skill : ISkill
         SkillInfo = skillInfo;
     }
 
-    //몬스터 공격
-    public void Use(MonsterStatus monster)
-    {
-        PlayerInfo.player.MP -= Cost;
-        int damage = AbilityPower + PlayerInfo.player.AD - monster.DF;
-        monster.HP -= damage;
-        Console.WriteLine($"{monster.Name}에게 {Name}(으)로 {damage}의 피해를 입혔습니다.");
-    }
-    public void Use(BossMonsterStatus bossMonster)
-    {
-        PlayerInfo.player.MP -= Cost;
-        int damage = AbilityPower + PlayerInfo.player.AD - bossMonster.DF;
-        bossMonster.HP -= damage;
-        Console.WriteLine($"{bossMonster.Name}에게 {Name}(으)로 {damage}의 피해를 입혔습니다.");
-    }
 }
 

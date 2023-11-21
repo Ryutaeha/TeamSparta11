@@ -29,8 +29,8 @@
             Console.Write(">>");
             while (true)
             {
-                int userSelect = Date.userSelect();
-                switch (userSelect)
+                int UserSelect = Date.UserSelect();
+                switch (UserSelect)
                 {
                     case 1:
                         //공격 함수
