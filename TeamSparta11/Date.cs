@@ -5,6 +5,7 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using Teamproject;
+using TeamSparta11;
 
 // 몬스터 정보나 기타 등등의 일반적인 데이터를 담는 클래스
 internal class Date
@@ -20,37 +21,52 @@ internal class Date
     }
 
     public static DataTable ItemDataTable = new DataTable();
+    public static DataTable EquipmentDataTable = new DataTable();
     public static DataTable SuppliesDataTable = new DataTable();
 
     internal static void ItemDataTableSetting()
     {
+        // 테이블 컬럼 생성 및 기본키 지정
+        #region
         Action<DataTable, string, Type> addColumn = (table, columnName, columnType) =>
         {
             table.Columns.Add(columnName, columnType);
         };
 
-        // 아이템 테이블 컬럼 생성 및 기본키 지정
         addColumn(ItemDataTable, "ItemIndex", typeof(int));
         addColumn(ItemDataTable, "Name", typeof(string));
         addColumn(ItemDataTable, "Explain", typeof(string));
         addColumn(ItemDataTable, "ItemType", typeof(int));
         addColumn(ItemDataTable, "ItemPrice", typeof(int));
 
-        DataColumn[] ItemDataTableKey = new DataColumn[1];
-        ItemDataTableKey[0] = ItemDataTable.Columns["ItemIndex"];
-        ItemDataTable.PrimaryKey = ItemDataTableKey;
+        DataColumn[] itemDataTableKey = new DataColumn[1];
+        itemDataTableKey[0] = ItemDataTable.Columns["ItemIndex"];
+        ItemDataTable.PrimaryKey = itemDataTableKey;
 
-        // { Index, Name, Explain, ItemType, ItemPrice, EquipmentType, MaxHP, Speed, AD, DF }
+        addColumn(EquipmentDataTable, "EquipmentIndex", typeof(int));
+        addColumn(EquipmentDataTable, "EquipmentType", typeof(int));
+        addColumn(EquipmentDataTable, "MaxHP", typeof(int));
+        addColumn(EquipmentDataTable, "MaxMp", typeof(int));
+        addColumn(EquipmentDataTable, "Speed", typeof(int));
+        addColumn(EquipmentDataTable, "AD", typeof(int));
+        addColumn(EquipmentDataTable, "DF", typeof(int));
+
+        DataColumn[] equipmentDataTableKey = new DataColumn[1];
+        equipmentDataTableKey[0] = EquipmentDataTable.Columns["EquipmentIndex"];
+        EquipmentDataTable.PrimaryKey = equipmentDataTableKey;
+
+        #endregion
+
+        // 아이템 데이터 테이블
+        // { Index, Name, Explain, ItemType, ItemPrice }
         ItemDataTable.Rows.Add(new object[] { 0, "나무 칼", "나무로 만든 칼", 0, 20 });
         ItemDataTable.Rows.Add(new object[] { 1, "돌 칼", "돌로 만든 칼", 0, 20 });
         ItemDataTable.Rows.Add(new object[] { 2, "체력 포션", "기초적인 체력포션이다", 1, 50 });
 
         // 장비 아이템 스텟 테이블
-        //addColumn(equipmentDataTable, "EquipmentType", typeof(int));
-        //addColumn(equipmentDataTable, "MaxHP", typeof(int));
-        //addColumn(equipmentDataTable, "Speed", typeof(int));
-        //addColumn(equipmentDataTable, "AD", typeof(int));
-        //addColumn(equipmentDataTable, "DF", typeof(int));
+        // { Index, EquipmentType, MaxHP, MaxMp, Speed, AD, DF }
+        EquipmentDataTable.Rows.Add(new object[] { 0, 0, 0, 0, 0, 5, 0 });
+        EquipmentDataTable.Rows.Add(new object[] { 1, 0, 0, 0, 0, 10, 0 });
     }
 
     
@@ -133,6 +149,7 @@ internal class SaveData
 {
     public PlayerStatus Player { get; set; }
     public List<Skill> SkillList { get; set; }
+    //public Inventory Inventory { get; set; }
 }
 
 internal class PlayerInfo
@@ -143,5 +160,7 @@ internal class PlayerInfo
     public static PlayerStatus player = null;
     //저장 슬롯
     public static int saveSlot;
+    //유저의 인벤토리 클래스, 매개변수는 인벤토리 크기이며 현재는 따로 변수가 없어 직접 지정했습니다.
+    public static Inventory Inventory = new Inventory(12);
 
 }
