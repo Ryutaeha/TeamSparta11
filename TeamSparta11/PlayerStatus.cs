@@ -62,7 +62,7 @@ namespace Teamproject
         }
 
 
-        public PlayerStatus(string name, string job, int level, int maxhp, int hp, int maxmp, int mp,int ad, int df, int speed, int gold, int exp)
+        public PlayerStatus(string name, string job, int level, int maxhp, int hp, int maxmp, int mp,int ad, int df, int speed, int exp, int gold)
         {
             Name = name;
             Job = job;
