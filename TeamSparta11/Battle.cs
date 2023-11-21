@@ -261,9 +261,8 @@ namespace TeamSparta11
         public void SpawnMonster(int stage)
         {
             List<MonsterStatus> monsters = new List<MonsterStatus>();
-            BossMonsterStatus boss;
             Random random = new Random();
-            int randomCount = random.Next(1, 3);
+            int randomCount = random.Next(1, 4);
 
             // 스테이지가 1 ~ 5일 동안은 랜덤한 고블린을 1마리에서 3마리까지 랜덤으로 생성.
             if (stage > 0 && stage <= 5)
@@ -272,10 +271,7 @@ namespace TeamSparta11
                 {
                     monsters.Add(GetRandomGoblin());
                 }
-                if (stage == 5)
-                {
-                    boss = GetGoblinBoss();
-                }
+                
             }
             // 스테이지가 6 ~ 10일 동안은 랜덤한 골렘을 1마리에서 3마리까지 랜덤으로 생성.
             else if (stage > 5 && stage <= 10)
@@ -284,10 +280,7 @@ namespace TeamSparta11
                 {
                     monsters.Add(GetRandomGolem());
                 }
-                if (stage == 10)
-                {
-                    boss = GetGolemBoss();
-                }
+               
             }
             // 스테이지가 10 ~ 15일 동안은 랜덤한 드래곤을 1마리에서 3마리까지 랜덤으로 생성.
             else if (stage > 10 && stage <= 15)
@@ -296,10 +289,7 @@ namespace TeamSparta11
                 {
                     monsters.Add(GetRandomDragon());
                 }
-                if (stage == 15)
-                {
-                    boss = GetDragonBoss();
-                }
+                
             }
             
         }
