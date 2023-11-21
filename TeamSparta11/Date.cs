@@ -162,18 +162,19 @@ internal class SaveDate
 {
     public PlayerStatus Player { get; set; }
     public List<Skill> SkillList { get; set; }
-    //public Inventory Inventory { get; set; }
+    public List<int> itemList { get; set; }
 }
 //세이브 가져올 객체 모음
 internal class PlayerInfo
 {
+    //저장 슬롯
+    public static int saveSlot;
     //가지고 있는 스킬 목록
     public static List<Skill> SkillList = new List<Skill>();
     //새로 만들거나 로드해올 때 끌어다 쓸 객체
     public static PlayerStatus Player = null;
-    //저장 슬롯
-    public static int saveSlot;
     //유저의 인벤토리 클래스, 매개변수는 인벤토리 크기이며 현재는 따로 변수가 없어 직접 지정했습니다.
-    public static Inventory Inventory = new Inventory(12);
-
+    public static Inventory Inventory = null;
+    //로딩할때 들고있는 아이템 인덱스
+    public static List<int> ItemList = new List<int>();
 }

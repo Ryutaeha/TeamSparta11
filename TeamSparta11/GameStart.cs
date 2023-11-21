@@ -98,7 +98,6 @@ namespace TeamSparta11
                     {
                         case 1:
                             CreatePlayer();
-                            Json.JsonSave(SaveSlot);
                             //게임 메인메뉴 위치
                             GameLord();
 
@@ -115,7 +114,6 @@ namespace TeamSparta11
             else
             {
                 CreatePlayer();
-                Json.JsonSave(SaveSlot);
                 //게임 메인메뉴 위치
                 GameLord();
                 return true;
@@ -163,8 +161,10 @@ namespace TeamSparta11
                 choice = randomIndex;
             }
             PlayerInfo.Player = new PlayerStatus(name, job[1], int.Parse(job[2]), int.Parse(job[3]), int.Parse(job[4]), int.Parse(job[5]), int.Parse(job[6]), int.Parse(job[7]), int.Parse(job[8]), int.Parse(job[9]), int.Parse(job[10]), int.Parse(job[11]),1);
+            PlayerInfo.Inventory = new Inventory(12);
             PlayerInfo.Inventory.GetItem(0);
             PlayerInfo.Inventory.GetItem(1);
+
         }
         // 이미 저장되어있는 슬롯 제어
         void LordCharacter()
@@ -225,13 +225,15 @@ namespace TeamSparta11
                         return false;
                     case 1:
                         // 세이브 가져오고 싶을 때 여기에 추가하면 됩니다.
-
-                        PlayerInfo.Player = Json.JsonLoad(saveSlot).Player;
-                        PlayerInfo.SkillList = Json.JsonLoad(saveSlot).SkillList;
-                        //PlayerInfo.Inventory = Json.JsonLoad(saveSlot).Inventory;
+                        SaveDate saveDate = Json.JsonLoad(saveSlot);
+                        PlayerInfo.Player = saveDate.Player;
+                        PlayerInfo.SkillList = saveDate.SkillList;
+                        PlayerInfo.ItemList = saveDate.itemList;
+                        PlayerInfo.Inventory = new Inventory(12);
+                        LoadItem();
                         GameLord();
                         return true;
-                    case 2:
+                    case 2: 
                         DeleteCheck();
                         return false;
                     default:
@@ -241,6 +243,8 @@ namespace TeamSparta11
             }
 
         }
+
+        
 
         //저장 슬롯 삭제
         void DeleteCheck()
@@ -307,19 +311,41 @@ namespace TeamSparta11
                         //모험 메서드 인스턴스화해서 호출
                         break;
                     case 0:
+                        SaveItems();
                         Json.JsonSave(PlayerInfo.saveSlot);
+                        PlayerInfo.ItemList.Clear();
                         PlayerInfo.SkillList.Clear();
                         PlayerInfo.Player = null;
+                        PlayerInfo.Inventory = null;
                         //저장및 돌아가기 메서드 인스턴스화해서 호출
                         return;
-                    default:
+
+                     default:
                         Console.WriteLine("\n번호를 다시 입력해주세요\n");
                         break;
                 }
             }
         }
 
+        private void SaveItems()
+        {
+            for (int i = 0; i < PlayerInfo.Inventory.inventory.Count; i++)
+            {
+                PlayerInfo.ItemList.Add(PlayerInfo.Inventory.inventory[i].ItemIndex);
+            }
+        }
+
+        private void LoadItem()
+        {
+            for (int i = 0; i < PlayerInfo.ItemList.Count; i++)
+            {
+                PlayerInfo.Inventory.GetItem(PlayerInfo.ItemList[i]);
+            }
+        }
+
+
         private void InvetoryDisplay()
+
         {
             Console.Clear();
             Console.WriteLine("인벤토리");
@@ -344,8 +370,7 @@ namespace TeamSparta11
                     //상세정보 메서드 인스턴스화해서 호출
                     break;
                 case 0:
-                    GameLord();
-                    break;
+                    return;
                 default:
                     Console.WriteLine("\n번호를 다시 입력해주세요\n");
                     break;
