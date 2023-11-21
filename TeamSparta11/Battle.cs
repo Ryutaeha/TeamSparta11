@@ -193,7 +193,7 @@ namespace TeamSparta11
         static void BasicAttack(PlayerStatus player, MonsterStatus monster)
         {
 
-            if (/*공격자가 몬스터이면*/)
+            if (attacker == "monster")
             {
                 int damage = monster.AD - player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
                 player.HP -= damage;
@@ -203,7 +203,7 @@ namespace TeamSparta11
                 }
 
             }
-            else if (/*공격자가 플레이어면*/)
+            else if (attacker == "player")
             {
                 int damage = player.AD - monster.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
                 monster.HP -= damage;
@@ -218,7 +218,7 @@ namespace TeamSparta11
         static void BasicAttack(PlayerStatus player, BossMonsterStatus boss)
         {
 
-            if (/*공격자가 보스몬스터이면*/)
+            if (attacker == "boss")
             {
                 int damage = boss.AD - player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
                 player.HP -= damage;
@@ -228,7 +228,7 @@ namespace TeamSparta11
                 }
 
             }
-            else if (/*공격자가 플레이어면*/)
+            else if (attacker == "player")
             {
                 int damage = player.AD - boss.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
                 boss.HP -= damage;
@@ -252,25 +252,25 @@ namespace TeamSparta11
             int damage;
             if (skillName == /*스킬배열이름*/[skillName])
             {
-                int damage = monsterStatus.AD - playerStatus.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
-                playerStatus.HP -= damage;
-                if (damage >= playerStatus.HP)
+                damage = monster.AD - player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
+                player.HP -= damage;
+                if (damage >= player.HP)
                 {
-                    playerStatus.HP = 0;
-                    Console.WriteLine($"{playerStatus.Name}이 쓰러졌습니다");
+                    player.HP = 0;
+                    Console.WriteLine($"{player.Name}이 쓰러졌습니다");
 
                 }
 
             }
              
         }
-        public void SkillAttack(PlayerStatus playerStatus, MonsterStatus monsterStatus, Skill skill, Date data)
+        public void SkillAttack(PlayerStatus player, MonsterStatus monster, Skill skill, Date data)
         {
             int skillNum = int.Parse(Console.ReadLine());
             int damage;
             if (skillNum == PlayerInfo.SkillList[skillNum])
             {
-                if (skill.Cost <= playerStatus.MP)
+                if (skill.Cost <= player.MP)
                 {
 
                     if (attacker == "monster")
@@ -290,7 +290,7 @@ namespace TeamSparta11
 
                         damage = player.AD - monster.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
                         monster.HP -= damage;
-                        player.MP -= skills.MP;                        
+                        player.MP -= skill.Cost;                        
                         if (damage >= monster.HP)
                         {
                             monster.HP = 0;
@@ -306,16 +306,16 @@ namespace TeamSparta11
         }
 
 
-        public void SkillAttack(PlayerStatus player, BossMonsterStatus boss/*, Skills skills*/)
+        public void SkillAttack(PlayerStatus player, BossMonsterStatus boss, Skill skill)
         {
             string skillName = Console.ReadLine();
             int damage;
             if (skillName == /*스킬배열이름*/[skillName])
             {
-                if (/*skills.MP <= playerStatus.MP*/)
+                if (skill.Cost <= player.MP)
                 {
 
-                    if (/*공격자가 보스몬스터이면 */)
+                    if (attacker == "boss")
                     {
                         damage = boss.AD - player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
                         player.HP -= damage;
@@ -325,11 +325,11 @@ namespace TeamSparta11
                         }
 
                     }
-                    else if (/*공격자가 플레이어면*/)
+                    else if (attacker == "player")
                     {
                         damage = player.AD - boss.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
                         boss.HP -= damage;
-                        player.MP -= skills.MP;
+                        player.MP -= skill.Cost;
                         if (damage >= boss.HP)
                         {
                             boss.HP = 0;
