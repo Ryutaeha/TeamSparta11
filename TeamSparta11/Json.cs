@@ -16,7 +16,7 @@ internal class Json
         SaveDate saveDate = new SaveDate
         {
 
-            Player = PlayerInfo.player,
+            Player = PlayerInfo.Player,
             SkillList = PlayerInfo.SkillList,
             //Inventory = PlayerInfo.Inventory
 
