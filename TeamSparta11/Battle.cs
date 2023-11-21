@@ -28,32 +28,17 @@ namespace TeamSparta11
             this.rewards = rewards;
         }
 
-
         // 플레이어와 몬스터와 관련된 메소드들은 플레이어와 보스몬스터
-
-
-
         public void BeginBattleScene(List<MonsterStatus> monsters)
         {
-            if (PlayerInfo.Player.Stage <= 5)
-            {
-                GetRandomGoblin();
-            }
-            else if (PlayerInfo.Player.Stage > 5 && PlayerInfo.Player.Stage <= 10)
-            {
-                GetRandomGolem();
-            }
-            else if (PlayerInfo.Player.Stage > 10 && PlayerInfo.Player.Stage <= 15)
-            {
-                GetRandomDragon();
-            }
+            
             while (true) 
             {
                 Console.WriteLine($"Stage: {PlayerInfo.Player.Stage}");
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
                 Console.WriteLine("[내정보]");
-                Console.WriteLine($"LV.{PlayerInfo.Player.Level}\t{PlayerInfo.Player.Name}");
+                Console.WriteLine($"LV.{PlayerInfo.Player.Level}  {PlayerInfo.Player.Name}");
                 Console.WriteLine($"HP {PlayerInfo.Player.HP}/{PlayerInfo.Player.MaxHP}");
                 Console.WriteLine($"MP {PlayerInfo.Player.MP}/{PlayerInfo.Player.MaxMP}");
                 Console.WriteLine();
@@ -185,7 +170,7 @@ namespace TeamSparta11
             Console.WriteLine();
             MonsterBasicAttack(monster);
 
-            //Thread.Sleep(1000);
+            Thread.Sleep(1000);
         }
         // 보스몹
         private void MonsterAttackScene(BossMonsterStatus boss)
@@ -205,6 +190,7 @@ namespace TeamSparta11
                 Console.WriteLine($"{PlayerInfo.Player.Name}의 승리, {monster.Name}의 패배입니다.");
                 PlayerInfo.Player.HP += 20;
                 PlayerInfo.Player.NextEXP += monster.EXP;
+                int UserSelect = Date.UserSelect();
             }
             else
             {
