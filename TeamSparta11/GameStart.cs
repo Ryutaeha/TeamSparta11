@@ -337,7 +337,7 @@ namespace TeamSparta11
             Console.WriteLine("");
             Console.WriteLine("1. 장착관리");
             Console.WriteLine("0. 나가기");
-            int userSelect = Date.userSelect();
+            int userSelect = Date.UserSelect();
 
             switch (userSelect)
             {
