@@ -83,11 +83,11 @@ namespace TeamSparta11
                 Console.WriteLine($"{i + 1}. LV.{monsters[i].Level}\t{monsters[i].Name}\tHP{monsters[i].HP}");
             }
 
-            int choice = Date.UserSelect();
-            if (choice >= 1 && choice <= monsters.Count)
+            int UserSelect = Date.UserSelect();
+            if (UserSelect >= 1 && UserSelect <= monsters.Count)
             {
-                PlayerBasicAttack(monsters[choice - 1]);
-                return monsters[choice - 1];
+                PlayerBasicAttack(monsters[UserSelect - 1]);
+                return monsters[UserSelect - 1];
             }
             Console.WriteLine("첫 번째 몬스터를 선택합니다.");
             return monsters.FirstOrDefault();
@@ -145,31 +145,12 @@ namespace TeamSparta11
 
 
 
-        private void PlayerBasicAttack(MonsterStatus target)
+        private int PlayerBasicAttack(MonsterStatus target)
         {
-            int damage = PlayerInfo.Player.AD - target.DF; // 데미지는 플레이어 공격력 - 몬스터의 방어력
-            target.HP -= damage;
-
-            if (target.HP <= 0)
-            {
-
-                int damage = monster.AD - PlayerInfo.Player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
-                PlayerInfo.Player.HP -= damage;
-                if (damage >= PlayerInfo.Player.HP)
-                {
-                    PlayerInfo.Player.HP = 0;
-                }
-            }
-            else if (attacker == "player")
-            {
-                int damage = PlayerInfo.Player.AD - monster.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
-                monster.HP -= damage;
-                if (damage >= monster.HP)
-                {
-
-                    monster.HP = 0;
-                }
-            }
+            int damage = PlayerInfo.Player.AD - target.DF; // 데미지는 플레이어 공격력 - 몬스터의 방어력           
+            monster.HP -= damage;
+ 
+            return damage;         
         }
 
         private void MonsterBasicAttack(MonsterStatus monster)
