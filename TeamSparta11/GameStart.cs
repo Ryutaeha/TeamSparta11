@@ -167,7 +167,7 @@ namespace TeamSparta11
                 choice = randomIndex;
             }
 
-            PlayerInfo.Player = new PlayerStatus(name, job, 1, 100, 100, 100, 100, 10, 10, 10, 10, 0);
+            PlayerInfo.Player = new PlayerStatus(name, job, 1, 100, 100, 100, 100, 10, 10, 10, 10, 0, 1);
             PlayerInfo.Inventory.GetItem(0);
             PlayerInfo.Inventory.GetItem(1);
         }

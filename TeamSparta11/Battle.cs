@@ -9,9 +9,10 @@ namespace TeamSparta11
 {
     internal class Battle
     {
-        private PlayerStatus player;
+        private PlayerStatus Player;
         private MonsterStatus monster;
         private BossMonsterStatus boss;
+        private MonsterStatus currentTarget;
         private List<IItem> rewards;
         static string attacker;
 
@@ -19,12 +20,12 @@ namespace TeamSparta11
 
         public Battle(PlayerStatus player, MonsterStatus monster)
         {
-            this.player = player;
+            this.Player = player;
             this.monster = monster;
         }
         public Battle(PlayerStatus player, BossMonsterStatus boss, List<IItem> rewards)
         {
-            this.player = player;
+            this.Player = player;
             this.boss = boss;
             this.rewards = rewards;
         }
@@ -34,14 +35,18 @@ namespace TeamSparta11
 
 
 
-        public void BeginBattleScene(MonsterStatus monster)
+        public void BeginBattleScene(List<MonsterStatus> monsters, Skill skill)
         {
             Console.WriteLine("Battle!!");
             Console.WriteLine();
             Console.WriteLine("[몬스터 정보]");
- 
-            //몬스터 수만큼 반복이 필요합니다
-            Console.WriteLine($"LV.{monster.Level}\t{monster.Name}\tHP{monster.HP}");
+
+            currentTarget = ChooseTarget(monsters);
+            for(int i = 0; i < monsters.Count; i++)
+            {
+                Console.WriteLine($"LV.{monsters[i].Level}\t{monsters[i].Name}\tHP{monsters[i].HP}");
+            }
+            
  
             Console.WriteLine();
             Console.WriteLine("[내정보]");
@@ -51,26 +56,46 @@ namespace TeamSparta11
             Console.WriteLine("===============================================================");
 
             // 플레이어나 몬스터가 죽기 전까지 반복
-            while (PlayerInfo.Player.HP > 0 && monster.HP > 0)
+            while (PlayerInfo.Player.HP > 0 && currentTarget.HP > 0)
             {
                 // 플레이어와 몬스터의 스피드에 따라서 선턴 결정
 
-                if (PlayerInfo.Player.Speed > monster.Speed)
+                if (PlayerInfo.Player.Speed > currentTarget.Speed)
 
                 {
-                    PlayerAttackScene(monster);
-                    //MonsterAttackScene(skill, monster); 
+                    PlayerAttackScene(currentTarget);
+                    MonsterAttackScene(monster, skill); 
                 }
 
-                else if (monster.Speed > PlayerInfo.Player.Speed)
+                else if (currentTarget.Speed > PlayerInfo.Player.Speed)
                 {
-                    //MonsterAttackScene(player, monster);
-                    PlayerAttackScene(monster);
+                    MonsterAttackScene(monster, skill);
+                    PlayerAttackScene(currentTarget);
                 }
             }
             // 플레이어 몬스터 둘중 하나가 죽었을때 호출
-            EndBattleScene(monster);
+            EndBattleScene(currentTarget);
         }
+
+        private MonsterStatus ChooseTarget(List<MonsterStatus> monsters)
+        {
+            Console.WriteLine("대상을 선택하세요:");
+            for (int i = 0; i < monsters.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. LV.{monsters[i].Level}\t{monsters[i].Name}\tHP{monsters[i].HP}");
+            }
+
+            int choice = Date.UserSelect();
+            if (choice >= 1 && choice <= monsters.Count)
+            {
+                PlayerBasicAttack(monsters[choice - 1]);
+                return monsters[choice - 1];
+            }
+            Console.WriteLine("첫 번째 몬스터를 선택합니다.");
+            return monsters.FirstOrDefault();
+        }
+
+
 
         public void BeginBattleScene(BossMonsterStatus boss, Skill skill)
         {
@@ -125,35 +150,29 @@ namespace TeamSparta11
 
 
 
-        private void BasicAttack(MonsterStatus monster)
+        private void PlayerBasicAttack(MonsterStatus target)
         {
-
-            if (attacker == "monster")
+            int damage = PlayerInfo.Player.AD - target.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
+            target.HP -= damage;
+            if (damage >= target.HP)
             {
-                int damage = monster.AD - PlayerInfo.Player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
-                PlayerInfo.Player.HP -= damage;
-                if (damage >= PlayerInfo.Player.HP)
-                {
-                    PlayerInfo.Player.HP = 0;
-                    EndBattleScene(monster);
 
-                }
-            }
-            else if (attacker == "player")
-            {
-                int damage = PlayerInfo.Player.AD - monster.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
-                monster.HP -= damage;
-                if (damage >= monster.HP)
-                {
-
-                    monster.HP = 0;
-                }
+                target.HP = 0;
             }
         }
 
-        private void BasicAttack(BossMonsterStatus boss)
+        private void MonsterBasicAttack(MonsterStatus monster)
         {
-            attacker = "boss";
+            int damage = monster.AD - PlayerInfo.Player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
+            PlayerInfo.Player.HP -= damage;
+            if (damage >= PlayerInfo.Player.HP)
+            {
+                PlayerInfo.Player.HP = 0;
+            }
+        }
+
+        private void BossBasicAttack(BossMonsterStatus boss)
+        {
             int damage = boss.AD - PlayerInfo.Player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
             PlayerInfo.Player.HP -= damage;
             if (damage >= PlayerInfo.Player.HP)
@@ -194,12 +213,12 @@ namespace TeamSparta11
         }
 
         // 몬스터와의 배틀이 종료된 후에 실행할 메소드
-        private void EndBattleScene(MonsterStatus monster) //
+        private void EndBattleScene(MonsterStatus target)
         {
             if (PlayerInfo.Player.HP > 0)
             {
-                Console.WriteLine($"{PlayerInfo.Player.Name}의 승리, {monster.Name}의 패배입니다.");
-                PlayerInfo.Player.NextEXP += monster.EXP;
+                Console.WriteLine($"{PlayerInfo.Player.Name}의 승리, {target.Name}의 패배입니다.");
+                PlayerInfo.Player.NextEXP += target.EXP;
             }
             else
             {
@@ -210,7 +229,7 @@ namespace TeamSparta11
         // 보스 몬스터와의 배틀이 종료된 후에 실행할 메소드
         private void EndBattleScene(BossMonsterStatus boss)
         {
-            if (player.HP > 0)
+            if (PlayerInfo.Player.HP > 0)
             {
                 Console.WriteLine($"{PlayerInfo.Player.Name}의 승리, {boss.Name}의 패배입니다.");
                 PlayerInfo.Player.NextEXP += boss.EXP;
@@ -237,8 +256,7 @@ namespace TeamSparta11
                 switch (UserSelect)
                 {
                     case 1:
-                        attacker = "player";
-                        BasicAttack(monster);
+                        PlayerBasicAttack(monster);
                         break;
                     case 2:
                         //스킬 목록 보여주고 그 안에서 또 선택 => SkillNum
