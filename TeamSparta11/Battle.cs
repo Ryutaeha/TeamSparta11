@@ -14,9 +14,6 @@ namespace TeamSparta11
         private BossMonsterStatus boss;
         private MonsterStatus currentTarget;
         private List<IItem> rewards;
-        static string attacker;
-
-
 
         public Battle(PlayerStatus player, MonsterStatus monster)
         {
@@ -35,7 +32,7 @@ namespace TeamSparta11
 
 
 
-        public void BeginBattleScene(List<MonsterStatus> monsters, Skill skill)
+        public void BeginBattleScene(List<MonsterStatus> monsters)
         {
             Console.WriteLine("Battle!!");
             Console.WriteLine();
@@ -64,12 +61,12 @@ namespace TeamSparta11
 
                 {
                     PlayerAttackScene(currentTarget);
-                    MonsterAttackScene(monster, skill); 
+                    MonsterAttackScene(monster); 
                 }
 
                 else if (currentTarget.Speed > PlayerInfo.Player.Speed)
                 {
-                    MonsterAttackScene(monster, skill);
+                    MonsterAttackScene(monster);
                     PlayerAttackScene(currentTarget);
                 }
             }
@@ -97,7 +94,7 @@ namespace TeamSparta11
 
 
 
-        public void BeginBattleScene(BossMonsterStatus boss, Skill skill)
+        public void BeginBattleScene(BossMonsterStatus boss)
         {
             Console.WriteLine("Battle!!");
             Console.WriteLine();
@@ -114,17 +111,14 @@ namespace TeamSparta11
             while (PlayerInfo.Player.HP > 0 && boss.HP > 0)
             {
                 // 플레이어와 몬스터의 스피드에 따라서 선턴 결정
-
                 if (PlayerInfo.Player.Speed > boss.Speed)
-
                 {
                     PlayerAttackScene(boss);
-                    MonsterAttackScene(monster, skill);
+                    MonsterAttackScene(monster);
                 }
-
                 else if (monster.Speed > PlayerInfo.Player.Speed)
                 {
-                    MonsterAttackScene(boss, skill);
+                    MonsterAttackScene(boss);
                     PlayerAttackScene(boss);
                 }
             }
@@ -152,22 +146,25 @@ namespace TeamSparta11
 
         private void PlayerBasicAttack(MonsterStatus target)
         {
-            int damage = PlayerInfo.Player.AD - target.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
+            int damage = PlayerInfo.Player.AD - target.DF; // 데미지는 플레이어 공격력 - 몬스터의 방어력
             target.HP -= damage;
-            if (damage >= target.HP)
-            {
 
+            if (target.HP <= 0)
+            {
                 target.HP = 0;
+                EndBattleScene(target);
             }
         }
 
         private void MonsterBasicAttack(MonsterStatus monster)
         {
-            int damage = monster.AD - PlayerInfo.Player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
+            int damage = monster.AD - PlayerInfo.Player.DF; // 데미지는 몬스터 공격력 - 플레이어 방어력
             PlayerInfo.Player.HP -= damage;
-            if (damage >= PlayerInfo.Player.HP)
+
+            if (PlayerInfo.Player.HP <= 0)
             {
                 PlayerInfo.Player.HP = 0;
+                EndBattleScene(monster);
             }
         }
 
@@ -180,35 +177,26 @@ namespace TeamSparta11
                 PlayerInfo.Player.HP = 0;
             }
         }
-        // 스킬 공격 메소드
-        /*public void SkillAttack(MonsterStatus monster, Skill skill)
-        {
-            skill.Use(monster);
 
-        }
-        public void SkillAttack(BossMonsterStatus bossMonster, Skill skill)
-        {
-            skill.Use(bossMonster);
-        }*/
 
 
         // 몬스터의 턴 메소드
         // 일반몹
-        private void MonsterAttackScene(MonsterStatus monster, Skill skill)
+        private void MonsterAttackScene(MonsterStatus monster)
         {
             Console.WriteLine();
             Console.WriteLine("몬스터의 턴입니다.");
             Console.WriteLine();
-            skill.Use(monster);
+            MonsterBasicAttack(monster);
             Thread.Sleep(1000);
         }
         // 보스몹
-        private void MonsterAttackScene(BossMonsterStatus bossMonster, Skill skill)
+        private void MonsterAttackScene(BossMonsterStatus boss)
         {
             Console.WriteLine();
             Console.WriteLine("보스몬스터의 턴입니다.");
             Console.WriteLine();
-            skill.Use(bossMonster);
+            BossBasicAttack(boss);
             Thread.Sleep(1000);
         }
 
