@@ -167,7 +167,7 @@ namespace TeamSparta11
                 choice = randomIndex;
             }
 
-            PlayerInfo.player = new PlayerStatus(name, job, 1, 100, 100, 100, 100, 10, 10, 10, 10, 0);
+            PlayerInfo.Player = new PlayerStatus(name, job, 1, 100, 100, 100, 100, 10, 10, 10, 10, 0);
             PlayerInfo.Inventory.GetItem(0);
             PlayerInfo.Inventory.GetItem(1);
         }
@@ -309,7 +309,6 @@ namespace TeamSparta11
                         //상점 메서드 인스턴스화해서 호출
                         break;
                     case 4:
-                        //모험 메서드 인스턴스화해서 호출
                         break;
                     case 0:
                         Json.JsonSave(PlayerInfo.saveSlot);
@@ -341,7 +340,7 @@ namespace TeamSparta11
             Console.WriteLine("");
             Console.WriteLine("1. 장착관리");
             Console.WriteLine("0. 나가기");
-            int userSelect = Date.userSelect();
+            int userSelect = Date.UserSelect();
 
             switch (userSelect)
             {

@@ -77,9 +77,7 @@ namespace Teamproject
             AD = ad;
             DF = df;
             EXP = exp;
-            Stage = stage;
-
->>>>>>>>    
+            Stage = stage;   
         }
     }
 }

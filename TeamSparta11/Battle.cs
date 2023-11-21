@@ -39,10 +39,10 @@ namespace TeamSparta11
             Console.WriteLine("Battle!!");
             Console.WriteLine();
             Console.WriteLine("[몬스터 정보]");
-
+ 
             //몬스터 수만큼 반복이 필요합니다
             Console.WriteLine($"LV.{monster.Level}\t{monster.Name}\tHP{monster.HP}");
-
+ 
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine($"LV.{PlayerInfo.Player.Level}\t{PlayerInfo.Player.Name}");
@@ -125,7 +125,7 @@ namespace TeamSparta11
 
 
 
-        static void BasicAttack(MonsterStatus monster)
+        private void BasicAttack(MonsterStatus monster)
         {
 
             if (attacker == "monster")
@@ -135,6 +135,7 @@ namespace TeamSparta11
                 if (damage >= PlayerInfo.Player.HP)
                 {
                     PlayerInfo.Player.HP = 0;
+                    EndBattleScene(monster);
 
                 }
             }
@@ -150,7 +151,7 @@ namespace TeamSparta11
             }
         }
 
-        static void BasicAttack(BossMonsterStatus boss)
+        private void BasicAttack(BossMonsterStatus boss)
         {
             attacker = "boss";
             int damage = boss.AD - PlayerInfo.Player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
@@ -161,7 +162,7 @@ namespace TeamSparta11
             }
         }
         // 스킬 공격 메소드
-        public void SkillAttack(MonsterStatus monster, Skill skill)
+        /*public void SkillAttack(MonsterStatus monster, Skill skill)
         {
             skill.Use(monster);
 
@@ -169,7 +170,7 @@ namespace TeamSparta11
         public void SkillAttack(BossMonsterStatus bossMonster, Skill skill)
         {
             skill.Use(bossMonster);
-        }
+        }*/
 
 
         // 몬스터의 턴 메소드
@@ -179,7 +180,7 @@ namespace TeamSparta11
             Console.WriteLine();
             Console.WriteLine("몬스터의 턴입니다.");
             Console.WriteLine();
-            SkillAttack(monster, skill);
+            skill.Use(monster);
             Thread.Sleep(1000);
         }
         // 보스몹
@@ -188,7 +189,7 @@ namespace TeamSparta11
             Console.WriteLine();
             Console.WriteLine("보스몬스터의 턴입니다.");
             Console.WriteLine();
-            SkillAttack(bossMonster, skill);
+            skill.Use(bossMonster);
             Thread.Sleep(1000);
         }
 
@@ -198,7 +199,7 @@ namespace TeamSparta11
             if (PlayerInfo.Player.HP > 0)
             {
                 Console.WriteLine($"{PlayerInfo.Player.Name}의 승리, {monster.Name}의 패배입니다.");
-                PlayerInfo.Player.EXP += monster.EXP;
+                PlayerInfo.Player.NextEXP += monster.EXP;
             }
             else
             {
@@ -212,7 +213,7 @@ namespace TeamSparta11
             if (player.HP > 0)
             {
                 Console.WriteLine($"{PlayerInfo.Player.Name}의 승리, {boss.Name}의 패배입니다.");
-                PlayerInfo.Player.EXP += boss.EXP;
+                PlayerInfo.Player.NextEXP += boss.EXP;
             }
             else
             {
