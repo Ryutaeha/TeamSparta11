@@ -15,8 +15,7 @@ namespace TeamSparta11
             //GameStart 인스턴스화
             //GameStart gameStart = new GameStart();
             //인스턴스화 된 gameStart의 Game 메서드 호출
-
-            gameStart.Game();
+            //gameStart.Game();
 
             // Battle 클래스의 생성자를 이용하여 Battle 객체를 생성
 
