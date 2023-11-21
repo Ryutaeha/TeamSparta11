@@ -378,8 +378,7 @@ namespace TeamSparta11
                         ItemUseDisplay();
                         break;
                     case 0:
-                        GameLord();
-                        break;
+                        return;
                     default:
                         Console.WriteLine("\n번호를 다시 입력해주세요\n");
                         break;
@@ -408,7 +407,7 @@ namespace TeamSparta11
                 int userSelect = Date.UserSelect();
                 if (userSelect == 0)
                 {
-                    InvetoryDisplay();
+                    return;
                 }
                 else
                 {
@@ -439,8 +438,7 @@ namespace TeamSparta11
                         //상세정보 메서드 인스턴스화해서 호출
                         break;
                     case 0:
-                        GameLord();
-                        break;
+                        return;
                     default:
                         Console.WriteLine("\n번호를 다시 입력해주세요\n");
                         break;
