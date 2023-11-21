@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Teamproject;
-
 namespace TeamSparta11
 {
     internal class GameStart
@@ -144,7 +143,7 @@ namespace TeamSparta11
             {
                 jobSkill = Date.wizardSkill;
             }
-            string[] job = Date.jobClass[UserSelect];
+            string[] job = Date.jobClass[UserSelect-1];
 
             // Random 클래스를 사용하여 무작위로 2개의 인덱스 선택
             Random random = new Random();
@@ -291,7 +290,7 @@ namespace TeamSparta11
                 switch (UserSelect)
                 {
                     case 1:
-                        //상세정보 메서드 인스턴스화해서 호출
+                        PlayerInfomation();
                         break;
                     case 2:
                         //인벤토리 메서드 인스턴스화해서 호출
@@ -314,7 +313,21 @@ namespace TeamSparta11
                 }
             }
         }
-    }
+        public void PlayerInfomation()
+        {
+            Date.Line();
 
+            Console.WriteLine($"\nLV. {PlayerInfo.Player.Level}  {PlayerInfo.Player.Name} ({PlayerInfo.Player.Job})     현재 스테이지 : {PlayerInfo.Player.Stage}");
+            Console.WriteLine($"HP : {PlayerInfo.Player.HP} / {PlayerInfo.Player.MaxHP}         MP : {PlayerInfo.Player.MP} / {PlayerInfo.Player.MaxMP}");
+            Console.WriteLine($"공격력 : {PlayerInfo.Player.AD}    방어력 : {PlayerInfo.Player.DF}    스피드 : {PlayerInfo.Player.Speed}");
+            Console.WriteLine($"현재 경험치 : {PlayerInfo.Player.EXP}        골드 : {PlayerInfo.Player.Gold}\n");
+            Console.WriteLine("현재 가지고 있는 스킬 목록\n");
+            for(int i = 0; i <PlayerInfo.SkillList.Count; i++)
+            {
+                Console.WriteLine($"스킬명 : {PlayerInfo.SkillList[i].Name.PadRight(10)} 데미지 : {PlayerInfo.SkillList[i].Ability} 마나 소모량 : {PlayerInfo.SkillList[i].Cost} 설명 : {PlayerInfo.SkillList[i].SkillInfo}");
+            }
+        }
+    }
+    
     
 }
