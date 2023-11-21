@@ -79,6 +79,7 @@ namespace Teamproject
             EXP = exp;
             Stage = stage;
 
+>>>>>>>>    
         }
     }
 }

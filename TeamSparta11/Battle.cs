@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Collections.Generic;
+using System.Numerics;
 using System.Threading;
 using System.Xml.Linq;
 using Teamproject;
@@ -35,7 +36,7 @@ namespace TeamSparta11
 
 
 
-        public void BeginBattleScene(PlayerStatus player, MonsterStatus monster)
+        public void BeginBattleScene(MonsterStatus monster)
         {
             Console.WriteLine("Battle!!");
             Console.WriteLine();
@@ -43,9 +44,9 @@ namespace TeamSparta11
             Console.WriteLine($"LV.{monster.Level}\t{monster.Name}\tHP{monster.HP}");
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine($"LV.{player.Level}\t{player.Name}");
-            Console.WriteLine($"HP {player.HP}/{player.MaxHP}");
-            Console.WriteLine($"MP {player.MP}/{player.MaxMP}");
+            Console.WriteLine($"LV.{PlayerInfo.Player.Level}\t{PlayerInfo.Player.Name}");
+            Console.WriteLine($"HP {PlayerInfo.Player.HP}/{PlayerInfo.Player.MaxHP}");
+            Console.WriteLine($"MP {PlayerInfo.Player.MP}/{PlayerInfo.Player.MaxMP}");
             Console.WriteLine("===============================================================");
 
             // 플레이어나 몬스터가 죽기 전까지 반복
@@ -54,14 +55,14 @@ namespace TeamSparta11
                 // 플레이어와 몬스터의 스피드에 따라서 선턴 결정
                 if (player.Speed > monster.Speed)
                 {
-                    PlayerAttackScene( player,  monster); 
-                    MonsterAttackScene(player, monster); 
+                    PlayerAttackScene(monster); 
+                    //MonsterAttackScene(skill, monster); 
                 }
 
                 else if (monster.Speed > player.Speed)
                 {
-                    MonsterAttackScene(player, monster);
-                    PlayerAttackScene( player,  monster);
+                    //MonsterAttackScene(player, monster);
+                    PlayerAttackScene(monster);
                 }
                 else
                 {
@@ -69,10 +70,10 @@ namespace TeamSparta11
                 }
             }
             // 플레이어 몬스터 둘중 하나가 죽었을때 호출
-            EndBattleScene(player, monster);
+            EndBattleScene(monster);
         }
 
-        public void BeginBattleScene(PlayerStatus player, BossMonsterStatus boss)
+        public void BeginBattleScene(BossMonsterStatus boss)
         {
             Console.WriteLine("Battle!!");
             Console.WriteLine();
@@ -80,9 +81,9 @@ namespace TeamSparta11
             Console.WriteLine($"LV.{boss.Level}\t{boss.Name}\tHP{boss.HP}");
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine($"LV.{player.Level}\t{player.Name}");
-            Console.WriteLine($"HP {player.HP}/{player.MaxHP}");
-            Console.WriteLine($"MP {player.MP}/{player.MaxMP}");
+            Console.WriteLine($"LV.{PlayerInfo.Player.Level}\t{PlayerInfo.Player.Name}");
+            Console.WriteLine($"HP {PlayerInfo.Player.HP}/{PlayerInfo.Player.MaxHP}");
+            Console.WriteLine($"MP {PlayerInfo.Player.MP}/{PlayerInfo.Player.MaxMP}");
             Console.WriteLine("===============================================================");
 
             // 플레이어나 몬스터가 죽기 전까지 반복
@@ -91,14 +92,14 @@ namespace TeamSparta11
                 // 플레이어와 몬스터의 스피드에 따라서 선턴 결정
                 if (player.Speed > boss.Speed)
                 {
-                    PlayerAttackScene(player, boss);
-                    MonsterAttackScene(player, boss);
+                    PlayerAttackScene(boss);
+                    //MonsterAttackScene(player, boss);
                 }
 
                 else if (monster.Speed > player.Speed)
                 {
-                    MonsterAttackScene(player, boss);
-                    PlayerAttackScene(player, boss);
+                    //MonsterAttackScene(player, boss);
+                    PlayerAttackScene(boss);
                 }
                 else
                 {
@@ -106,7 +107,7 @@ namespace TeamSparta11
                 }
             }
             // 플레이어 몬스터 둘중 하나가 죽었을때 호출
-            EndBattleScene(player, monster);
+            EndBattleScene(monster);
         }
 
 
@@ -114,7 +115,7 @@ namespace TeamSparta11
 
 
         // 플레이어 턴일때 실행할 메소드
-        private void PlayerAttackScene(PlayerStatus player, MonsterStatus monster)
+        private void PlayerAttackScene(MonsterStatus monster)
         {
             Console.WriteLine();
             Console.WriteLine("플레이어의 턴입니다.");
@@ -130,6 +131,7 @@ namespace TeamSparta11
                 {
                     case 1:
                         attacker = "player";
+                        BasicAttack(monster);
                         break;
                     case 2:
                         //스킬 목록 보여주고 그 안에서 또 선택 => SkillNum
@@ -149,8 +151,7 @@ namespace TeamSparta11
 
         }
 
-
-        private void PlayerAttackScene(PlayerStatus player, BossMonsterStatus boss)
+        private void PlayerAttackScene(BossMonsterStatus boss)
         {
             Console.WriteLine();
             Console.WriteLine("플레이어의 턴입니다.");
@@ -161,11 +162,12 @@ namespace TeamSparta11
             Console.Write(">>");
             while (true)
             {
-                int userSelect = Date.userSelect();
+                int userSelect = Date.UserSelect();
                 switch (userSelect)
                 {
                     case 1:
-
+                        attacker = "player";
+                        BasicAttack(boss);
                         break;
                     case 2:
                         //스킬 목록 보여주고 그 안에서 또 선택 => SkillNum
@@ -190,22 +192,22 @@ namespace TeamSparta11
 
 
 
-        static void BasicAttack(PlayerStatus player, MonsterStatus monster)
+        static void BasicAttack(MonsterStatus monster)
         {
 
             if (attacker == "monster")
             {
-                int damage = monster.AD - player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
-                player.HP -= damage;
-                if (damage >= player.HP)
+                int damage = monster.AD - PlayerInfo.Player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
+                PlayerInfo.Player.HP -= damage;
+                if (damage >= PlayerInfo.Player.HP)
                 {
-                    player.HP = 0;
+                    PlayerInfo.Player.HP = 0;
                 }
 
             }
             else if (attacker == "player")
             {
-                int damage = player.AD - monster.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
+                int damage = PlayerInfo.Player.AD - monster.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
                 monster.HP -= damage;
                 if (damage >= monster.HP)
                 {
@@ -215,22 +217,22 @@ namespace TeamSparta11
             }
         }
 
-        static void BasicAttack(PlayerStatus player, BossMonsterStatus boss)
+        static void BasicAttack(BossMonsterStatus boss)
         {
 
             if (attacker == "boss")
             {
-                int damage = boss.AD - player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
-                player.HP -= damage;
-                if (damage >= player.HP)
+                int damage = boss.AD - PlayerInfo.Player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
+                PlayerInfo.Player.HP -= damage;
+                if (damage >= PlayerInfo.Player.HP)
                 {
-                    player.HP = 0;
+                    PlayerInfo.Player.HP = 0;
                 }
 
             }
             else if (attacker == "player")
             {
-                int damage = player.AD - boss.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
+                int damage = PlayerInfo.Player.AD - boss.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
                 boss.HP -= damage;
                 if (damage >= boss.HP)
                 {
@@ -238,162 +240,63 @@ namespace TeamSparta11
                 }
             }
         }
-
-
-
-
-
-
-
         // 스킬 공격 메소드
-        public void SkillAttack(PlayerStatus player, MonsterStatus monster/*, Skills skills*/)
+        public void SkillAttack(MonsterStatus monster, Skill skill)
         {
-            string skillName = Console.ReadLine();
-            int damage;
-            if (skillName == /*스킬배열이름*/[skillName])
-            {
-                damage = monster.AD - player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
-                player.HP -= damage;
-                if (damage >= player.HP)
-                {
-                    player.HP = 0;
-                    Console.WriteLine($"{player.Name}이 쓰러졌습니다");
-
-                }
-
-            }
+            skill.Use(monster);
              
         }
-        public void SkillAttack(PlayerStatus player, MonsterStatus monster, Skill skill, Date data)
+        public void SkillAttack(BossMonsterStatus bossMonster, Skill skill)
         {
-            int skillNum = int.Parse(Console.ReadLine());
-            int damage;
-            if (skillNum == PlayerInfo.SkillList[skillNum])
-            {
-                if (skill.Cost <= player.MP)
-                {
-
-                    if (attacker == "monster")
-                    {
-                        damage = monster.AD - player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
-                        player.HP -= damage;
-                        if (damage >= player.HP)
-                        {
-
-                            player.HP = 0;
-
-                        }
-
-                    }
-                    else if (attacker == "player")
-                    {
-
-                        damage = player.AD - monster.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
-                        monster.HP -= damage;
-                        player.MP -= skill.Cost;                        
-                        if (damage >= monster.HP)
-                        {
-                            monster.HP = 0;
-
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("MP가 부족합니다");
-                }
-            }
+            skill.Use(bossMonster);
         }
-
-
-        public void SkillAttack(PlayerStatus player, BossMonsterStatus boss, Skill skill)
-        {
-            string skillName = Console.ReadLine();
-            int damage;
-            if (skillName == /*스킬배열이름*/[skillName])
-            {
-                if (skill.Cost <= player.MP)
-                {
-
-                    if (attacker == "boss")
-                    {
-                        damage = boss.AD - player.DF; //데미지는 몬스터 공격력 - 플레이어 방어력
-                        player.HP -= damage;
-                        if (damage >= player.HP)
-                        {
-                            player.HP = 0;
-                        }
-
-                    }
-                    else if (attacker == "player")
-                    {
-                        damage = player.AD - boss.DF; //데미지는 플레이어 공격력 - 몬스터의 방어력
-                        boss.HP -= damage;
-                        player.MP -= skill.Cost;
-                        if (damage >= boss.HP)
-                        {
-                            boss.HP = 0;
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("MP가 부족합니다");
-                }
-            }
-        }
-
-
-
 
 
         // 몬스터의 턴 메소드
         // 일반몹
-        private void MonsterAttackScene(PlayerStatus player, MonsterStatus monster)
+        private void MonsterAttackScene(MonsterStatus monster, Skill skill)
         {
             Console.WriteLine();
             Console.WriteLine("몬스터의 턴입니다.");
             Console.WriteLine();
-            BasicAttack(player, monster);
+            SkillAttack(monster, skill);
             Thread.Sleep(1000);
         }
         // 보스몹
-        private void MonsterAttackScene(PlayerStatus player, BossMonsterStatus boss)
+        private void MonsterAttackScene(BossMonsterStatus bossMonster, Skill skill)
         {
             Console.WriteLine();
             Console.WriteLine("보스몬스터의 턴입니다.");
             Console.WriteLine();
-            BasicAttack(player, boss);
+            SkillAttack(bossMonster, skill);
             Thread.Sleep(1000);
         }
 
-
-
         // 몬스터와의 배틀이 종료된 후에 실행할 메소드
-        private void EndBattleScene(PlayerStatus player, MonsterStatus monster) //
+        private void EndBattleScene(MonsterStatus monster) //
         {
-            if (player.HP > 0)
+            if (PlayerInfo.Player.HP > 0)
             {
-                Console.WriteLine($"{player.Name}의 승리, {monster.Name}의 패배입니다.");
-                // 경험치를 주는 내용
+                Console.WriteLine($"{PlayerInfo.Player.Name}의 승리, {monster.Name}의 패배입니다.");
+                PlayerInfo.Player.EXP += monster.EXP;
             }
             else
             {
-                Console.WriteLine($"{monster.Name}의 승리, {player.Name}의 패배입니다.");
+                Console.WriteLine($"{monster.Name}의 승리, {PlayerInfo.Player.Name}의 패배입니다.");
             }
         }
 
         // 보스 몬스터와의 배틀이 종료된 후에 실행할 메소드
-        private void EndBattleScene(PlayerStatus player, BossMonsterStatus boss) //
+        private void EndBattleScene(BossMonsterStatus boss)
         {
             if (player.HP > 0)
             {
-                Console.WriteLine($"{player.Name}의 승리, {boss.Name}의 패배입니다.");
+                Console.WriteLine($"{PlayerInfo.Player.Name}의 승리, {boss.Name}의 패배입니다.");
                 // 보상을 주는 내용, 경험치를 주는 내용
             }
             else
             {
-                Console.WriteLine($"{boss.Name}의 승리, {player.Name}의 패배입니다.");
+                Console.WriteLine($"{boss.Name}의 승리, {PlayerInfo.Player.Name}의 패배입니다.");
             }
         }
 
