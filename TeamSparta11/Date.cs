@@ -22,11 +22,11 @@ internal class Date
 
     }
 
-    public static DataTable ItemDataTable = new DataTable();
-    public static DataTable EquipmentDataTable = new DataTable();
-    public static DataTable SuppliesDataTable = new DataTable();
+    public static DataTable ItemDateTable = new DataTable();
+    public static DataTable EquipmentDateTable = new DataTable();
+    public static DataTable SuppliesDateTable = new DataTable();
 
-    internal static void ItemDataTableSetting()
+    internal static void ItemDateTableSetting()
     {
         // 테이블 컬럼 생성 및 기본키 지정
         #region
@@ -35,40 +35,40 @@ internal class Date
             table.Columns.Add(columnName, columnType);
         };
 
-        addColumn(ItemDataTable, "ItemIndex", typeof(int));
-        addColumn(ItemDataTable, "Name", typeof(string));
-        addColumn(ItemDataTable, "Explain", typeof(string));
-        addColumn(ItemDataTable, "ItemType", typeof(int));
-        addColumn(ItemDataTable, "ItemPrice", typeof(int));
+        addColumn(ItemDateTable, "ItemIndex", typeof(int));
+        addColumn(ItemDateTable, "Name", typeof(string));
+        addColumn(ItemDateTable, "Explain", typeof(string));
+        addColumn(ItemDateTable, "ItemType", typeof(int));
+        addColumn(ItemDateTable, "ItemPrice", typeof(int));
 
-        DataColumn[] itemDataTableKey = new DataColumn[1];
-        itemDataTableKey[0] = ItemDataTable.Columns["ItemIndex"];
-        ItemDataTable.PrimaryKey = itemDataTableKey;
+        DataColumn[] ItemDateTableKey = new DataColumn[1];
+        ItemDateTableKey[0] = ItemDateTable.Columns["ItemIndex"];
+        ItemDateTable.PrimaryKey = ItemDateTableKey;
 
-        addColumn(EquipmentDataTable, "EquipmentIndex", typeof(int));
-        addColumn(EquipmentDataTable, "EquipmentType", typeof(int));
-        addColumn(EquipmentDataTable, "MaxHP", typeof(int));
-        addColumn(EquipmentDataTable, "MaxMp", typeof(int));
-        addColumn(EquipmentDataTable, "Speed", typeof(int));
-        addColumn(EquipmentDataTable, "AD", typeof(int));
-        addColumn(EquipmentDataTable, "DF", typeof(int));
+        addColumn(EquipmentDateTable, "EquipmentIndex", typeof(int));
+        addColumn(EquipmentDateTable, "EquipmentType", typeof(int));
+        addColumn(EquipmentDateTable, "MaxHP", typeof(int));
+        addColumn(EquipmentDateTable, "MaxMp", typeof(int));
+        addColumn(EquipmentDateTable, "Speed", typeof(int));
+        addColumn(EquipmentDateTable, "AD", typeof(int));
+        addColumn(EquipmentDateTable, "DF", typeof(int));
 
-        DataColumn[] equipmentDataTableKey = new DataColumn[1];
-        equipmentDataTableKey[0] = EquipmentDataTable.Columns["EquipmentIndex"];
-        EquipmentDataTable.PrimaryKey = equipmentDataTableKey;
+        DataColumn[] EquipmentDateTableKey = new DataColumn[1];
+        EquipmentDateTableKey[0] = EquipmentDateTable.Columns["EquipmentIndex"];
+        EquipmentDateTable.PrimaryKey = EquipmentDateTableKey;
 
         #endregion
 
         // 아이템 데이터 테이블
         // { Index, Name, Explain, ItemType, ItemPrice }
-        ItemDataTable.Rows.Add(new object[] { 0, "나무 칼", "나무로 만든 칼", 0, 20 });
-        ItemDataTable.Rows.Add(new object[] { 1, "돌 칼", "돌로 만든 칼", 0, 20 });
-        ItemDataTable.Rows.Add(new object[] { 2, "체력 포션", "기초적인 체력포션이다", 1, 50 });
+        ItemDateTable.Rows.Add(new object[] { 0, "나무 칼", "나무로 만든 칼", 0, 20 });
+        ItemDateTable.Rows.Add(new object[] { 1, "돌 칼", "돌로 만든 칼", 0, 20 });
+        ItemDateTable.Rows.Add(new object[] { 2, "체력 포션", "기초적인 체력포션이다", 1, 50 });
 
         // 장비 아이템 스텟 테이블
         // { Index, EquipmentType, MaxHP, MaxMp, Speed, AD, DF }
-        EquipmentDataTable.Rows.Add(new object[] { 0, 0, 0, 0, 0, 5, 0 });
-        EquipmentDataTable.Rows.Add(new object[] { 1, 0, 0, 0, 0, 10, 0 });
+        EquipmentDateTable.Rows.Add(new object[] { 0, 0, 0, 0, 0, 5, 0 });
+        EquipmentDateTable.Rows.Add(new object[] { 1, 0, 0, 0, 0, 10, 0 });
     }
 
     // 몬스터 정리

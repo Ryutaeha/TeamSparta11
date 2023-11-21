@@ -21,7 +21,7 @@ namespace TeamSparta11
 
         public void GetItem(int Index, int piece = 1)
         {
-            DataRow? itemdata = Date.ItemDataTable.Rows.Find(Index);
+            DataRow? itemdata = Date.ItemDateTable.Rows.Find(Index);
             int itemType = Convert.ToInt32(itemdata["ItemType"]);
 
             switch (itemType)
