@@ -142,8 +142,8 @@ internal class Date
     {
         { 0 , new string[] {"강타", "3", "5", "쌔게때리기"} },
         { 1 , new string[] {"돌진", "6", "8", "전장으로~"} },
-        { 2 , new string[] {"마무리 일격", "10", "13", "아직 한발 남았다"} },
-        { 3 , new string[] {"두개골 부시기", "15", "17", "뚝!빼기"} }
+        { 2 , new string[] {"일격필살", "10", "13", "아직 한발 남았다"} },
+        { 3 , new string[] {"부시기", "15", "17", "뚝!빼기"} }
     };
     internal static Dictionary<int, string[]> banditSkill = new Dictionary<int, string[]>
     {
@@ -154,10 +154,10 @@ internal class Date
     };
     internal static Dictionary<int, string[]> wizardSkill = new Dictionary<int, string[]>
     {
-        { 0 , new string[] {"지팡이 던지기(물리)", "3", "5", "마법사(물리)"} },
+        { 0 , new string[] {"지팡이(물리)", "3", "5", "마법사(물리)"} },
         { 1 , new string[] {"화염구", "6", "8", "단단묵직"} },
         { 2 , new string[] {"물벼락", "10", "13", "X북이 물대포!"} },
-        { 3 , new string[] { "블랙홀", "15", "17", "히어로스 오브 더 X톰" } }
+        { 3 , new string[] {"블랙홀", "15", "17", "히어로스 오브 더 X톰" } }
     };
 
 
@@ -167,18 +167,19 @@ internal class SaveDate
 {
     public PlayerStatus Player { get; set; }
     public List<Skill> SkillList { get; set; }
-    //public Inventory Inventory { get; set; }
+    public List<int> itemList { get; set; }
 }
 //세이브 가져올 객체 모음
 internal class PlayerInfo
 {
+    //저장 슬롯
+    public static int saveSlot;
     //가지고 있는 스킬 목록
     public static List<Skill> SkillList = new List<Skill>();
     //새로 만들거나 로드해올 때 끌어다 쓸 객체
     public static PlayerStatus Player = null;
-    //저장 슬롯
-    public static int saveSlot;
     //유저의 인벤토리 클래스, 매개변수는 인벤토리 크기이며 현재는 따로 변수가 없어 직접 지정했습니다.
-    public static Inventory Inventory = new Inventory(12);
-
+    public static Inventory Inventory = null;
+    //로딩할때 들고있는 아이템 인덱스
+    public static List<int> ItemList = new List<int>();
 }
