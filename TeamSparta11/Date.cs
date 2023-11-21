@@ -5,6 +5,7 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using Teamproject;
+using TeamSparta11;
 
 // 몬스터 정보나 기타 등등의 일반적인 데이터를 담는 클래스
 internal class Date
@@ -21,38 +22,53 @@ internal class Date
 
     }
 
-    public static DataTable ItemDataTable = new DataTable();
-    public static DataTable SuppliesDataTable = new DataTable();
+    public static DataTable ItemDateTable = new DataTable();
+    public static DataTable EquipmentDateTable = new DataTable();
+    public static DataTable SuppliesDateTable = new DataTable();
 
-    internal static void ItemDataTableSetting()
+    internal static void ItemDateTableSetting()
     {
+        // 테이블 컬럼 생성 및 기본키 지정
+        #region
         Action<DataTable, string, Type> addColumn = (table, columnName, columnType) =>
         {
             table.Columns.Add(columnName, columnType);
         };
 
-        // 아이템 테이블 컬럼 생성 및 기본키 지정
-        addColumn(ItemDataTable, "ItemIndex", typeof(int));
-        addColumn(ItemDataTable, "Name", typeof(string));
-        addColumn(ItemDataTable, "Explain", typeof(string));
-        addColumn(ItemDataTable, "ItemType", typeof(int));
-        addColumn(ItemDataTable, "ItemPrice", typeof(int));
+        addColumn(ItemDateTable, "ItemIndex", typeof(int));
+        addColumn(ItemDateTable, "Name", typeof(string));
+        addColumn(ItemDateTable, "Explain", typeof(string));
+        addColumn(ItemDateTable, "ItemType", typeof(int));
+        addColumn(ItemDateTable, "ItemPrice", typeof(int));
 
-        DataColumn[] ItemDataTableKey = new DataColumn[1];
-        ItemDataTableKey[0] = ItemDataTable.Columns["ItemIndex"];
-        ItemDataTable.PrimaryKey = ItemDataTableKey;
+        DataColumn[] ItemDateTableKey = new DataColumn[1];
+        ItemDateTableKey[0] = ItemDateTable.Columns["ItemIndex"];
+        ItemDateTable.PrimaryKey = ItemDateTableKey;
 
-        // { Index, Name, Explain, ItemType, ItemPrice, EquipmentType, MaxHP, Speed, AD, DF }
-        ItemDataTable.Rows.Add(new object[] { 0, "나무 칼", "나무로 만든 칼", 0, 20 });
-        ItemDataTable.Rows.Add(new object[] { 1, "돌 칼", "돌로 만든 칼", 0, 20 });
-        ItemDataTable.Rows.Add(new object[] { 2, "체력 포션", "기초적인 체력포션이다", 1, 50 });
+        addColumn(EquipmentDateTable, "EquipmentIndex", typeof(int));
+        addColumn(EquipmentDateTable, "EquipmentType", typeof(int));
+        addColumn(EquipmentDateTable, "MaxHP", typeof(int));
+        addColumn(EquipmentDateTable, "MaxMp", typeof(int));
+        addColumn(EquipmentDateTable, "Speed", typeof(int));
+        addColumn(EquipmentDateTable, "AD", typeof(int));
+        addColumn(EquipmentDateTable, "DF", typeof(int));
+
+        DataColumn[] EquipmentDateTableKey = new DataColumn[1];
+        EquipmentDateTableKey[0] = EquipmentDateTable.Columns["EquipmentIndex"];
+        EquipmentDateTable.PrimaryKey = EquipmentDateTableKey;
+
+        #endregion
+
+        // 아이템 데이터 테이블
+        // { Index, Name, Explain, ItemType, ItemPrice }
+        ItemDateTable.Rows.Add(new object[] { 0, "나무 칼", "나무로 만든 칼", 0, 20 });
+        ItemDateTable.Rows.Add(new object[] { 1, "돌 칼", "돌로 만든 칼", 0, 20 });
+        ItemDateTable.Rows.Add(new object[] { 2, "체력 포션", "기초적인 체력포션이다", 1, 50 });
 
         // 장비 아이템 스텟 테이블
-        //addColumn(equipmentDataTable, "EquipmentType", typeof(int));
-        //addColumn(equipmentDataTable, "MaxHP", typeof(int));
-        //addColumn(equipmentDataTable, "Speed", typeof(int));
-        //addColumn(equipmentDataTable, "AD", typeof(int));
-        //addColumn(equipmentDataTable, "DF", typeof(int));
+        // { Index, EquipmentType, MaxHP, MaxMp, Speed, AD, DF }
+        EquipmentDateTable.Rows.Add(new object[] { 0, 0, 0, 0, 0, 5, 0 });
+        EquipmentDateTable.Rows.Add(new object[] { 1, 0, 0, 0, 0, 10, 0 });
     }
 
     // 몬스터 정리
@@ -151,6 +167,7 @@ internal class SaveDate
 {
     public PlayerStatus Player { get; set; }
     public List<Skill> SkillList { get; set; }
+    //public Inventory Inventory { get; set; }
 }
 //세이브 가져올 객체 모음
 internal class PlayerInfo
@@ -161,5 +178,7 @@ internal class PlayerInfo
     public static PlayerStatus Player = null;
     //저장 슬롯
     public static int saveSlot;
+    //유저의 인벤토리 클래스, 매개변수는 인벤토리 크기이며 현재는 따로 변수가 없어 직접 지정했습니다.
+    public static Inventory Inventory = new Inventory(12);
 
 }

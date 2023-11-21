@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -167,7 +168,8 @@ namespace TeamSparta11
             }
 
             PlayerInfo.Player = new PlayerStatus(name, job[1], int.Parse(job[2]), int.Parse(job[3]), int.Parse(job[4]), int.Parse(job[5]), int.Parse(job[6]), int.Parse(job[7]), int.Parse(job[8]), int.Parse(job[9]), int.Parse(job[10]), int.Parse(job[11]),1);
-
+            PlayerInfo.Inventory.GetItem(0);
+            PlayerInfo.Inventory.GetItem(1);
         }
         // 이미 저장되어있는 슬롯 제어
         void LordCharacter()
@@ -231,6 +233,7 @@ namespace TeamSparta11
 
                         PlayerInfo.Player = Json.JsonLoad(saveSlot).Player;
                         PlayerInfo.SkillList = Json.JsonLoad(saveSlot).SkillList;
+                        //PlayerInfo.Inventory = Json.JsonLoad(saveSlot).Inventory;
                         GameLord();
                         return true;
                     case 2:
@@ -275,7 +278,7 @@ namespace TeamSparta11
             string filePath = "..\\..\\..\\dates\\Save" + PlayerInfo.saveSlot + ".json";
             File.Delete(filePath);
 
-            Console.WriteLine("파일이 정삭적으로 삭제되었습니다.");
+            Console.WriteLine("파일이 정상적으로 삭제되었습니다.");
         }
 
         //게임 시작시 나오는 화면
@@ -300,6 +303,7 @@ namespace TeamSparta11
                         break;
                     case 2:
                         //인벤토리 메서드 인스턴스화해서 호출
+                        InvetoryDisplay();
                         break; 
                     case 3:
                         //상점 메서드 인스턴스화해서 호출
@@ -317,6 +321,39 @@ namespace TeamSparta11
                         Console.WriteLine("\n번호를 다시 입력해주세요\n");
                         break;
                 }
+            }
+        }
+
+        private void InvetoryDisplay()
+        {
+            Console.Clear();
+            Console.WriteLine("인벤토리");
+            Console.WriteLine("보유 중인 아이템을 확인 할 수 있습니다.");
+            Console.WriteLine("");
+
+            for (int i = 0; i < PlayerInfo.Inventory.ItemCount; i++)
+            {
+                Item currentItem = PlayerInfo.Inventory.inventory[i];
+
+                Console.WriteLine($"- {currentItem.Name}");
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("1. 장착관리");
+            Console.WriteLine("0. 나가기");
+            int userSelect = Date.UserSelect();
+
+            switch (userSelect)
+            {
+                case 1:
+                    //상세정보 메서드 인스턴스화해서 호출
+                    break;
+                case 0:
+                    GameLord();
+                    break;
+                default:
+                    Console.WriteLine("\n번호를 다시 입력해주세요\n");
+                    break;
             }
         }
     }
