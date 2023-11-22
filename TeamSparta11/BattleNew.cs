@@ -336,7 +336,7 @@ namespace TeamSparta11
                 int select = Date.UserSelect();
                 if(select > 0 && select <= monster.Count )
                 {
-                    if (selectNum==1) return (select, PlayerInfo.Player.AD);
+                    if (selectNum==1) return (select, PlayerInfo.Player.AD + (PlayerInfo.Inventory.EquippedItem[0]== null? 0: PlayerInfo.Inventory.EquippedItem[0].AD));
                     int skillselect = SkillAttack();
                     if (selectNum == 2 && skillselect != 0) return (select , skillselect);
                 }
@@ -361,7 +361,7 @@ namespace TeamSparta11
                     if ((PlayerInfo.Player.MP - PlayerInfo.SkillList[select - 1].Cost) >= 0)
                     {
                         PlayerInfo.Player.MP -= PlayerInfo.SkillList[select - 1].Cost;
-                        return (PlayerInfo.SkillList[select - 1].AbilityPower);
+                        return (PlayerInfo.SkillList[select - 1].AbilityPower + (PlayerInfo.Inventory.EquippedItem[0] == null ? 0 : PlayerInfo.Inventory.EquippedItem[0].AD));
                     }
                     else Console.WriteLine("MP가 모자랍니다.");
                 }if (select == 0) return (select);
@@ -450,7 +450,7 @@ namespace TeamSparta11
 
         private int BossAttack(int select)
         {
-            if (select == 1) return PlayerInfo.Player.AD;
+            if (select == 1) return PlayerInfo.Player.AD + (PlayerInfo.Inventory.EquippedItem[0] == null ? 0 : PlayerInfo.Inventory.EquippedItem[0].AD);
             else return SkillAttack();
         }
 
