@@ -10,7 +10,7 @@ using TeamSparta11;
 // 몬스터 정보나 기타 등등의 일반적인 데이터를 담는 클래스
 internal class Date
 {
-    internal enum ItemType { equipment, supplies }
+    internal enum ItemType { Equipment, Supplies }
 
     internal static int UserSelect()
     {
@@ -22,9 +22,13 @@ internal class Date
 
     }
 
+    // 테이블 생성
+    #region
     public static DataTable ItemDateTable = new DataTable();
     public static DataTable EquipmentDateTable = new DataTable();
     public static DataTable SuppliesDateTable = new DataTable();
+    public static DataTable ShopDateTable = new DataTable();
+    #endregion
 
     internal static void ItemDateTableSetting()
     {
@@ -57,6 +61,16 @@ internal class Date
         EquipmentDateTableKey[0] = EquipmentDateTable.Columns["EquipmentIndex"];
         EquipmentDateTable.PrimaryKey = EquipmentDateTableKey;
 
+        //addColumn(ShopDateTable, "ShopCategory", typeof(int));
+        addColumn(ShopDateTable, "ProductIndex", typeof(int));
+        addColumn(ShopDateTable, "ItemIndex", typeof(int));
+        addColumn(ShopDateTable, "ProductPrice", typeof(int));
+        addColumn(ShopDateTable, "ShopExplain", typeof(string));
+
+        DataColumn[] ShopDateTableKey = new DataColumn[1];
+        ShopDateTableKey[0] = ShopDateTable.Columns["ProductIndex"];
+        ShopDateTable.PrimaryKey = ShopDateTableKey;
+
         #endregion
 
         // 아이템 데이터 테이블
@@ -74,6 +88,11 @@ internal class Date
         EquipmentDateTable.Rows.Add(new object[] { 2, 0, 0, 0, 0, 5, 0 });
         EquipmentDateTable.Rows.Add(new object[] { 3, 0, 0, 0, 0, 0, 5 });
         EquipmentDateTable.Rows.Add(new object[] { 4, 0, 0, 0, 0, 0, 0 });
+
+        // 상점 아이템 테이블
+        // { ProductIndex, ItemIndex, ProductPrice, ShopExplain }
+        ShopDateTable.Rows.Add(new object[] { 0, 0, 100, "동네에서 손재주 좋은 아저씨가 깎은 칼" });
+        ShopDateTable.Rows.Add(new object[] { 1, 1, 500, "이런걸 돈받고 팔아도 되는건가...?" });
     }
 
     // 몬스터 정리
