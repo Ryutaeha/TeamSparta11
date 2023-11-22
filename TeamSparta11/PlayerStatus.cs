@@ -16,7 +16,7 @@ namespace Teamproject
         public bool IsDead => HP <= 0;
 
 
-        public int NextEXP = 5;
+        public int NextEXP = 10;
         public string Job { get; }
         public int MaxMP { get; set; }
         public int MP { get; set; }
@@ -28,7 +28,9 @@ namespace Teamproject
             int up = 0;
             while (EXP >= NextEXP)
             {
-                NextEXP += (++Level * 1);
+                Level++;
+                EXP = (EXP - NextEXP);
+                NextEXP += 1;
                 MaxHP += Job == "전사" ? 10 : 5;
                 HP += 20;
                 if(HP > MaxHP)
@@ -44,7 +46,7 @@ namespace Teamproject
                 }
 
                 AD += Job == "도적" ? 2 : 1;
-                DF += Job == "전사" ? 2 : 1;
+                DF += 1;
 
                 if(Level % 10 == 0)
                 {
