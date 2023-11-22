@@ -82,6 +82,7 @@ namespace TeamSparta11
                 Console.WriteLine($"획득한 골드 : {getGold}");
                 Console.WriteLine($"획득한 경험치 : {getExp}");
                 PlayerInfo.Player.HP += 20;
+                if(PlayerInfo.Player.HP> PlayerInfo.Player.MaxHP) PlayerInfo.Player.HP = PlayerInfo.Player.MaxHP;
                 PlayerInfo.Player.MP = PlayerInfo.Player.MaxMP;
                 Console.WriteLine($"{PlayerInfo.Player.Name}의 체력이 20과 마나가 전부 회복되었습니다");
                 PlayerInfo.Player.Gold += getGold;
@@ -205,16 +206,19 @@ namespace TeamSparta11
                     else
                     {
 
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.Write($"{monster[attackSequence[i]-1].Name}");
-                        Console.ResetColor();
-                        Console.WriteLine("의 턴");
-                        if (monster[attackSequence[i] - 1].IsDead) Console.WriteLine("최후의 발악!");
-                        if (fatalDamage < 3)
+                        if (!monster[attackSequence[i] - 1].IsDead)
                         {
-                            PlayerInfo.Player.BeFatalDamaged(monster[attackSequence[i]-1].AD);
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write($"{monster[attackSequence[i] - 1].Name}");
+                            Console.ResetColor();
+                            Console.WriteLine("의 턴");
+                            if (fatalDamage < 3)
+                            {
+                                PlayerInfo.Player.BeFatalDamaged(monster[attackSequence[i] - 1].AD);
+                            }
+                            else PlayerInfo.Player.BeDamaged(monster[attackSequence[i] - 1].AD);
                         }
-                        else PlayerInfo.Player.BeDamaged(monster[attackSequence[i]-1].AD);
+                        else  Console.WriteLine($"{monster[attackSequence[i-1]].Name} (은)는 죽었습니다.");
                         if(PlayerInfo.Player.IsDead)
                         {
                             return false;
@@ -361,7 +365,7 @@ namespace TeamSparta11
                     if ((PlayerInfo.Player.MP - PlayerInfo.SkillList[select - 1].Cost) >= 0)
                     {
                         PlayerInfo.Player.MP -= PlayerInfo.SkillList[select - 1].Cost;
-                        return (PlayerInfo.SkillList[select - 1].AbilityPower + (PlayerInfo.Inventory.EquippedItem[0] == null ? 0 : PlayerInfo.Inventory.EquippedItem[0].AD));
+                        return (PlayerInfo.SkillList[select - 1].AbilityPower + PlayerInfo.Player.AD + (PlayerInfo.Inventory.EquippedItem[0] == null ? 0 : PlayerInfo.Inventory.EquippedItem[0].AD));
                     }
                     else Console.WriteLine("MP가 모자랍니다.");
                 }if (select == 0) return (select);
