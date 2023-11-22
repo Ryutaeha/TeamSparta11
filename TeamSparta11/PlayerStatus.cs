@@ -46,7 +46,7 @@ namespace Teamproject
                 AD += Job == "도적" ? 2 : 1;
                 DF += Job == "전사" ? 2 : 1;
 
-                if(Level / 10 == 0)
+                if(Level % 10 == 0)
                 {
                     ++Speed;
                 }
