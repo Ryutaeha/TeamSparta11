@@ -199,9 +199,10 @@ namespace TeamSparta11
                         {
                             monster[playerSelete.Item1-1].FatalDamage(playerSelete.Item2);
                         }
-                        else monster[playerSelete.Item1-1].Damage(playerSelete.Item2);
-                        
+                        else if(fatalDamage < 97) monster[playerSelete.Item1-1].Damage(playerSelete.Item2);
+                        else Console.WriteLine($"\n{monster[playerSelete.Item1 - 1].Name}가 공격을 피했습니다!");
 
+                        if (monster[playerSelete.Item1 - 1].IsDead) Console.WriteLine($"\n{monster[playerSelete.Item1 - 1].Name} (은)는 죽었습니다.");
                     }
                     else
                     {
@@ -216,9 +217,10 @@ namespace TeamSparta11
                             {
                                 PlayerInfo.Player.BeFatalDamaged(monster[attackSequence[i] - 1].AD);
                             }
-                            else PlayerInfo.Player.BeDamaged(monster[attackSequence[i] - 1].AD);
+                            else if (fatalDamage < 97) PlayerInfo.Player.BeDamaged(monster[attackSequence[i] - 1].AD);
+                            else Console.WriteLine($"\n{PlayerInfo.Player.Name}가 공격을 피했습니다!");
                         }
-                        else  Console.WriteLine($"{monster[attackSequence[i-1]].Name} (은)는 죽었습니다.");
+                        
                         if(PlayerInfo.Player.IsDead)
                         {
                             return false;

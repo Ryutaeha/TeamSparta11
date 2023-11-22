@@ -112,7 +112,7 @@ namespace Teamproject
         }
         public void FatalDamage(int damage)
         {
-            int dameges = damage - DF;
+            int dameges = (damage*2) - DF;
             if (dameges < 0) damage = 1;
             HP -= damage;
             if (HP < 0) HP = 0;
@@ -170,7 +170,7 @@ namespace Teamproject
         }
         public void FatalDamage(int damage)
         {
-            int dameges = damage - DF;
+            int dameges = (damage * 2) - DF;
             if (dameges < 0) damage = 1;
             HP -= damage;
             if (HP < 0) HP = 0;
