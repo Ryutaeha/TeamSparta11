@@ -63,12 +63,17 @@ internal class Date
         // { Index, Name, Explain, ItemType, ItemPrice }
         ItemDateTable.Rows.Add(new object[] { 0, "나무 칼", "나무로 만든 칼", 0, 20 });
         ItemDateTable.Rows.Add(new object[] { 1, "돌 칼", "돌로 만든 칼", 0, 20 });
-        ItemDateTable.Rows.Add(new object[] { 2, "체력 포션", "기초적인 체력포션이다", 1, 50 });
-
+        ItemDateTable.Rows.Add(new object[] { 2, "킹 고블린의 검", "킹 고블린이 아끼던 보검이다", 0, 100 });
+        ItemDateTable.Rows.Add(new object[] { 3, "다이아 골렘의 파편", "다이아 골렘의 파편으로 방패로 사용할수있을것같다", 0, 200 });
+        ItemDateTable.Rows.Add(new object[] { 4, "다크 드래곤의 뿔", "다크드래곤을 잡은 용사만이 가질수있는 명예로운 아이템", 1, 300 });
+        
         // 장비 아이템 스텟 테이블
         // { Index, EquipmentType, MaxHP, MaxMp, Speed, AD, DF }
-        EquipmentDateTable.Rows.Add(new object[] { 0, 0, 0, 0, 0, 5, 0 });
-        EquipmentDateTable.Rows.Add(new object[] { 1, 0, 0, 0, 0, 10, 0 });
+        EquipmentDateTable.Rows.Add(new object[] { 0, 0, 0, 0, 0, 1, 0 });
+        EquipmentDateTable.Rows.Add(new object[] { 1, 0, 0, 0, 0, 2, 0 });
+        EquipmentDateTable.Rows.Add(new object[] { 2, 0, 0, 0, 0, 5, 0 });
+        EquipmentDateTable.Rows.Add(new object[] { 3, 0, 0, 0, 0, 0, 5 });
+        EquipmentDateTable.Rows.Add(new object[] { 4, 0, 0, 0, 0, 0, 0 });
     }
 
     // 몬스터 정리
@@ -78,8 +83,8 @@ internal class Date
     public static Dictionary<int, string[]> goblin = new Dictionary<int, string[]>
     {
         { 0 , new string[] { "칼 고블린", "1", "10","10","5", "1" ,"1", "1", "10"} },
-        { 1 , new string[] { "방패 고블린", "3", "30", "30", "3", "5" ,"1", "2", "15" } },
-        { 2 , new string[] { "장로 고블린", "5", "50", "50", "5", "3", "1", "3", "20" } }
+        { 1 , new string[] { "방패 고블린", "3", "30", "30", "10", "5" ,"1", "2", "15" } },
+        { 2 , new string[] { "장로 고블린", "5", "50", "50", "15", "3", "1", "3", "20" } }
        
     };
     /// <summary>
@@ -87,9 +92,9 @@ internal class Date
     /// </summary>
     public static Dictionary<int, string[]> golem = new Dictionary<int, string[]>
     {
-        { 0 , new string[] { "점토 골렘", "11", "60","60","10", "3" ,"1", "6", "30"} },
-        { 1 , new string[] { "다크 골렘", "13", "80", "80", "13", "5" ,"1", "7", "35" } },
-        { 2 , new string[] { "강철 골렘", "15", "100", "100", "15", "7", "1", "8", "40" } }
+        { 0 , new string[] { "점토 골렘", "11", "60","60","20", "3" ,"1", "4", "30"} },
+        { 1 , new string[] { "다크 골렘", "13", "80", "80", "25", "5" ,"1", "5", "35" } },
+        { 2 , new string[] { "강철 골렘", "15", "100", "100", "30", "7", "1", "6", "40" } }
        
     };
     /// <summary>
@@ -97,9 +102,9 @@ internal class Date
     /// </summary>
     public static Dictionary<int, string[]> dragon = new Dictionary<int, string[]>
     {
-        { 0 , new string[] { "레드 드래곤", "21", "100","100","15", "5" ,"2", "12", "50"} },
-        { 1 , new string[] { "그린 드래곤", "23", "125", "125", "17", "5" ,"2", "13", "55" } },
-        { 2 , new string[] { "블루 드래곤", "25", "150", "150", "19", "7", "2", "14", "60" } }
+        { 0 , new string[] { "레드 드래곤", "21", "100","100","35", "5" ,"2", "7", "50"} },
+        { 1 , new string[] { "그린 드래곤", "23", "125", "125", "40", "5" ,"2", "8", "55" } },
+        { 2 , new string[] { "블루 드래곤", "25", "150", "150", "45", "7", "2", "9", "60" } }
         
     };
     /// <summary>
@@ -107,9 +112,9 @@ internal class Date
     /// </summary>
     public static Dictionary<int, string[]> boss = new Dictionary<int, string[]>
     {
-        { 0 , new string[] { "킹 고블린","10", "100", "100", "50", "50", "25", "10", "2", "10", "100", "?" } }, 
+        { 0 , new string[] { "킹 고블린","10", "100", "100", "50", "50", "30", "10", "2", "10", "100", "?" } }, 
         { 1 , new string[] { "다이아 골렘","20", "200", "200", "100", "100", "50", "20", "2", "20", "200", "?" } },
-        { 2 , new string[] { "다크 드래곤", "30", "300", "300", "150", "150", "75", "30", "3", "30", "300", "?" } }
+        { 2 , new string[] { "다크 드래곤", "30", "300", "300", "150", "150", "70", "30", "3", "30", "300", "?" } }
     
     };
 
