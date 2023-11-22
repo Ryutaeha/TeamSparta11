@@ -37,6 +37,8 @@ namespace TeamSparta11
                 Console.WriteLine($"Stage: {PlayerInfo.Player.Stage}");
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
+                Console.WriteLine($"플레이어 {PlayerInfo.Player.Name}은(는) 스테이지[{stage}]에 도착했습니다!");
+                Console.WriteLine();
                 Console.WriteLine("[내정보]");
                 Console.WriteLine($"LV.{PlayerInfo.Player.Level}  {PlayerInfo.Player.Name}");
                 Console.WriteLine($"HP {PlayerInfo.Player.HP}/{PlayerInfo.Player.MaxHP}");
@@ -83,9 +85,11 @@ namespace TeamSparta11
 
 
 
-        public void BeginBattleScene(BossMonsterStatus boss)
+        public void BeginBattleScene(BossMonsterStatus boss, int stage)
         {
             Console.WriteLine("Battle!!");
+            Console.WriteLine();
+            Console.WriteLine($"플레이어 {PlayerInfo.Player.Name}은(는) 스테이지[{stage}]에 도착했습니다!");
             Console.WriteLine();
             Console.WriteLine("[보스몬스터 정보]");
             Console.WriteLine($"LV.{boss.Level}\t{boss.Name}\tHP{boss.HP}");
@@ -119,6 +123,14 @@ namespace TeamSparta11
 
 
 
+        private bool IsPlayerTurn(MonsterStatus monster)
+        {
+            return PlayerInfo.Player.Speed >= monster.Speed;
+        }
+        private bool IsPlayerTurn(BossMonsterStatus boss)
+        {
+            return PlayerInfo.Player.Speed >= boss.Speed;
+        }
 
 
 
@@ -217,12 +229,11 @@ namespace TeamSparta11
 
 
         //몬스터 생성과 스폰 메소드
-        public void SpawnMonster(int stage)
+        public List<MonsterStatus> SpawnMonster(int stage)
         {
             List<MonsterStatus> monsters = new List<MonsterStatus>();
-            BossMonsterStatus boss;
             Random random = new Random();
-            int randomCount = random.Next(1, 3);
+            int randomCount = random.Next(1, 4);
 
             // 스테이지가 1 ~ 5일 동안은 랜덤한 고블린을 1마리에서 3마리까지 랜덤으로 생성.
             if (stage > 0 && stage <= 5)
@@ -231,10 +242,7 @@ namespace TeamSparta11
                 {
                     monsters.Add(GetRandomGoblin());
                 }
-                if (stage == 5)
-                {
-                    boss = GetGoblinBoss();
-                }
+                
             }
             // 스테이지가 6 ~ 10일 동안은 랜덤한 골렘을 1마리에서 3마리까지 랜덤으로 생성.
             else if (stage > 5 && stage <= 10)
@@ -243,10 +251,7 @@ namespace TeamSparta11
                 {
                     monsters.Add(GetRandomGolem());
                 }
-                if (stage == 10)
-                {
-                    boss = GetGolemBoss();
-                }
+               
             }
             // 스테이지가 10 ~ 15일 동안은 랜덤한 드래곤을 1마리에서 3마리까지 랜덤으로 생성.
             else if (stage > 10 && stage <= 15)
@@ -255,14 +260,32 @@ namespace TeamSparta11
                 {
                     monsters.Add(GetRandomDragon());
                 }
-                if (stage == 15)
-                {
-                    boss = GetDragonBoss();
-                }
+                
             }
-            
+
+            return monsters;
         }
 
+        public BossMonsterStatus SpawnBoss(int stage)
+        {
+            BossMonsterStatus boss = null;
+
+            if (stage == 5)
+            {
+                boss = GetGoblinBoss();
+            }
+            else if (stage == 10)
+            {
+                boss = GetGolemBoss();
+            }
+            else if (stage == 15)
+            {
+                boss = GetDragonBoss();
+            }
+
+            return boss;
+
+        }
 
         /// <summary>
         /// 몬스터 랜덤 리턴 메소드
