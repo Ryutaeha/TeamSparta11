@@ -1,0 +1,371 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Teamproject;
+
+namespace TeamSparta11
+{
+    internal class BattleNew
+    {
+        List<MonsterStatusNew> monster = new List<MonsterStatusNew>();
+        List<BossMonsterStatusNew> bossMonster = new List<BossMonsterStatusNew>();
+        int[] speedCompare;
+        int[] attackSequence;
+        //획득 아이템 저장
+        int getGold = 0;
+        int getExp = 0;
+        internal bool Battle()
+        {
+            bossMonster.Clear();
+            monster.Clear();
+            MonsterSetting();
+            bool battleEnd;
+            if (PlayerInfo.Player.Stage % 5 != 0)
+            {
+                Console.WriteLine();
+                Date.Line();
+                for(int i = 0; i < monster.Count; i++)
+                {
+                    Console.WriteLine($"{monster[i].Name}(이)가 출현했다.\n");
+                   
+                }
+                Console.WriteLine();
+                battleEnd = BattleStart();
+                
+            }
+            else
+            {
+                battleEnd = BossBattleStart();
+            }
+
+            BattleEnd(battleEnd);
+
+            if (battleEnd)
+            {
+                PlayerInfo.Player.Stage++;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        
+
+        private void BattleEnd(bool battleEnd)
+        {
+            Date.Line();
+            Console.WriteLine();
+            if (battleEnd)
+            {
+                Console.WriteLine("사냥 성공");
+                Console.WriteLine($"획득한 골드 : {getGold}");
+                Console.WriteLine($"획득한 경험치 : {getExp}");
+                PlayerInfo.Player.Gold += getGold;
+                PlayerInfo.Player.EXP += getExp;
+                if(PlayerInfo.Player.Stage % 5 == 0)
+                {
+                    //보스 잡았을 때 랜덤 아이템 인벤토리에 넣는 로직
+                }
+            }
+            else Console.WriteLine("사망하였습니다 메인화면으로 돌아갑니다");
+
+        }
+
+        private void MonsterSetting()
+        {
+            string[] monsters = null;
+            if(PlayerInfo.Player.Stage % 5 != 0)
+            {
+                int monsterAmount = new Random().Next(1,4);
+                MonsterStatusNew monsterSelect = null;
+                for (int i = 0; i < monsterAmount; i++)
+                {
+                    int randomMonster = new Random().Next(0,3);
+                
+                    if(PlayerInfo.Player.Stage < 6) monsters = Date.goblin[randomMonster];
+                    else if(PlayerInfo.Player.Stage < 11) monsters = Date.golem[randomMonster];
+                    else monsters = Date.dragon[randomMonster];
+                    monsterSelect = new MonsterStatusNew
+                        (
+                            monsters[0],
+                            int.Parse(monsters[1]),
+                            int.Parse(monsters[2]),
+                            int.Parse(monsters[3]),
+                            int.Parse(monsters[4]),
+                            int.Parse(monsters[5]),
+                            int.Parse(monsters[6]),
+                            int.Parse(monsters[7]),
+                            int.Parse(monsters[8])
+                        );
+                    monster.Add(monsterSelect);
+                }
+            }
+            else
+            {
+                int bossSelect = PlayerInfo.Player.Stage / 5;
+                if (bossSelect > 3) bossSelect = 2;
+                monsters = Date.boss[bossSelect-1];
+                BossMonsterStatusNew bossMonsterSelect = new BossMonsterStatusNew
+                    (
+                         monsters[0],
+                         int.Parse(monsters[1]),
+                         int.Parse(monsters[2]),
+                         int.Parse(monsters[3]),
+                         int.Parse(monsters[4]),
+                         int.Parse(monsters[5]),
+                         int.Parse(monsters[6]),
+                         int.Parse(monsters[7]),
+                         int.Parse(monsters[8]),
+                         int.Parse(monsters[8])
+                    );
+                bossMonster.Add(bossMonsterSelect);
+            }
+        }
+        private bool BattleStart()
+        {
+            BattleAttackSequence();
+            
+            //전투 
+            while (!PlayerInfo.Player.IsDead && monster.Count != 0)
+            {
+                Date.Line();
+                Console.WriteLine($"{PlayerInfo.Player.Name}  HP : {PlayerInfo.Player.HP} / {PlayerInfo.Player.MaxHP}   MP : {PlayerInfo.Player.MP} / {PlayerInfo.Player.MaxMP}");
+                
+                (int, int) playerSelete = PlayerSelete();
+
+                for(int i = 0; i < attackSequence.Length; i++)
+                {
+                    int fatalDamage = new Random().Next(0,100);
+                    if (attackSequence[i]==0)
+                    {
+                        Console.WriteLine($"{PlayerInfo.Player.Name}의 턴");
+                        if(fatalDamage < 3)
+                        {
+                            monster[playerSelete.Item1-1].FatalDamage(playerSelete.Item2);
+                        }
+                        else monster[playerSelete.Item1-1].Damage(playerSelete.Item2);
+                        
+
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{monster[attackSequence[i]-1].Name}의 턴");
+                        if (monster[attackSequence[i] - 1].IsDead) Console.WriteLine("최후의 발악!");
+                        if (fatalDamage < 3)
+                        {
+                            PlayerInfo.Player.BeFatalDamaged(monster[attackSequence[i]-1].AD);
+                        }
+                        else PlayerInfo.Player.BeDamaged(monster[attackSequence[i]-1].AD);
+                        if(PlayerInfo.Player.IsDead)
+                        {
+                            return false;
+                        }
+                    }
+
+                    Console.WriteLine();
+
+                    Thread.Sleep(1000);
+
+                }
+                if (monster[playerSelete.Item1 - 1].IsDead)
+                {
+                    getGold += monster[playerSelete.Item1 - 1].Gold;
+                    getExp += monster[playerSelete.Item1 - 1].EXP;
+                    monster.RemoveAt(playerSelete.Item1 - 1);
+                    BattleAttackSequence();
+                }
+            }
+            return true;
+        }
+
+        private void BattleAttackSequence()
+        {
+            speedCompare = new int[monster.Count + 1];
+            attackSequence = new int[monster.Count + 1];
+            for (int i = 0; i <= monster.Count; i++)
+            {
+                if (i == 0)
+                {
+                    speedCompare[i] = PlayerInfo.Player.Speed;
+                }
+                else
+                {
+                    speedCompare[i] = monster[i - 1].Speed;
+                }
+                attackSequence[i] = i;
+            }
+            for (int i = 0; i < speedCompare.Length - 1; i++)
+            {
+                for (int j = 0; j < speedCompare.Length - i - 1; j++)
+                {
+                    // 현재 원소와 다음 원소를 비교하여 순서가 바뀌어 있으면 교환
+                    if (speedCompare[j] < speedCompare[j + 1])
+                    {
+                        // Swap arr[j] and arr[j+1]
+                        int temp = speedCompare[j];
+                        speedCompare[j] = speedCompare[j + 1];
+                        speedCompare[j + 1] = temp;
+                        int temp1 = attackSequence[j];
+                        attackSequence[j] = attackSequence[j + 1];
+                        attackSequence[j + 1] = temp1;
+                    }
+                }
+            }
+        }
+
+        private (int, int) PlayerSelete()
+        {
+            (int, int) attack;
+            while (true)
+            {
+                Date.Line() ;
+                Console.WriteLine("행동을 선택하세요\n");
+                Console.WriteLine("1. 일반 공격");
+                Console.WriteLine("2. 스킬 공격");
+                switch (Date.UserSelect())
+                {
+                    case 1:
+                        attack = Attack(1);
+                        if(attack.Item1 != 0) return attack;
+                        break;
+                    case 2:
+                        attack = Attack(2);
+                        if (attack.Item1 != 0) return attack;
+                        break;
+                    default: 
+                        break;
+                }
+
+                
+            }
+        }
+        private (int, int) Attack(int selectNum)
+        {
+            while(true)
+            {
+                Date.Line() ;
+                Console.WriteLine("공격할 몬스터를 선택하세요");
+
+                for (int i = 0 ;i < monster.Count ; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {monster[i].Name}");
+                }
+                Console.WriteLine("0. 돌아가기");
+                int select = Date.UserSelect();
+                if(select > 0 && select <= monster.Count )
+                {
+                    if (selectNum==1) return (select, PlayerInfo.Player.AD);
+                    int skillselect = SkillAttack();
+                    if (selectNum == 2 && skillselect != 0) return (select , skillselect);
+                }
+                if (select == 0) return (select, 0);
+            }
+        }
+
+        private int SkillAttack()
+        {
+            while (true)
+            {
+                Date.Line();
+                Console.WriteLine("사용할 스킬을 선택하세요!");
+                for(int i = 0 ; i < PlayerInfo.SkillList.Count ; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {PlayerInfo.SkillList[i].Name} 공격력 : {PlayerInfo.SkillList[i].Ability}    소모마나 : {PlayerInfo.SkillList[i].Cost}");
+                }
+                Console.WriteLine("0. 뒤로가기");
+                int select = Date.UserSelect();
+                if (select > 0 && select <= PlayerInfo.SkillList.Count)
+                {
+                    if ((PlayerInfo.Player.MP - PlayerInfo.SkillList[select - 1].Cost) >= 0)
+                    {
+                        PlayerInfo.Player.MP -= PlayerInfo.SkillList[select - 1].Cost;
+                        return (PlayerInfo.SkillList[select - 1].AbilityPower);
+                    }
+                    else Console.WriteLine("MP가 모자랍니다.");
+                }if (select == 0) return (select);
+            }
+        }
+        private bool BossBattleStart()
+        {
+            Date.Line ();
+            Console.WriteLine($"\n강력한 적인 {bossMonster[0].Name}이 나타났다.");
+            while (!PlayerInfo.Player.IsDead && bossMonster.Count != 0)
+            {
+                Date.Line();
+                Console.WriteLine($"{PlayerInfo.Player.Name}  HP : {PlayerInfo.Player.HP} / {PlayerInfo.Player.MaxHP}   MP : {PlayerInfo.Player.MP} / {PlayerInfo.Player.MaxMP}");
+                int damege = PlayerSeleteBoss();
+
+                Console.WriteLine();
+
+                int fatalDamage = new Random().Next(0, 100);
+
+                Console.WriteLine($"{bossMonster[0].Name}의 턴");
+                if (fatalDamage < 3)
+                {
+                    PlayerInfo.Player.BeFatalDamaged(bossMonster[0].AD);
+                }
+                else PlayerInfo.Player.BeDamaged(bossMonster[0].AD);
+
+                if (PlayerInfo.Player.IsDead) return false;
+                Console.WriteLine();
+                Thread.Sleep(1000);
+                        
+                Console.WriteLine($"{PlayerInfo.Player.Name}의 턴");
+                if (fatalDamage < 3)
+                {
+                    bossMonster[0].FatalDamage(damege);
+                }
+                else bossMonster[0].Damage(damege);
+
+                if (bossMonster[0].IsDead)
+                {
+                    getGold += bossMonster[0].Gold;
+                    getExp += bossMonster[0].EXP;
+                    return true;
+                }
+                Console.WriteLine();
+                Thread.Sleep(1000);
+            }
+            return false;
+        }
+
+        private int PlayerSeleteBoss()
+        {
+            int attack;
+            while (true)
+            {
+                Date.Line();
+                Console.WriteLine("행동을 선택하세요\n");
+                Console.WriteLine("1. 일반 공격");
+                Console.WriteLine("2. 스킬 공격");
+                switch (Date.UserSelect())
+                {
+                    case 1:
+                        attack = BossAttack(1);
+                        if (attack != 0) return attack;
+                        break;
+                    case 2:
+                        attack = BossAttack(2);
+                        if (attack != 0) return attack;
+                        break;
+                    default:
+                        break;
+                }
+
+
+            }
+        }
+
+        private int BossAttack(int select)
+        {
+            if (select == 1) return PlayerInfo.Player.AD;
+            else return SkillAttack();
+        }
+
+    }
+}

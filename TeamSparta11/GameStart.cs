@@ -102,6 +102,7 @@ namespace TeamSparta11
                     {
                         case 1:
                             CreatePlayer();
+                            Json.JsonSave(PlayerInfo.saveSlot);
                             //게임 메인메뉴 위치
                             GameLord();
 
@@ -118,6 +119,7 @@ namespace TeamSparta11
             else
             {
                 CreatePlayer();
+                Json.JsonSave(PlayerInfo.saveSlot);
                 //게임 메인메뉴 위치
                 GameLord();
                 return true;
@@ -314,7 +316,12 @@ namespace TeamSparta11
                         ShopMainDisplay();
                         break;
                     case 4:
-                        break;
+                        /*
+                        BattleNew battleNew = new BattleNew();
+                        bool isDead = battleNew.Battle();
+                        if (isDead) break;
+                        else return;
+                        */
                     case 0:
                         SaveItems();
                         Json.JsonSave(PlayerInfo.saveSlot);
