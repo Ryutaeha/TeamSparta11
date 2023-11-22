@@ -188,8 +188,9 @@ internal class SaveDate
 {
     public PlayerStatus Player { get; set; }
     public List<Skill> SkillList { get; set; }
-    public List<int> itemList { get; set; }
+    public Inventory Inventory { get; set; }
     public List<ShopProduct> ShopProductList { get; set; }
+
 }
 //세이브 가져올 객체 모음
 internal class PlayerInfo
@@ -204,7 +205,7 @@ internal class PlayerInfo
     public static Inventory Inventory = null;
     //상점 클래스
     public static List<ShopProduct> ShopProductList = new List<ShopProduct>();
-    public static Shop Shop = new Shop();
     //로딩할때 들고있는 아이템 인덱스
     public static List<int> ItemList = new List<int>();
+    public static Shop Shop = new Shop();
 }
