@@ -28,7 +28,9 @@ namespace Teamproject
             int up = 0;
             while (EXP >= NextEXP)
             {
-                NextEXP += (++Level * 1);
+                Level++;
+                EXP = (EXP - NextEXP);
+                NextEXP += 1;
                 MaxHP += Job == "전사" ? 10 : 5;
                 HP += 20;
                 if(HP > MaxHP)

@@ -10,10 +10,10 @@ namespace TeamSparta11
     internal class ShopProduct
     {
         //public int ShopCategory { get; set; }
-        public int ProductIndex { get; private set; }
-        public int ItemIndex { get; private set; }
-        public int ProductPrice { get; private set; }
-        public string ShopExplain { get; private set; }
+        public int ProductIndex { get; set; }
+        public int ItemIndex { get; set; }
+        public int ProductPrice { get; set; }
+        public string ShopExplain { get; set; }
 
         public ShopProduct CreateShopProduct(int index)
         {
