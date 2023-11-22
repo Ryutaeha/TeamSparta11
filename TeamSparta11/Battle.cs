@@ -37,7 +37,7 @@ namespace TeamSparta11
                 Console.WriteLine($"Stage: {PlayerInfo.Player.Stage}");
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
-                Console.WriteLine($"플레이어 {PlayerInfo.Player.Name}은(는) 스테이지[{stage}]에 도착했습니다!");
+                Console.WriteLine($"플레이어 {PlayerInfo.Player.Name}은(는) 스테이지[{PlayerInfo.Player.Stage}]에 도착했습니다!");
                 Console.WriteLine();
                 Console.WriteLine("[내정보]");
                 Console.WriteLine($"LV.{PlayerInfo.Player.Level}  {PlayerInfo.Player.Name}");
