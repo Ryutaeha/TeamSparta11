@@ -20,7 +20,9 @@ namespace TeamSparta11
             while (true)
             {
                 Date.Line();
-                Console.WriteLine("This is 스파르타 던전");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("◆This is 스파르타 던전◆");
+                Console.ResetColor();
                 Console.WriteLine("원하시는 항목을 선택해주세요\n");
 
 
@@ -179,13 +181,14 @@ namespace TeamSparta11
             while (true)
             {
                 Date.Line();
-                Console.WriteLine("\n저장된 슬롯을 선택하세요\n");
-
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\n◆저장된 슬롯을 선택하세요◆\n");
+                Console.ResetColor();
                 for(int i = 0; i < 3; i++)
                 {
                     string resultString = Json.JsonLoad(i) == null
                     ? "저장된 데이터가 없습니다."
-                    : $"이름: {Json.JsonLoad(i).Player.Name} 직업: {Json.JsonLoad(i).Player.Job}";
+                    :  $"이름: {Json.JsonLoad(i).Player.Name} 직업: {Json.JsonLoad(i).Player.Job}";
                     Console.WriteLine(i+1 + ". " + resultString);
                 }
                 Console.WriteLine("0. 돌아가기\n");
@@ -293,9 +296,9 @@ namespace TeamSparta11
             while (true)
             {
                 Date.Line();
-
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("★마을★\n");
-
+                Console.ResetColor();
                 Console.WriteLine("1. 상세정보");
                 Console.WriteLine("2. 인벤토리");
                 Console.WriteLine("3. 상점");
@@ -466,8 +469,16 @@ namespace TeamSparta11
             Date.Line();
 
             Console.WriteLine($"\nLV. {PlayerInfo.Player.Level}  {PlayerInfo.Player.Name} ({PlayerInfo.Player.Job})     현재 스테이지 : {PlayerInfo.Player.Stage}");
-            Console.WriteLine($"HP : {PlayerInfo.Player.HP} / {PlayerInfo.Player.MaxHP}         MP : {PlayerInfo.Player.MP} / {PlayerInfo.Player.MaxMP}");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"HP : {PlayerInfo.Player.HP} / {PlayerInfo.Player.MaxHP}\t  ");
+            Console.ResetColor();
+            Console.ForegroundColor= ConsoleColor.Blue;
+            Console.WriteLine($"MP : {PlayerInfo.Player.MP} / {PlayerInfo.Player.MaxMP}");
+            Console.ResetColor();
+            Console.WriteLine();
             Console.WriteLine($"공격력 : {PlayerInfo.Player.AD}    방어력 : {PlayerInfo.Player.DF}    스피드 : {PlayerInfo.Player.Speed}");
+            Console.WriteLine();
             Console.WriteLine($"현재 경험치 : {PlayerInfo.Player.EXP}        골드 : {PlayerInfo.Player.Gold}\n");
             Console.WriteLine("현재 가지고 있는 스킬 목록\n");
             for(int i = 0; i <PlayerInfo.SkillList.Count; i++)
