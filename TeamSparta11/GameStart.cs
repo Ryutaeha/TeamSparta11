@@ -59,11 +59,18 @@ namespace TeamSparta11
 
                 for(int i = 0; i < 3; i++)
                 {
-
-                    string resultString = Json.JsonLoad(i) == null
-                    ? "저장된 데이터가 없습니다."
-                    : $"이름: {Json.JsonLoad(i).Player.Name} 직업: {Json.JsonLoad(i).Player.Job}";
-                    Console.WriteLine(i+1 + ". " + resultString);
+                    
+                    if (Json.JsonLoad(i) == null)
+                    {
+                        Console.WriteLine(i + 1 + ". 저장된 데이터가 없습니다.");
+                        
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(i + 1 + $". 이름: {Json.JsonLoad(i).Player.Name} 직업: {Json.JsonLoad(i).Player.Job}");
+                        Console.ResetColor() ;
+                    }
                 }
                 Console.WriteLine("0. 돌아가기\n");
                 int UserSelect = Date.UserSelect();
@@ -185,12 +192,20 @@ namespace TeamSparta11
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\n◆저장된 슬롯을 선택하세요◆\n");
                 Console.ResetColor();
-                for(int i = 0; i < 3; i++)
+                for (int i = 0; i < 3; i++)
                 {
-                    string resultString = Json.JsonLoad(i) == null
-                    ? "저장된 데이터가 없습니다."
-                    :  $"이름: {Json.JsonLoad(i).Player.Name} 직업: {Json.JsonLoad(i).Player.Job}";
-                    Console.WriteLine(i+1 + ". " + resultString);
+
+                    if (Json.JsonLoad(i) == null)
+                    {
+                        Console.WriteLine(i + 1 + ". 저장된 데이터가 없습니다.");
+
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(i + 1 + $". 이름: {Json.JsonLoad(i).Player.Name} 직업: {Json.JsonLoad(i).Player.Job}");
+                        Console.ResetColor();
+                    }
                 }
                 Console.WriteLine("0. 돌아가기\n");
                 int UserSelect = Date.UserSelect();
@@ -239,10 +254,8 @@ namespace TeamSparta11
                         SaveDate saveDate = Json.JsonLoad(saveSlot);
                         PlayerInfo.Player = saveDate.Player;
                         PlayerInfo.SkillList = saveDate.SkillList;
-                        PlayerInfo.ItemList = saveDate.itemList;
                         PlayerInfo.Shop = saveDate.Shop;
-                        PlayerInfo.Inventory = new Inventory(12);
-                        LoadItem();
+                        PlayerInfo.Inventory = saveDate.Inventory;
                         GameLord();
                         return true;
                     case 2: 
@@ -328,9 +341,8 @@ namespace TeamSparta11
                         else return;
                         
                     case 0:
-                        SaveItems();
                         Json.JsonSave(PlayerInfo.saveSlot);
-                        PlayerInfo.ItemList.Clear();
+                        PlayerInfo.Inventory = null;
                         PlayerInfo.SkillList.Clear();
                         PlayerInfo.Player = null;
                         PlayerInfo.Inventory = null;
@@ -343,23 +355,7 @@ namespace TeamSparta11
                 }
             }
         }
-
-        private void SaveItems()
-        {
-            for (int i = 0; i < PlayerInfo.Inventory.EquipmentInventory.Count; i++)
-            {
-                PlayerInfo.ItemList.Add(PlayerInfo.Inventory.EquipmentInventory[i].ItemIndex);
-            }
-        }
-
-        private void LoadItem()
-        {
-            for (int i = 0; i < PlayerInfo.ItemList.Count; i++)
-            {
-                PlayerInfo.Inventory.GetItem(PlayerInfo.ItemList[i]);
-            }
-        }
-
+        
 
         private void InvetoryDisplay()
 
@@ -547,6 +543,10 @@ namespace TeamSparta11
             {
                 Console.WriteLine($"스킬명 : {PlayerInfo.SkillList[i].Name.PadRight(10)} 데미지 : {PlayerInfo.SkillList[i].Ability} 마나 소모량 : {PlayerInfo.SkillList[i].Cost} 설명 : {PlayerInfo.SkillList[i].SkillInfo}");
             }
+
+            Console.WriteLine("\n장착중인 장비");
+            if (PlayerInfo.Inventory.EquippedItem[0] == null) Console.WriteLine("장착중인 장비 없음");
+            else Console.WriteLine($"이름 : {PlayerInfo.Inventory.EquippedItem[0].Name}       공격력 : {PlayerInfo.Inventory.EquippedItem[0].AD}");
         }
     }
 }

@@ -10,24 +10,24 @@ namespace TeamSparta11
 {
     internal abstract class Item
     {
-        public int ItemIndex { get; protected set; }
-        public string Name { get; protected set; }
-        public string Explain { get; protected set; }
-        public int ItemType { get; protected set; }
-        public int ItemPrice { get; protected set; }
+        public int ItemIndex { get; set; }
+        public string Name { get; set; }
+        public string Explain { get; set; }
+        public int ItemType { get; set; }
+        public int ItemPrice { get; set; }
 
         public abstract Item ItemAdd(int index);
     }
 
     internal class Equipment : Item, IItem
     {
-        public int EquipmentIndex { get; private set; }
-        public int EquipmentType { get; private set; }
-        public int MaxHP { get; private set; }
-        public int MaxMp { get; private set; }
-        public int Speed { get; private set; }
-        public int AD { get; private set; }
-        public int DF { get; private set; }
+        public int EquipmentIndex { get; set; }
+        public int EquipmentType { get; set; }
+        public int MaxHP { get; set; }
+        public int MaxMp { get; set; }
+        public int Speed { get; set; }
+        public int AD { get; set; }
+        public int DF { get; set; }
 
         public override Equipment? ItemAdd(int index)
         {

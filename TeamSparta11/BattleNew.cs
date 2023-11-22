@@ -82,7 +82,8 @@ namespace TeamSparta11
                 Console.WriteLine($"획득한 골드 : {getGold}");
                 Console.WriteLine($"획득한 경험치 : {getExp}");
                 PlayerInfo.Player.HP += 20;
-                Console.WriteLine($"{PlayerInfo.Player.Name}의 체력이 20 회복되었습니다");
+                PlayerInfo.Player.MP = PlayerInfo.Player.MaxMP;
+                Console.WriteLine($"{PlayerInfo.Player.Name}의 체력이 20과 마나가 전부 회복되었습니다");
                 PlayerInfo.Player.Gold += getGold;
                 PlayerInfo.Player.EXP += getExp;
                 if (PlayerInfo.Player.Stage == 5)
@@ -93,9 +94,13 @@ namespace TeamSparta11
                 {
                     PlayerInfo.Inventory.GetItem(3);
                 }
-                if (PlayerInfo.Player.Stage == 15)
+                if (PlayerInfo.Player.Stage % 5 == 0 && PlayerInfo.Player.Stage / 5 > 2)
                 {
                     PlayerInfo.Inventory.GetItem(4);
+                }
+                if(PlayerInfo.Player.Stage % 5 == 0)
+                {
+                    Console.WriteLine("무언가 반짝이는 것이 보이는거 같다!");
                 }
             }
             else
@@ -276,6 +281,7 @@ namespace TeamSparta11
                 Console.WriteLine("행동을 선택하세요\n");
                 Console.WriteLine("1. 일반 공격");
                 Console.WriteLine("2. 스킬 공격");
+                Console.WriteLine("3. 몬스터 정보");
                 switch (Date.UserSelect())
                 {
                     case 1:
@@ -286,6 +292,9 @@ namespace TeamSparta11
                         attack = Attack(2);
                         if (attack.Item1 != 0) return attack;
                         break;
+                    case 3:
+                        MosterInfo();
+                        break;
                     default: 
                         break;
                 }
@@ -293,6 +302,22 @@ namespace TeamSparta11
                 
             }
         }
+
+        private void MosterInfo()
+        {
+            if(PlayerInfo.Player.Stage % 5 != 0)
+            {
+                for (int i = 0; i< monster.Count; i++)
+                {
+                    Console.WriteLine($"몬스터 이름 : {monster[i].Name}  체력 : {monster[i].HP} / {monster[i].MaxHP}   공격력 : {monster[i].AD}   방어력 : {monster[i].DF}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"몬스터 이름 : {bossMonster[0].Name}  체력 : {bossMonster[0].HP} / {bossMonster[0].MaxHP}   공격력 : {bossMonster[0].AD}   방어력 : {bossMonster[0].DF}");
+            }
+        }
+
         private (int, int) Attack(int selectNum)
         {
             while(true)
@@ -401,6 +426,7 @@ namespace TeamSparta11
                 Console.WriteLine("행동을 선택하세요\n");
                 Console.WriteLine("1. 일반 공격");
                 Console.WriteLine("2. 스킬 공격");
+                Console.WriteLine("3. 몬스터 정보");
                 switch (Date.UserSelect())
                 {
                     case 1:
@@ -410,6 +436,9 @@ namespace TeamSparta11
                     case 2:
                         attack = BossAttack(2);
                         if (attack != 0) return attack;
+                        break;
+                    case 3:
+                        MosterInfo();
                         break;
                     default:
                         break;
