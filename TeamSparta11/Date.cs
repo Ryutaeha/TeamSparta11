@@ -192,7 +192,7 @@ internal class SaveDate
     public PlayerStatus Player { get; set; }
     public List<Skill> SkillList { get; set; }
     public List<int> itemList { get; set; }
-    public Shop Shop { get; set; }
+    public List<ShopProduct> ShopProductList { get; set; }
 }
 //세이브 가져올 객체 모음
 internal class PlayerInfo
@@ -206,7 +206,8 @@ internal class PlayerInfo
     //유저의 인벤토리 클래스, 매개변수는 인벤토리 크기이며 현재는 따로 변수가 없어 직접 지정했습니다.
     public static Inventory Inventory = null;
     //상점 클래스
-    public static Shop Shop = null;
+    public static List<ShopProduct> ShopProductList = new List<ShopProduct>();
+    public static Shop Shop = new Shop();
     //로딩할때 들고있는 아이템 인덱스
     public static List<int> ItemList = new List<int>();
 }
