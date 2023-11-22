@@ -17,9 +17,6 @@ internal class Date
         Console.Write("입력 > ");
         if (int.TryParse(Console.ReadLine(), out int userInput)) return userInput; 
         else return -1;
-
-
-
     }
 
     // 테이블 생성
@@ -79,7 +76,7 @@ internal class Date
         ItemDateTable.Rows.Add(new object[] { 1, "돌 칼", "돌로 만든 칼", 0, 20 });
         ItemDateTable.Rows.Add(new object[] { 2, "킹 고블린의 검", "킹 고블린이 아끼던 보검이다", 0, 100 });
         ItemDateTable.Rows.Add(new object[] { 3, "다이아 골렘의 파편", "다이아 골렘의 파편으로 방패로 사용할수있을것같다", 0, 200 });
-        ItemDateTable.Rows.Add(new object[] { 4, "다크 드래곤의 뿔", "다크드래곤을 잡은 용사만이 가질수있는 명예로운 아이템", 1, 300 });
+        ItemDateTable.Rows.Add(new object[] { 4, "다크 드래곤의 뿔", "다크드래곤을 잡은 용사만이 가질수있는 명예로운 아이템", 0, 300 });
         
         // 장비 아이템 스텟 테이블
         // { Index, EquipmentType, MaxHP, MaxMp, Speed, AD, DF }
@@ -191,8 +188,9 @@ internal class SaveDate
 {
     public PlayerStatus Player { get; set; }
     public List<Skill> SkillList { get; set; }
-    public List<int> itemList { get; set; }
+    public Inventory Inventory { get; set; }
     public List<ShopProduct> ShopProductList { get; set; }
+
 }
 //세이브 가져올 객체 모음
 internal class PlayerInfo
@@ -207,7 +205,7 @@ internal class PlayerInfo
     public static Inventory Inventory = null;
     //상점 클래스
     public static List<ShopProduct> ShopProductList = new List<ShopProduct>();
-    public static Shop Shop = new Shop();
     //로딩할때 들고있는 아이템 인덱스
     public static List<int> ItemList = new List<int>();
+    public static Shop Shop = new Shop();
 }

@@ -10,11 +10,11 @@ namespace TeamSparta11
 {
     internal class Inventory
     {
-        public int[] ItemCount { get; private set; }
-        public int[] MaxItemCount { get; private set; }
-        public List<Equipment> EquipmentInventory { get; private set; }
-        public List<Supplies> SuppliesInventory { get; private set; }
-        public Equipment[]? EquippedItem { get; private set; }
+        public int[] ItemCount { get; set; }
+        public int[] MaxItemCount { get; set; }
+        public List<Equipment> EquipmentInventory { get; set; }
+        public List<Supplies> SuppliesInventory { get; set; }
+        public Equipment[]? EquippedItem { get; set; }
 
         public Inventory(int volume) 
         {
