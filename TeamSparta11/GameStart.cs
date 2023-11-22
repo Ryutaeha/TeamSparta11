@@ -169,6 +169,7 @@ namespace TeamSparta11
 
             PlayerInfo.Player = new PlayerStatus(name, job[1], int.Parse(job[2]), int.Parse(job[3]), int.Parse(job[4]), int.Parse(job[5]), int.Parse(job[6]), int.Parse(job[7]), int.Parse(job[8]), int.Parse(job[9]), int.Parse(job[10]), int.Parse(job[11]),1);
             PlayerInfo.Inventory = new Inventory(12);
+            PlayerInfo.Shop = new Shop(10);
             PlayerInfo.Inventory.GetItem(0);
             PlayerInfo.Inventory.GetItem(1);
 
@@ -451,13 +452,68 @@ namespace TeamSparta11
                 switch (userSelect)
                 {
                     case 1:
-                        //상세정보 메서드 인스턴스화해서 호출
+                        ShopBuyDisplay();
+                        break;
+                    case 2:
+                        ShopSellDisplay();
                         break;
                     case 0:
                         return;
                     default:
                         Console.WriteLine("\n번호를 다시 입력해주세요\n");
                         break;
+                }
+            }
+        }
+
+        private void ShopBuyDisplay()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("상점");
+                Console.WriteLine("구매할 아이템의 번호를 입력해주세요.");
+                Console.WriteLine("");
+                for (int i = 0; i < PlayerInfo.Shop.shopProductList.Count; i++)
+                {
+                    ShopProduct currentProduct = PlayerInfo.Shop.shopProductList[i];
+
+                    Console.WriteLine($"- {i + 1}. {currentProduct.ProductItemName()} | {currentProduct.ShopExplain} | 가격 : {currentProduct.ProductPrice} Gold");
+                }
+                Console.WriteLine("");
+                Console.WriteLine("0. 나가기");
+                int userSelect = Date.UserSelect();
+                if (userSelect == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    PlayerInfo.Shop.ProductBuy(userSelect - 1);
+                }
+            }
+        }
+        private void ShopSellDisplay()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("상점");
+                Console.WriteLine("아이템을 구매 및 판매할 수 있습니다.");
+                Console.WriteLine("구입 가능한 물품은 ???마다 갱신됩니다.");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("1. 구매하기");
+                Console.WriteLine("2. 판매하기");
+                Console.WriteLine("0. 나가기");
+                int userSelect = Date.UserSelect();
+                if (userSelect == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    PlayerInfo.Inventory.ItemUse(userSelect - 1);
                 }
             }
         }

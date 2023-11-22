@@ -204,6 +204,8 @@ internal class PlayerInfo
     public static PlayerStatus Player = null;
     //유저의 인벤토리 클래스, 매개변수는 인벤토리 크기이며 현재는 따로 변수가 없어 직접 지정했습니다.
     public static Inventory Inventory = null;
+    //상점 클래스
+    public static Shop Shop = null;
     //로딩할때 들고있는 아이템 인덱스
     public static List<int> ItemList = new List<int>();
 }

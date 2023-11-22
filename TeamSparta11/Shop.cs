@@ -10,10 +10,10 @@ namespace TeamSparta11
     internal class ShopProduct
     {
         //public int ShopCategory { get; set; }
-        public int ProductIndex { get; set; }
-        public int ItemIndex { get; set; }
-        public int ProductPrice { get; set; }
-        public string ShopExplain { get; set; }
+        public int ProductIndex { get; private set; }
+        public int ItemIndex { get; private set; }
+        public int ProductPrice { get; private set; }
+        public string ShopExplain { get; private set; }
 
         public ShopProduct CreateShopProduct(int index)
         {
@@ -26,6 +26,13 @@ namespace TeamSparta11
 
             return this;
         }
+
+        public string ProductItemName()
+        {
+            DataRow? itemData = Date.ItemDateTable.Rows.Find(ItemIndex);
+
+            return itemData["Name"].ToString();
+        }
     }
 
     internal class Shop
@@ -35,6 +42,7 @@ namespace TeamSparta11
         public Shop(int productLimit)
         {
             shopProductList = new List<ShopProduct>();
+            ShopProductReset(); // 최초 생성 시 상점 리셋
         }
 
         public void ShopProductReset()
@@ -49,6 +57,22 @@ namespace TeamSparta11
                 ShopProduct addProduct = newProduct.CreateShopProduct(index);
                 shopProductList.Add(addProduct);
             }
+        }
+
+        public void ProductBuy(int index)
+        {
+            ShopProduct buySelectProduct = shopProductList[index];
+
+            if (buySelectProduct.ProductPrice > PlayerInfo.Player.Gold)
+            {
+                Console.WriteLine("소지금이 부족합니다.");
+            }
+            else
+            {
+                PlayerInfo.Player.Gold -= buySelectProduct.ProductPrice;
+                PlayerInfo.Inventory.GetItem(buySelectProduct.ItemIndex);
+            }
+            
         }
     }
 }
