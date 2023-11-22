@@ -19,6 +19,8 @@ namespace TeamSparta11
 
             // Battle 클래스의 생성자를 이용하여 Battle 객체를 생성
 
+
+            //내꺼
             //SaveDate player = Json.JsonLoad(0);
             //PlayerInfo.Player = player.Player;
             //PlayerInfo.SkillList = player.SkillList;
@@ -26,6 +28,13 @@ namespace TeamSparta11
             //Battle battle = new Battle(PlayerInfo.Player, monster);
             //battle.BeginBattleScene(new List<MonsterStatus> { monster });
 
+
+            //태하님꺼
+            SaveDate player = Json.JsonLoad(0);
+            PlayerInfo.Player = player.Player;
+            PlayerInfo.SkillList = player.SkillList;
+            BattleNew battle = new BattleNew();
+            battle.Battle();
 
         }
     }
