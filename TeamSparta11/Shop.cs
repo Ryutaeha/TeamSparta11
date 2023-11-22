@@ -71,8 +71,8 @@ namespace TeamSparta11
             {
                 PlayerInfo.Player.Gold -= buySelectProduct.ProductPrice;
                 PlayerInfo.Inventory.GetItem(buySelectProduct.ItemIndex);
+                Console.WriteLine($"{buySelectProduct.ProductItemName()}을 구매했습니다. 남은 소지금 : {PlayerInfo.Player.Gold} Gold");
             }
-            
         }
     }
 }

@@ -192,6 +192,7 @@ internal class SaveDate
     public PlayerStatus Player { get; set; }
     public List<Skill> SkillList { get; set; }
     public List<int> itemList { get; set; }
+    public Shop Shop { get; set; }
 }
 //세이브 가져올 객체 모음
 internal class PlayerInfo

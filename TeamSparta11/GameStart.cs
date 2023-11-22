@@ -237,6 +237,7 @@ namespace TeamSparta11
                         PlayerInfo.Player = saveDate.Player;
                         PlayerInfo.SkillList = saveDate.SkillList;
                         PlayerInfo.ItemList = saveDate.itemList;
+                        PlayerInfo.Shop = saveDate.Shop;
                         PlayerInfo.Inventory = new Inventory(12);
                         LoadItem();
                         GameLord();
@@ -436,9 +437,9 @@ namespace TeamSparta11
 
         private void ShopMainDisplay()
         {
+            Console.Clear();
             while (true)
             {
-                Console.Clear();
                 Console.WriteLine("상점");
                 Console.WriteLine("아이템을 구매 및 판매할 수 있습니다.");
                 Console.WriteLine("구입 가능한 물품은 ???마다 갱신됩니다.");
@@ -468,10 +469,10 @@ namespace TeamSparta11
 
         private void ShopBuyDisplay()
         {
+            Console.Clear();
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine("상점");
+                Console.WriteLine("상점 - 구매하기");
                 Console.WriteLine("구매할 아이템의 번호를 입력해주세요.");
                 Console.WriteLine("");
                 for (int i = 0; i < PlayerInfo.Shop.shopProductList.Count; i++)
@@ -495,16 +496,21 @@ namespace TeamSparta11
         }
         private void ShopSellDisplay()
         {
+            Console.Clear();
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine("상점");
-                Console.WriteLine("아이템을 구매 및 판매할 수 있습니다.");
-                Console.WriteLine("구입 가능한 물품은 ???마다 갱신됩니다.");
+                int equipmentItemCount = PlayerInfo.Inventory.ItemCount[(int)Date.ItemType.Equipment];
+
+                Console.WriteLine("상점 - 판매하기");
+                Console.WriteLine("판매할 아이템의 번호를 입력해주세요.");
                 Console.WriteLine("");
+                for (int i = 0; i < equipmentItemCount; i++)
+                {
+                    Item currentItem = PlayerInfo.Inventory.EquipmentInventory[i];
+
+                    Console.WriteLine($"- {i + 1}. {currentItem.Name} | {currentItem.Explain} | 판매 가격 {currentItem.ItemPrice} Gold");
+                }
                 Console.WriteLine("");
-                Console.WriteLine("1. 구매하기");
-                Console.WriteLine("2. 판매하기");
                 Console.WriteLine("0. 나가기");
                 int userSelect = Date.UserSelect();
                 if (userSelect == 0)
@@ -513,7 +519,7 @@ namespace TeamSparta11
                 }
                 else
                 {
-                    PlayerInfo.Inventory.ItemUse(userSelect - 1);
+                    PlayerInfo.Inventory.ItemSell(userSelect - 1);
                 }
             }
         }
