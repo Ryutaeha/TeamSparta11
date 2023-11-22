@@ -470,13 +470,11 @@ namespace TeamSparta11
 
             Console.WriteLine($"\nLV. {PlayerInfo.Player.Level}  {PlayerInfo.Player.Name} ({PlayerInfo.Player.Job})     현재 스테이지 : {PlayerInfo.Player.Stage}");
             Console.WriteLine();
-            Console.Write($"HP : ");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write($"{PlayerInfo.Player.HP} / {PlayerInfo.Player.MaxHP}\t  ");
+            Console.Write($"HP : {PlayerInfo.Player.HP} / {PlayerInfo.Player.MaxHP}\t  ");
             Console.ResetColor();
-            Console.Write("MP : ");
             Console.ForegroundColor= ConsoleColor.Blue;
-            Console.WriteLine($"{PlayerInfo.Player.MP} / {PlayerInfo.Player.MaxMP}");
+            Console.WriteLine($"MP : {PlayerInfo.Player.MP} / {PlayerInfo.Player.MaxMP}");
             Console.ResetColor();
             Console.WriteLine();
             Console.WriteLine($"공격력 : {PlayerInfo.Player.AD}    방어력 : {PlayerInfo.Player.DF}    스피드 : {PlayerInfo.Player.Speed}");
