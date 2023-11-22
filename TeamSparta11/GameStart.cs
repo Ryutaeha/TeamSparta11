@@ -289,7 +289,7 @@ namespace TeamSparta11
         }
 
         //게임 시작시 나오는 화면
-        private void GameLord()
+        public void GameLord()
         {
             while (true)
             {
@@ -317,12 +317,12 @@ namespace TeamSparta11
                         ShopMainDisplay();
                         break;
                     case 4:
-                        /*
+                        
                         BattleNew battleNew = new BattleNew();
                         bool isDead = battleNew.Battle();
                         if (isDead) break;
                         else return;
-                        */
+                        
                     case 0:
                         SaveItems();
                         Json.JsonSave(PlayerInfo.saveSlot);

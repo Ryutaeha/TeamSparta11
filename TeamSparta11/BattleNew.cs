@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +19,9 @@ namespace TeamSparta11
         //획득 아이템 저장
         int getGold = 0;
         int getExp = 0;
+
+
+
         internal bool Battle()
         {
             bossMonster.Clear();
@@ -25,12 +30,21 @@ namespace TeamSparta11
             bool battleEnd;
             if (PlayerInfo.Player.Stage % 5 != 0)
             {
+                
                 Console.WriteLine();
                 Date.Line();
-                for(int i = 0; i < monster.Count; i++)
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"◆현재 스테이지: {PlayerInfo.Player.Stage} 층◆");
+                Console.ResetColor();
+                Console.WriteLine();
+                Console.WriteLine();
+                for (int i = 0; i < monster.Count; i++)
                 {
-                    Console.WriteLine($"{monster[i].Name}(이)가 출현했다.\n");
-                   
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write($"{monster[i].Name}");
+                    Console.ResetColor();
+                    Console.WriteLine("(이)가 출현했다.\n");
+
                 }
                 Console.WriteLine();
                 battleEnd = BattleStart();
@@ -62,21 +76,44 @@ namespace TeamSparta11
             Console.WriteLine();
             if (battleEnd)
             {
-                Console.WriteLine("사냥 성공");
+                Console.ForegroundColor= ConsoleColor.Magenta;
+                Console.WriteLine("♬사냥 성공♬");
+                Console.ResetColor();
                 Console.WriteLine($"획득한 골드 : {getGold}");
                 Console.WriteLine($"획득한 경험치 : {getExp}");
+                PlayerInfo.Player.HP += 20;
+                Console.WriteLine($"{PlayerInfo.Player.Name}의 체력이 20 회복되었습니다");
                 PlayerInfo.Player.Gold += getGold;
                 PlayerInfo.Player.EXP += getExp;
-                if(PlayerInfo.Player.Stage % 5 == 0)
+                if (PlayerInfo.Player.Stage == 5)
                 {
-                    //보스 잡았을 때 랜덤 아이템 인벤토리에 넣는 로직
+                    PlayerInfo.Inventory.GetItem(2);
+                }
+                if (PlayerInfo.Player.Stage == 10)
+                {
+                    PlayerInfo.Inventory.GetItem(3);
+                }
+                if (PlayerInfo.Player.Stage == 15)
+                {
+                    PlayerInfo.Inventory.GetItem(4);
                 }
             }
-            else Console.WriteLine("사망하였습니다 메인화면으로 돌아갑니다");
+            else
+            {
+                
+                Console.WriteLine("사망하였습니다 아무키나 입력 시 메인화면으로 돌아갑니다");                
+                int UserSelect = Date.UserSelect();
+                switch (UserSelect)
+                {
+                    default:
+
+                    break;
+                }               
+            }
 
         }
 
-        private void MonsterSetting()
+            private void MonsterSetting()
         {
             string[] monsters = null;
             if(PlayerInfo.Player.Stage % 5 != 0)
@@ -134,7 +171,15 @@ namespace TeamSparta11
             while (!PlayerInfo.Player.IsDead && monster.Count != 0)
             {
                 Date.Line();
-                Console.WriteLine($"{PlayerInfo.Player.Name}  HP : {PlayerInfo.Player.HP} / {PlayerInfo.Player.MaxHP}   MP : {PlayerInfo.Player.MP} / {PlayerInfo.Player.MaxMP}");
+                Console.Write($"{PlayerInfo.Player.Name} ");   
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"HP : {PlayerInfo.Player.HP} / {PlayerInfo.Player.MaxHP}  ");
+                Console.ResetColor();
+                Console.ForegroundColor= ConsoleColor.Blue;
+                Console.WriteLine($"MP : {PlayerInfo.Player.MP} / { PlayerInfo.Player.MaxMP}");
+                Console.ResetColor();
+
+
                 
                 (int, int) playerSelete = PlayerSelete();
 
@@ -154,7 +199,11 @@ namespace TeamSparta11
                     }
                     else
                     {
-                        Console.WriteLine($"{monster[attackSequence[i]-1].Name}의 턴");
+
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write($"{monster[attackSequence[i]-1].Name}");
+                        Console.ResetColor();
+                        Console.WriteLine("의 턴");
                         if (monster[attackSequence[i] - 1].IsDead) Console.WriteLine("최후의 발악!");
                         if (fatalDamage < 3)
                         {
@@ -253,7 +302,10 @@ namespace TeamSparta11
 
                 for (int i = 0 ;i < monster.Count ; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {monster[i].Name}");
+                    Console.Write($"{i + 1}. ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"{monster[i].Name}");
+                    Console.ResetColor();
                 }
                 Console.WriteLine("0. 돌아가기");
                 int select = Date.UserSelect();
@@ -297,7 +349,13 @@ namespace TeamSparta11
             while (!PlayerInfo.Player.IsDead && bossMonster.Count != 0)
             {
                 Date.Line();
-                Console.WriteLine($"{PlayerInfo.Player.Name}  HP : {PlayerInfo.Player.HP} / {PlayerInfo.Player.MaxHP}   MP : {PlayerInfo.Player.MP} / {PlayerInfo.Player.MaxMP}");
+                Console.Write($"{PlayerInfo.Player.Name} ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"HP : {PlayerInfo.Player.HP} / {PlayerInfo.Player.MaxHP}  ");
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"MP : {PlayerInfo.Player.MP} / {PlayerInfo.Player.MaxMP}");
+                Console.ResetColor();
                 int damege = PlayerSeleteBoss();
 
                 Console.WriteLine();
