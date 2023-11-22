@@ -178,7 +178,7 @@ namespace TeamSparta11
 
             PlayerInfo.Player = new PlayerStatus(name, job[1], int.Parse(job[2]), int.Parse(job[3]), int.Parse(job[4]), int.Parse(job[5]), int.Parse(job[6]), int.Parse(job[7]), int.Parse(job[8]), int.Parse(job[9]), int.Parse(job[10]), int.Parse(job[11]),1);
             PlayerInfo.Inventory = new Inventory(12);
-            PlayerInfo.Shop = new Shop(10);
+            PlayerInfo.Shop.ShopProductReset();
             PlayerInfo.Inventory.GetItem(0);
             PlayerInfo.Inventory.GetItem(1);
 
@@ -254,7 +254,7 @@ namespace TeamSparta11
                         SaveDate saveDate = Json.JsonLoad(saveSlot);
                         PlayerInfo.Player = saveDate.Player;
                         PlayerInfo.SkillList = saveDate.SkillList;
-                        PlayerInfo.Shop = saveDate.Shop;
+                        PlayerInfo.ShopProductList = saveDate.ShopProductList;
                         PlayerInfo.Inventory = saveDate.Inventory;
                         GameLord();
                         return true;
@@ -346,6 +346,7 @@ namespace TeamSparta11
                         PlayerInfo.SkillList.Clear();
                         PlayerInfo.Player = null;
                         PlayerInfo.Inventory = null;
+                        PlayerInfo.ShopProductList = null;
                         //저장및 돌아가기 메서드 인스턴스화해서 호출
                         return;
 
@@ -474,9 +475,9 @@ namespace TeamSparta11
                 Console.WriteLine("상점 - 구매하기");
                 Console.WriteLine("구매할 아이템의 번호를 입력해주세요.");
                 Console.WriteLine("");
-                for (int i = 0; i < PlayerInfo.Shop.shopProductList.Count; i++)
+                for (int i = 0; i < PlayerInfo.ShopProductList.Count; i++)
                 {
-                    ShopProduct currentProduct = PlayerInfo.Shop.shopProductList[i];
+                    ShopProduct currentProduct = PlayerInfo.ShopProductList[i];
 
                     Console.WriteLine($"- {i + 1}. {currentProduct.ProductItemName()} | {currentProduct.ShopExplain} | 가격 : {currentProduct.ProductPrice} Gold");
                 }

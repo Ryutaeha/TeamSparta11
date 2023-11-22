@@ -37,17 +37,14 @@ namespace TeamSparta11
 
     internal class Shop
     {
-        public List<ShopProduct> shopProductList;
-
-        public Shop(int productLimit)
+        public Shop()
         {
-            shopProductList = new List<ShopProduct>();
-            ShopProductReset(); // 최초 생성 시 상점 리셋
+            
         }
 
         public void ShopProductReset()
         {
-            shopProductList.Clear();
+            PlayerInfo.ShopProductList.Clear();
             object[] tableObj = Date.ShopDateTable.Select().Select(table => table["ProductIndex"]).ToArray();
             int[] indexArr = tableObj.Cast<int>().ToArray();
 
@@ -55,13 +52,13 @@ namespace TeamSparta11
             {
                 ShopProduct newProduct = new ShopProduct();
                 ShopProduct addProduct = newProduct.CreateShopProduct(index);
-                shopProductList.Add(addProduct);
+                PlayerInfo.ShopProductList.Add(addProduct);
             }
         }
 
         public void ProductBuy(int index)
         {
-            ShopProduct buySelectProduct = shopProductList[index];
+            ShopProduct buySelectProduct = PlayerInfo.ShopProductList[index];
 
             if (buySelectProduct.ProductPrice > PlayerInfo.Player.Gold)
             {
