@@ -93,5 +93,17 @@ namespace TeamSparta11
                 Console.WriteLine($"{equipItem.Name}(을/를) 장비 해제했습니다.");
             }
         }
+
+        public void ItemSell(int index)
+        {
+            int itemCountSum = ItemCount.Sum();
+            if (index > itemCountSum) return;
+            Equipment item = EquipmentInventory[index];
+
+            PlayerInfo.Player.Gold += item.ItemPrice;
+            EquipmentInventory.Remove(item);
+            ItemCount[(int)Date.ItemType.Equipment]--;
+            Console.WriteLine($"{item.Name}(을/를) 판매했습니다. 현재 소지금 : {PlayerInfo.Player.Gold} Gold");
+        }
     }
 }
