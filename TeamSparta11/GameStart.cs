@@ -335,9 +335,9 @@ namespace TeamSparta11
 
         private void SaveItems()
         {
-            for (int i = 0; i < PlayerInfo.Inventory.inventory.Count; i++)
+            for (int i = 0; i < PlayerInfo.Inventory.EquipmentInventory.Count; i++)
             {
-                PlayerInfo.ItemList.Add(PlayerInfo.Inventory.inventory[i].ItemIndex);
+                PlayerInfo.ItemList.Add(PlayerInfo.Inventory.EquipmentInventory[i].ItemIndex);
             }
         }
 
@@ -356,19 +356,28 @@ namespace TeamSparta11
             Console.Clear();
             while (true)
             {
+                int equipmentItemCount = PlayerInfo.Inventory.ItemCount[(int)Date.ItemType.Equipment];
+                //int suppliesItemCount = PlayerInfo.Inventory.ItemCount[(int)Date.ItemType.Supplies];
+
                 Console.WriteLine("인벤토리");
                 Console.WriteLine("보유 중인 아이템을 확인 할 수 있습니다.");
                 Console.WriteLine("");
-
-                for (int i = 0; i < PlayerInfo.Inventory.ItemCount; i++)
+                Console.WriteLine("--- 장비 아이템 ---");
+                for (int i = 0; i < equipmentItemCount; i++)
                 {
-                    Item currentItem = PlayerInfo.Inventory.inventory[i];
+                    Item currentItem = PlayerInfo.Inventory.EquipmentInventory[i];
 
                     Console.WriteLine($"- {currentItem.Name} | {currentItem.Explain}");
                 }
+                //Console.WriteLine("\n--- 소비 아이템 ---");
+                //for (int i = 0; i < suppliesItemCount; i++)
+                //{
+                //    Item currentItem = PlayerInfo.Inventory.SuppliesInventory[i];
 
+                //    Console.WriteLine($"- {currentItem.Name} | {currentItem.Explain}");
+                //}
                 Console.WriteLine("");
-                Console.WriteLine("1. 아이템 장착/사용");
+                Console.WriteLine("1. 장비 장착하기");
                 Console.WriteLine("0. 나가기");
                 int userSelect = Date.UserSelect();
 
@@ -392,16 +401,17 @@ namespace TeamSparta11
             Console.Clear();
             while (true)
             {
+                int equipmentItemCount = PlayerInfo.Inventory.ItemCount[(int)Date.ItemType.Equipment];
+
                 Console.WriteLine("장착 / 사용할 아이템의 번호를 입력해주세요.");
                 Console.WriteLine("");
-
-                for (int i = 0; i < PlayerInfo.Inventory.ItemCount; i++)
+                Console.WriteLine("--- 장비 아이템 ---");
+                for (int i = 0; i < equipmentItemCount; i++)
                 {
-                    Item currentItem = PlayerInfo.Inventory.inventory[i];
+                    Item currentItem = PlayerInfo.Inventory.EquipmentInventory[i];
 
                     Console.WriteLine($"- {i + 1}. {currentItem.Name} | {currentItem.Explain}");
                 }
-
                 Console.WriteLine("");
                 Console.WriteLine("0. 나가기");
                 int userSelect = Date.UserSelect();
@@ -411,7 +421,7 @@ namespace TeamSparta11
                 }
                 else
                 {
-                    PlayerInfo.Inventory.ItemUse(userSelect);
+                    PlayerInfo.Inventory.ItemUse(userSelect - 1);
                 }
             }
 

@@ -10,7 +10,7 @@ using TeamSparta11;
 // 몬스터 정보나 기타 등등의 일반적인 데이터를 담는 클래스
 internal class Date
 {
-    internal enum ItemType { equipment, supplies }
+    internal enum ItemType { Equipment, Supplies }
 
     internal static int UserSelect()
     {
@@ -82,6 +82,7 @@ internal class Date
         // 장비 아이템 스텟 테이블
         // { Index, EquipmentType, MaxHP, MaxMp, Speed, AD, DF }
         EquipmentDateTable.Rows.Add(new object[] { 0, 0, 0, 0, 0, 5, 0 });
+        EquipmentDateTable.Rows.Add(new object[] { 1, 0, 0, 0, 0, 10, 0 });
 
         // 상점 아이템 테이블
         // { ProductIndex, ItemIndex, ProductPrice, ShopExplain }
