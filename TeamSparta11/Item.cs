@@ -4,6 +4,7 @@ using System.Linq;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace TeamSparta11
 {
@@ -22,7 +23,6 @@ namespace TeamSparta11
     {
         public int EquipmentIndex { get; private set; }
         public int EquipmentType { get; private set; }
-        public bool IsEquip { get; private set; }
         public int MaxHP { get; private set; }
         public int MaxMp { get; private set; }
         public int Speed { get; private set; }
@@ -50,7 +50,7 @@ namespace TeamSparta11
             DF = Convert.ToInt32(equipmentData["DF"]);
 
 
-            if (ItemType == (int)Date.ItemType.equipment)
+            if (ItemType == (int)Date.ItemType.Equipment)
             {
                 return this;
             }
@@ -59,31 +59,16 @@ namespace TeamSparta11
 
         public void ItemEvent()
         {
-            IsEquip = !IsEquip;
-
-            if (this is Equipment equipmentItem && equipmentItem.IsEquip)
+            if (PlayerInfo.Inventory.EquippedItem[EquipmentType] != null)
             {
-                // 인벤토리에서 동일한 타입에 장착중인 장비 찾기
-                Equipment? findEquipment = PlayerInfo.Inventory.inventory
-                .OfType<Equipment>()
-                .Where(findItem => findItem != this) // 자기 자신 제외
-                .FirstOrDefault(findItem => findItem.EquipmentType == equipmentItem.EquipmentType && findItem.IsEquip);
-
-                if (findEquipment != null)
-                {
-                    findEquipment.IsEquip = false;
-                    Console.WriteLine($"착용 중인 {findEquipment.Name}(이/가) 해제되었습니다.");
-                }
+                PlayerInfo.Inventory.Unequipped(EquipmentType);
             }
-
-            if (IsEquip)
-            {
-                Console.WriteLine($"{Name}(이/가) 장착되었습니다.");
-            }
-            else
-            {
-                Console.WriteLine($"{Name}(이/가) 해제되었습니다.");
-            }
+            Equipment newEquipment = new Equipment();
+            Equipment addEquipment = newEquipment.ItemAdd(ItemIndex);
+            PlayerInfo.Inventory.EquippedItem[EquipmentType] = addEquipment;
+            PlayerInfo.Inventory.EquipmentInventory.Remove(this);
+            PlayerInfo.Inventory.ItemCount[(int)Date.ItemType.Equipment]--;
+            Console.WriteLine($"{Name}(을/를) 착용했습니다.");
         }
     }
     
@@ -107,7 +92,7 @@ namespace TeamSparta11
             ItemType = Convert.ToInt32(itemData["ItemType"]);
             ItemPrice = Convert.ToInt32(itemData["ItemPrice"]);
 
-            if (ItemType == (int)Date.ItemType.supplies)
+            if (ItemType == (int)Date.ItemType.Supplies)
             {
                 return this;
             }
