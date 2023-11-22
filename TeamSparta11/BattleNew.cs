@@ -27,7 +27,10 @@ namespace TeamSparta11
             {
                 Console.WriteLine();
                 Date.Line();
-                for(int i = 0; i < monster.Count; i++)
+                Console.WriteLine($"현재 층: {PlayerInfo.Player.Stage}");
+                Console.WriteLine();
+                Console.WriteLine();
+                for (int i = 0; i < monster.Count; i++)
                 {
                     Console.WriteLine($"{monster[i].Name}(이)가 출현했다.\n");
                    
@@ -67,16 +70,28 @@ namespace TeamSparta11
                 Console.WriteLine($"획득한 경험치 : {getExp}");
                 PlayerInfo.Player.Gold += getGold;
                 PlayerInfo.Player.EXP += getExp;
-                if(PlayerInfo.Player.Stage % 5 == 0)
+                if (PlayerInfo.Player.Stage % 5 == 0)
                 {
                     //보스 잡았을 때 랜덤 아이템 인벤토리에 넣는 로직
                 }
             }
-            else Console.WriteLine("사망하였습니다 메인화면으로 돌아갑니다");
+            else
+            {
+                Console.WriteLine("사망하였습니다 아무키나 입력 시 메인화면으로 돌아갑니다");                
+                int UserSelect = Date.UserSelect();
+                switch (UserSelect)
+                {
+                    default:
+                        GameStart gameStart = new GameStart();
+                        gameStart.Game();
+                        break;
+                }
+               
+            }
 
         }
 
-        private void MonsterSetting()
+            private void MonsterSetting()
         {
             string[] monsters = null;
             if(PlayerInfo.Player.Stage % 5 != 0)
