@@ -83,7 +83,7 @@ namespace Teamproject
         }
         public void BeFatalDamaged(int damage)
         {
-            int dameges = damage - DF;
+            int dameges = (damage * 2) - DF;
             if (dameges < 0) damage = 1;
             HP -= damage;
             Console.WriteLine($"{Name}(은)는 {damage}의 치명적 피해를 입었습니다. 남은 체력 : {HP}");
